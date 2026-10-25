@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="bird-title">
+  <title id="bird-title">Aves</title>
+  <defs>
+    <filter id="wc" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="23" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <radialGradient id="sky" cx=".5" cy=".45" r=".55">
+      <stop offset="0" stop-color="#A9C0C7" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#A9C0C7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="600" cy="430" rx="470" ry="360" fill="url(#sky)"/>
+
+  <g filter="url(#wc)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- branch -->
+    <g fill="none">
+      <path d="M86 786C300 716 466 650 618 548 772 444 902 332 1112 228" stroke="#8B6B4E" stroke-opacity=".5" stroke-width="11"/>
+      <path d="M330 690c-34-30-56-66-66-104" stroke="#8B6B4E" stroke-opacity=".42" stroke-width="6"/>
+      <path d="M700 486c-6-44 4-84 26-118" stroke="#8B6B4E" stroke-opacity=".42" stroke-width="6"/>
+      <path d="M950 328c-2-36 8-68 28-96" stroke="#8B6B4E" stroke-opacity=".42" stroke-width="5"/>
+      <path d="M220 742c-16-34-18-66-8-96" stroke="#8B6B4E" stroke-opacity=".35" stroke-width="5"/>
+      <path d="M540 606c-14-32-16-60-6-88" stroke="#8B6B4E" stroke-opacity=".35" stroke-width="5"/>
+    </g>
+
+    <!-- leaves -->
+    <g fill="#8A9A72" fill-opacity=".34" stroke="#64764E" stroke-opacity=".35" stroke-width="2">
+      <path d="M330 690c-40-4-72-24-88-52 34-2 70 14 88 52z"/>
+      <path d="M700 486c40-8 68-30 80-58-32 0-66 22-80 58z"/>
+      <path d="M950 328c36-10 60-34 68-62-30 4-58 26-68 62z"/>
+      <path d="M220 742c-34-8-58-30-68-58 28 4 56 24 68 58z"/>
+      <path d="M540 606c34-6 60-26 70-52-28 2-58 20-70 52z"/>
+      <path d="M1020 250c26-22 40-50 38-80-22 18-40 46-38 80z"/>
+    </g>
+
+    <!-- blossoms -->
+    <g stroke="#A9706C" stroke-opacity=".35" stroke-width="1.6">
+      <g fill="#E0B7B1" fill-opacity=".5">
+        <g transform="translate(210 750)"><circle cx="0" cy="-11" r="8"/><circle cx="10" cy="-4" r="8"/><circle cx="7" cy="9" r="8"/><circle cx="-7" cy="9" r="8"/><circle cx="-10" cy="-4" r="8"/></g>
+        <g transform="translate(388 668) scale(.9)"><circle cx="0" cy="-11" r="8"/><circle cx="10" cy="-4" r="8"/><circle cx="7" cy="9" r="8"/><circle cx="-7" cy="9" r="8"/><circle cx="-10" cy="-4" r="8"/></g>
+        <g transform="translate(556 594)"><circle cx="0" cy="-11" r="8"/><circle cx="10" cy="-4" r="8"/><circle cx="7" cy="9" r="8"/><circle cx="-7" cy="9" r="8"/><circle cx="-10" cy="-4" r="8"/></g>
+        <g transform="translate(700 484) scale(1.1)"><circle cx="0" cy="-11" r="8"/><circle cx="10" cy="-4" r="8"/><circle cx="7" cy="9" r="8"/><circle cx="-7" cy="9" r="8"/><circle cx="-10" cy="-4" r="8"/></g>
+        <g transform="translate(930 342) scale(.85)"><circle cx="0" cy="-11" r="8"/><circle cx="10" cy="-4" r="8"/><circle cx="7" cy="9" r="8"/><circle cx="-7" cy="9" r="8"/><circle cx="-10" cy="-4" r="8"/></g>
+        <g transform="translate(1046 258)"><circle cx="0" cy="-11" r="8"/><circle cx="10" cy="-4" r="8"/><circle cx="7" cy="9" r="8"/><circle cx="-7" cy="9" r="8"/><circle cx="-10" cy="-4" r="8"/></g>
+      </g>
+      <g fill="#C9A86A" fill-opacity=".6">
+        <circle cx="210" cy="750" r="4"/><circle cx="388" cy="668" r="4"/><circle cx="556" cy="594" r="4"/>
+        <circle cx="700" cy="484" r="4"/><circle cx="930" cy="342" r="4"/><circle cx="1046" cy="258" r="4"/>
+      </g>
+    </g>
+
+    <!-- perched bird (right facing) -->
+    <g transform="translate(462 470)">
+      <ellipse cx="0" cy="6" rx="88" ry="46" fill="#7E8F86" fill-opacity=".14"/>
+      <path d="M-48-6C-92 2-116 20-124 34c22 4 54-2 78-16z" fill="#7E8F86" fill-opacity=".4" stroke="#5E6F66" stroke-opacity=".4" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="60" ry="40" fill="#8FA0A0" fill-opacity=".42" stroke="#5E6F66" stroke-opacity=".45" stroke-width="2.5" transform="rotate(-6)"/>
+      <circle cx="50" cy="-26" r="27" fill="#9DAFAE" fill-opacity=".45" stroke="#5E6F66" stroke-opacity=".45" stroke-width="2.5"/>
+      <path d="M74-30 106-21 74-10Z" fill="#C9A86A" fill-opacity=".6" stroke="#9A7A44" stroke-opacity=".45" stroke-width="2"/>
+      <path d="M76-14 98-8 74-2Z" fill="#B98A54" fill-opacity=".35"/>
+      <ellipse cx="-6" cy="-2" rx="38" ry="22" fill="#B07C77" fill-opacity=".34" stroke="#8E5F5C" stroke-opacity=".35" stroke-width="2" transform="rotate(-18)"/>
+      <path d="M-40 8c22 14 46 18 66 10" fill="none" stroke="#5E6F66" stroke-opacity=".35" stroke-width="2"/>
+      <path d="M-18 34v22M10 34v20" stroke="#A98555" stroke-opacity=".55" stroke-width="4"/>
+      <circle cx="59" cy="-33" r="3.6" fill="#3B423F"/>
+      <path d="M-116 30c-10 6-18 8-26 6" fill="none" stroke="#5E6F66" stroke-opacity=".4" stroke-width="3"/>
+    </g>
+
+    <!-- bird on upper branch, facing left -->
+    <g transform="translate(878 316) scale(.82) scale(-1 1)">
+      <path d="M-48-6C-92 2-116 20-124 34c22 4 54-2 78-16z" fill="#8C8578" fill-opacity=".4" stroke="#6B6459" stroke-opacity=".4" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="58" ry="38" fill="#A39A88" fill-opacity=".4" stroke="#6B6459" stroke-opacity=".45" stroke-width="2.5" transform="rotate(-6)"/>
+      <circle cx="48" cy="-24" r="25" fill="#B0A795" fill-opacity=".45" stroke="#6B6459" stroke-opacity=".45" stroke-width="2.5"/>
+      <path d="M70-28 100-19 70-9Z" fill="#C9A86A" fill-opacity=".6" stroke="#9A7A44" stroke-opacity=".45" stroke-width="2"/>
+      <ellipse cx="-6" cy="-2" rx="36" ry="20" fill="#8E7F6B" fill-opacity=".35" stroke="#6B6459" stroke-opacity=".35" stroke-width="2" transform="rotate(-18)"/>
+      <path d="M-14 32v20M8 32v18" stroke="#A98555" stroke-opacity=".55" stroke-width="4"/>
+      <circle cx="56" cy="-31" r="3.4" fill="#3B3A36"/>
+    </g>
+
+    <!-- flying bird -->
+    <g transform="translate(1016 596)" fill="none" stroke="#6E7C74" stroke-opacity=".45" stroke-width="4" stroke-linecap="round">
+      <path d="M-42 0c14-18 30-18 42-4 12-14 28-14 42 4"/>
+    </g>
+    <g transform="translate(918 524) scale(.7)" fill="none" stroke="#6E7C74" stroke-opacity=".35" stroke-width="4" stroke-linecap="round">
+      <path d="M-42 0c14-18 30-18 42-4 12-14 28-14 42 4"/>
+    </g>
+
+    <!-- falling petals -->
+    <g fill="#E0B7B1" fill-opacity=".4">
+      <ellipse cx="1006" cy="176" rx="11" ry="6" transform="rotate(28 1006 176)"/>
+      <ellipse cx="1120" cy="392" rx="10" ry="5" transform="rotate(-18 1120 392)"/>
+      <ellipse cx="134" cy="560" rx="9" ry="5" transform="rotate(14 134 560)"/>
+      <ellipse cx="636" cy="700" rx="8" ry="4" transform="rotate(-26 636 700)"/>
+      <ellipse cx="760" cy="140" rx="8" ry="4" transform="rotate(12 760 140)"/>
+    </g>
+  </g>
+</svg>

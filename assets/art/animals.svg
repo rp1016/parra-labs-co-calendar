@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="animal-title">
+  <title id="animal-title">Animales</title>
+  <defs>
+    <filter id="wc" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="71" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <radialGradient id="glade" cx=".5" cy=".42" r=".55">
+      <stop offset="0" stop-color="#A9C0C7" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#A9C0C7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="600" cy="400" rx="470" ry="340" fill="url(#glade)"/>
+
+  <g filter="url(#wc)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- distant trunks -->
+    <g fill="#8B6B4E" fill-opacity=".12">
+      <path d="M60 0h58l-8 900H52z"/>
+      <path d="M1096 0h56l10 900h-58z"/>
+    </g>
+    <g fill="#7C8B63" fill-opacity=".16">
+      <ellipse cx="88" cy="90" rx="150" ry="90"/>
+      <ellipse cx="1122" cy="70" rx="140" ry="86"/>
+      <ellipse cx="600" cy="10" rx="210" ry="70"/>
+    </g>
+
+    <!-- ground -->
+    <path d="M0 706c170-30 320-16 480 8 170 26 330 22 500-8 90-16 160-16 220-6v200H0z" fill="#8A9A72" fill-opacity=".12"/>
+
+    <!-- ferns -->
+    <g stroke="#7C8B63" stroke-opacity=".35" stroke-width="3" fill="none">
+      <path d="M120 890c14-58 36-98 68-126M150 890c4-52 18-92 40-122M186 890c-2-44 8-80 26-108"/>
+      <path d="M1000 890c-8-56-24-96-50-124M1026 890c2-50-8-90-26-120M1056 890c8-42 2-78-12-106"/>
+    </g>
+    <g fill="#8A9A72" fill-opacity=".3">
+      <path d="M120 716c-30-6-54-20-68-40 26-2 54 10 68 40z"/>
+      <path d="M1000 716c30-6 54-20 68-40-26-2-54 10-68 40z"/>
+    </g>
+
+    <!-- owl on branch -->
+    <path d="M452 404c86-22 168-18 250 8" fill="none" stroke="#8B6B4E" stroke-opacity=".4" stroke-width="8"/>
+    <g transform="translate(596 300)">
+      <ellipse cx="0" cy="0" rx="48" ry="60" fill="#8C8578" fill-opacity=".4" stroke="#6B6459" stroke-opacity=".45" stroke-width="2.6"/>
+      <path d="M-34-46-40-78-14-60ZM34-46 40-78 14-60Z" fill="#8C8578" fill-opacity=".4" stroke="#6B6459" stroke-opacity=".4" stroke-width="2"/>
+      <circle cx="0" cy="-34" r="36" fill="#A39A88" fill-opacity=".45" stroke="#6B6459" stroke-opacity=".45" stroke-width="2.4"/>
+      <circle cx="-14" cy="-38" r="12" fill="#E8DCC8" fill-opacity=".7" stroke="#6B6459" stroke-opacity=".4" stroke-width="1.6"/>
+      <circle cx="14" cy="-38" r="12" fill="#E8DCC8" fill-opacity=".7" stroke="#6B6459" stroke-opacity=".4" stroke-width="1.6"/>
+      <circle cx="-14" cy="-38" r="4.6" fill="#4A3F35"/>
+      <circle cx="14" cy="-38" r="4.6" fill="#4A3F35"/>
+      <path d="M-6-24 0-12 6-24Z" fill="#C9A86A" fill-opacity=".6"/>
+      <path d="M-30 6c8 26 20 40 30 46 10-6 22-20 30-46" fill="none" stroke="#6B6459" stroke-opacity=".3" stroke-width="2"/>
+      <path d="M-40 52v14M-14 56v12M14 56v12M40 52v14" stroke="#A98555" stroke-opacity=".5" stroke-width="4"/>
+    </g>
+
+    <!-- fox -->
+    <g transform="translate(320 676)">
+      <ellipse cx="4" cy="6" rx="104" ry="16" fill="#8A9A72" fill-opacity=".14"/>
+      <path d="M-24-44C-90-82-148-46-156 2c-6 26 12 40 30 36-22-16-22-48 8-64 26-14 60-8 86 10-4-12-16-22-30-28z" fill="#C08464" fill-opacity=".34" stroke="#8F5B44" stroke-opacity=".42" stroke-width="2.4"/>
+      <path d="M-132 18c8 10 22 14 34 8-12-4-20-10-24-18z" fill="#E8DCC8" fill-opacity=".55"/>
+      <path d="M-46 0C-60-36-46-80-10-100 22-118 58-102 64-68 70-36 56-4 34 0Z" fill="#C08464" fill-opacity=".38" stroke="#8F5B44" stroke-opacity=".45" stroke-width="2.6"/>
+      <path d="M16-82c16-12 34-6 40 10 8 20 0 44-18 52-12 6-24 2-28-10z" fill="#E8DCC8" fill-opacity=".45" stroke="#8F5B44" stroke-opacity=".25" stroke-width="2"/>
+      <path d="M-34 0v20M8 0v24M34 0v20" stroke="#8F5B44" stroke-opacity=".5" stroke-width="8"/>
+      <ellipse cx="-34" cy="22" rx="11" ry="5" fill="#8F5B44" fill-opacity=".35"/>
+      <ellipse cx="8" cy="26" rx="11" ry="5" fill="#8F5B44" fill-opacity=".35"/>
+      <ellipse cx="34" cy="22" rx="10" ry="5" fill="#8F5B44" fill-opacity=".35"/>
+      <circle cx="58" cy="-106" r="32" fill="#C08464" fill-opacity=".4" stroke="#8F5B44" stroke-opacity=".45" stroke-width="2.4"/>
+      <path d="M82-116 132-100 84-86Z" fill="#D9A6A0" fill-opacity=".42" stroke="#8F5B44" stroke-opacity=".45" stroke-width="2.2"/>
+      <path d="M88-90 128-98 92-100Z" fill="#E8DCC8" fill-opacity=".5"/>
+      <path d="M38-128 44-168 70-132Z" fill="#C08464" fill-opacity=".4" stroke="#8F5B44" stroke-opacity=".45" stroke-width="2.2"/>
+      <path d="M76-138 98-168 110-130Z" fill="#C08464" fill-opacity=".4" stroke="#8F5B44" stroke-opacity=".45" stroke-width="2.2"/>
+      <path d="M46-140 49-156 60-138Z" fill="#8F5B44" fill-opacity=".35"/>
+      <path d="M90-142 96-156 102-136Z" fill="#8F5B44" fill-opacity=".35"/>
+      <circle cx="70" cy="-112" r="4.2" fill="#4A3F35"/>
+      <ellipse cx="126" cy="-99" rx="5" ry="4" fill="#4A3F35"/>
+      <path d="M116-96c6 2 10 6 12 10M116-102c6-2 10-6 12-10" fill="none" stroke="#8F5B44" stroke-opacity=".4" stroke-width="1.8"/>
+    </g>
+
+    <!-- deer -->
+    <g transform="translate(846 660)">
+      <ellipse cx="0" cy="6" rx="86" ry="14" fill="#8A9A72" fill-opacity=".14"/>
+      <path d="M-24-116 34-116 40-42-30-42Z" fill="#C9A86A" fill-opacity=".32" stroke="#9A7A44" stroke-opacity=".42" stroke-width="2.4"/>
+      <ellipse cx="4" cy="-86" rx="70" ry="46" fill="#C9A86A" fill-opacity=".32" stroke="#9A7A44" stroke-opacity=".44" stroke-width="2.6"/>
+      <path d="M52-110C66-142 70-168 74-192" fill="none" stroke="#C9A86A" stroke-opacity=".4" stroke-width="26"/>
+      <ellipse cx="82" cy="-206" rx="34" ry="22" fill="#C9A86A" fill-opacity=".36" stroke="#9A7A44" stroke-opacity=".44" stroke-width="2.4" transform="rotate(-18 82 -206)"/>
+      <path d="M106-212 134-220 112-202Z" fill="#B99A5E" fill-opacity=".45"/>
+      <circle cx="92" cy="-212" r="4" fill="#4A3F35"/>
+      <path d="M60-224c-10-22-4-40 8-52M78-232c2-24 12-40 28-50M70-240c-16-8-30-6-42 4M84-246c14-12 30-14 44-6" fill="none" stroke="#8B6B4E" stroke-opacity=".45" stroke-width="4"/>
+      <path d="M-30-44v44M-6-44v46M34-44v44M56-44v46" stroke="#9A7A44" stroke-opacity=".48" stroke-width="7"/>
+      <ellipse cx="-28" cy="2" rx="12" ry="5" fill="#8B6B4E" fill-opacity=".3"/>
+      <ellipse cx="-4" cy="4" rx="12" ry="5" fill="#8B6B4E" fill-opacity=".3"/>
+      <ellipse cx="36" cy="2" rx="12" ry="5" fill="#8B6B4E" fill-opacity=".3"/>
+      <ellipse cx="58" cy="4" rx="12" ry="5" fill="#8B6B4E" fill-opacity=".3"/>
+      <g fill="#E8DCC8" fill-opacity=".5">
+        <circle cx="-18" cy="-100" r="5"/><circle cx="8" cy="-108" r="4"/><circle cx="26" cy="-94" r="5"/>
+        <circle cx="-2" cy="-80" r="4"/><circle cx="-30" cy="-78" r="4"/><circle cx="44" cy="-102" r="4"/>
+      </g>
+      <path d="M-60-104c-16-4-24-14-24-24 12 10 24 14 34 12z" fill="#C9A86A" fill-opacity=".4"/>
+    </g>
+
+    <!-- hedgehog -->
+    <g transform="translate(512 786)">
+      <ellipse cx="0" cy="18" rx="66" ry="12" fill="#8A9A72" fill-opacity=".14"/>
+      <path d="M-56 8C-56-16-32-34 0-34 34-34 56-14 56 8 56 20 40 26 0 26S-56 20-56 8Z" fill="#A98F72" fill-opacity=".38" stroke="#8B6B4E" stroke-opacity=".42" stroke-width="2.4"/>
+      <g fill="#8B6B4E" fill-opacity=".35">
+        <path d="M-48-4-58-30-38-18Z"/><path d="M-36-18-40-44-22-26Z"/><path d="M-20-26-18-52-4-32Z"/>
+        <path d="M-2-32 4-56 16-34Z"/><path d="M18-30 30-52 34-28Z"/><path d="M34-18 50-34 48-12Z"/>
+      </g>
+      <path d="M-56 8-84 0-58 16Z" fill="#E8DCC8" fill-opacity=".5" stroke="#8B6B4E" stroke-opacity=".4" stroke-width="2"/>
+      <circle cx="-74" cy="2" r="4" fill="#4A3F35"/>
+      <circle cx="-88" cy="6" r="3" fill="#8B6B4E" fill-opacity=".6"/>
+      <path d="M-40 20v10M-18 24v8M6 26v6M28 24v8" stroke="#8B6B4E" stroke-opacity=".45" stroke-width="4"/>
+    </g>
+
+    <!-- mushrooms -->
+    <g transform="translate(1010 806)">
+      <path d="M0 26V-6" stroke="#E8DCC8" stroke-opacity=".6" stroke-width="9"/>
+      <path d="M-30-4C-30-26-14-38 0-38s30 12 30 34z" fill="#C08464" fill-opacity=".38" stroke="#8F5B44" stroke-opacity=".42" stroke-width="2.2"/>
+      <g fill="#E8DCC8" fill-opacity=".55"><circle cx="-12" cy="-18" r="4"/><circle cx="6" cy="-26" r="3.4"/><circle cx="16" cy="-14" r="3"/></g>
+    </g>
+    <g transform="translate(1058 822) scale(.66)">
+      <path d="M0 26V-6" stroke="#E8DCC8" stroke-opacity=".6" stroke-width="9"/>
+      <path d="M-30-4C-30-26-14-38 0-38s30 12 30 34z" fill="#C08464" fill-opacity=".38" stroke="#8F5B44" stroke-opacity=".42" stroke-width="2.2"/>
+    </g>
+
+    <!-- butterfly and birds -->
+    <g transform="translate(700 210) scale(.9)" fill="#C98F8B" fill-opacity=".35" stroke="#96605C" stroke-opacity=".3" stroke-width="1.5">
+      <ellipse cx="-11" cy="-6" rx="13" ry="10" transform="rotate(-24 -11 -6)"/>
+      <ellipse cx="11" cy="-6" rx="13" ry="10" transform="rotate(24 11 -6)"/>
+      <ellipse cx="-8" cy="8" rx="9" ry="7" transform="rotate(-16 -8 8)"/>
+      <ellipse cx="8" cy="8" rx="9" ry="7" transform="rotate(16 8 8)"/>
+    </g>
+    <g fill="none" stroke="#6E7C74" stroke-opacity=".35" stroke-width="4" stroke-linecap="round">
+      <path d="M258 206c10-14 22-14 32-4 10-10 22-10 32 4"/>
+      <path d="M338 168c8-10 16-10 24-2 8-8 16-8 24 2"/>
+    </g>
+  </g>
+</svg>

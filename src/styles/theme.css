@@ -1,0 +1,249 @@
+/* Design tokens. <html data-theme data-accent> is written by App.tsx.
+   The default palette follows the calm, flat look of a desktop calendar:
+   a light-gray chrome, a white canvas and a single sky-blue accent. */
+:root {
+  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Inter", Roboto, sans-serif;
+  --brand-font: "Segoe UI Variable Display", "Segoe UI", "Inter Variable", system-ui, sans-serif;
+  --mono: "Cascadia Code", "Fira Code", Consolas, "SF Mono", Menlo, monospace;
+
+  --sidebar-width: 232px;
+  --rail-width: 288px;
+  --topbar-height: 56px;
+  --radius: 8px;
+  --radius-lg: 12px;
+
+  --accent-h: 186;
+  --accent-s: 82%;
+  --accent-l: 45%;
+
+  /* Vintage watermark behind the month grid (0 hides it entirely). */
+  --art-opacity: 0.11;
+
+  /* Light neutrals: flat, low contrast, almost no shadows. */
+  --bg: #ffffff;
+  --bg-subtle: #fafafa;
+  --bg-muted: #f4f4f4;
+  --bg-hover: #ececec;
+  --line: #e7e7e7;
+  --line-strong: #d3d3d3;
+  --text: #2b2b2b;
+  --text-strong: #171717;
+  --muted: #6f6f6f;
+  --faint: #9a9a9a;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.07);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 16px 44px rgba(0, 0, 0, 0.16);
+  --danger: #c42b1c;
+  --warning-bg: #fff6e0;
+
+  --side-bg: #f3f3f3;
+  --side-hover: #ebebeb;
+  --side-active: #e2e2e2;
+  --side-text: #2b2b2b;
+  --side-muted: #6f6f6f;
+  --side-line: #e4e4e4;
+
+  --rail-a: hsl(var(--accent-h) 85% 96%);
+  --rail-b: hsl(var(--accent-h) 70% 99%);
+
+  --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 7%));
+  --accent-text: hsl(var(--accent-h) 72% 34%);
+  --accent-soft: hsl(var(--accent-h) 84% 95%);
+  --accent-ring: hsl(var(--accent-h) 78% 52% / 0.4);
+  --on-accent: #ffffff;
+  --today-bg: hsl(var(--accent-h) 82% 96%);
+  --today-line: hsl(var(--accent-h) 72% 58%);
+
+  color-scheme: light;
+}
+
+:root[data-accent="indigo"] { --accent-h: 243; }
+:root[data-accent="violet"] { --accent-h: 262; }
+:root[data-accent="teal"] { --accent-h: 186; }
+:root[data-accent="blue"] { --accent-h: 200; }
+:root[data-accent="green"] { --accent-h: 145; }
+:root[data-accent="amber"] { --accent-h: 33; }
+:root[data-accent="rose"] { --accent-h: 337; }
+
+:root[data-theme="dark"] {
+  --bg: #17171a;
+  --bg-subtle: #1c1c20;
+  --bg-muted: #232328;
+  --bg-hover: #2c2c32;
+  --line: #2e2e35;
+  --line-strong: #41414a;
+  --text: #e7e7ea;
+  --text-strong: #ffffff;
+  --muted: #a0a0a8;
+  --faint: #71717a;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.45), 0 16px 44px rgba(0, 0, 0, 0.6);
+  --danger: #ff7365;
+  --warning-bg: #3a2f14;
+
+  --side-bg: #1b1b1f;
+  --side-hover: #26262c;
+  --side-active: #2e2e35;
+  --side-text: #e7e7ea;
+  --side-muted: #a0a0a8;
+  --side-line: #2b2b32;
+
+  --rail-a: hsl(var(--accent-h) 28% 13%);
+  --rail-b: hsl(var(--accent-h) 22% 11%);
+
+  --accent-l: 62%;
+  --accent-text: hsl(var(--accent-h) 85% 76%);
+  --accent-soft: hsl(var(--accent-h) 55% 28% / 0.4);
+  --accent-ring: hsl(var(--accent-h) 85% 70% / 0.45);
+  --on-accent: hsl(var(--accent-h) 60% 10%);
+  --today-bg: hsl(var(--accent-h) 42% 22% / 0.55);
+  --today-line: hsl(var(--accent-h) 80% 62%);
+  --art-opacity: 0.2;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="midnight"] {
+  --bg: #0b1020;
+  --bg-subtle: #0f1730;
+  --bg-muted: #14203d;
+  --bg-hover: #1b2a4d;
+  --line: #1d2a47;
+  --line-strong: #2b3c62;
+  --text: #dde5f7;
+  --text-strong: #ffffff;
+  --muted: #8ea0c4;
+  --faint: #5f7196;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 16px 44px rgba(0, 0, 0, 0.65);
+  --danger: #ff7a6b;
+  --warning-bg: #2b2410;
+
+  --side-bg: #0c1428;
+  --side-hover: #14203d;
+  --side-active: #1b2a4d;
+  --side-text: #dde5f7;
+  --side-muted: #8ea0c4;
+  --side-line: #1d2a47;
+
+  --rail-a: hsl(var(--accent-h) 32% 12%);
+  --rail-b: hsl(var(--accent-h) 26% 9%);
+
+  --accent-l: 66%;
+  --accent-text: hsl(var(--accent-h) 90% 78%);
+  --accent-soft: hsl(var(--accent-h) 55% 26% / 0.5);
+  --accent-ring: hsl(var(--accent-h) 90% 72% / 0.45);
+  --on-accent: #08101f;
+  --today-bg: hsl(var(--accent-h) 50% 24% / 0.6);
+  --today-line: hsl(var(--accent-h) 88% 66%);
+  --art-opacity: 0.22;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="sepia"] {
+  --bg: #f8f1e4;
+  --bg-subtle: #f3e9d8;
+  --bg-muted: #ece0cc;
+  --bg-hover: #e4d6bd;
+  --line: #dccdb4;
+  --line-strong: #c9b696;
+  --text: #423729;
+  --text-strong: #2a2118;
+  --muted: #7d6f5b;
+  --faint: #a6957c;
+  --shadow-sm: 0 1px 2px rgba(66, 55, 41, 0.08);
+  --shadow: 0 2px 8px rgba(66, 55, 41, 0.1), 0 16px 38px rgba(66, 55, 41, 0.2);
+  --danger: #b23a2a;
+  --warning-bg: #f8e6b8;
+
+  --side-bg: #f2e7d5;
+  --side-hover: #e9dcc6;
+  --side-active: #e0d0b4;
+  --side-text: #423729;
+  --side-muted: #7d6f5b;
+  --side-line: #dccdb4;
+
+  --rail-a: #f6ecdc;
+  --rail-b: #f9f3e8;
+
+  --accent-l: 42%;
+  --accent-text: hsl(var(--accent-h) 55% 36%);
+  --accent-soft: hsl(var(--accent-h) 50% 90%);
+  --accent-ring: hsl(var(--accent-h) 55% 45% / 0.35);
+  --on-accent: #fffaf1;
+  --today-bg: hsl(var(--accent-h) 55% 92%);
+  --today-line: hsl(var(--accent-h) 55% 48%);
+  --art-opacity: 0.13;
+
+  color-scheme: light;
+}
+
+:root[data-theme="contrast"] {
+  --bg: #000000;
+  --bg-subtle: #0a0a0a;
+  --bg-muted: #161616;
+  --bg-hover: #262626;
+  --line: #3a3a3a;
+  --line-strong: #6b6b6b;
+  --text: #ffffff;
+  --text-strong: #ffffff;
+  --muted: #cfcfcf;
+  --faint: #a8a8a8;
+  --shadow-sm: 0 0 0 1px #ffffff;
+  --shadow: 0 0 0 1px #ffffff;
+  --danger: #ff8f80;
+  --warning-bg: #3b3200;
+
+  --side-bg: #000000;
+  --side-hover: #1c1c1c;
+  --side-active: #2e2e2e;
+  --side-text: #ffffff;
+  --side-muted: #d6d6d6;
+  --side-line: #5c5c5c;
+
+  --rail-a: #000000;
+  --rail-b: #050505;
+
+  --accent-l: 72%;
+  --accent-text: hsl(var(--accent-h) 100% 82%);
+  --accent-soft: hsl(var(--accent-h) 100% 22%);
+  --accent-ring: hsl(var(--accent-h) 100% 80% / 0.7);
+  --on-accent: #000000;
+  --today-bg: hsl(var(--accent-h) 100% 18%);
+  --today-line: hsl(var(--accent-h) 100% 72%);
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, h4, p { margin: 0; }
+
+:focus-visible { outline: 2px solid var(--accent-ring); outline-offset: 1px; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background: var(--line-strong) padding-box;
+}
+::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

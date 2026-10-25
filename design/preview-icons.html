@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>CalendarPRO · nuevos iconos</title>
+<style>
+:root{--aqua:#1FAFBD;--aqua-light:#5FE0E8;--aqua-deep:#084F5B;--ivory:#F7F4EF;--ink:#14191A;--muted:#6C7476;--violet:#4F46E5;--amber:#F59E0B}
+*{box-sizing:border-box}
+body{margin:0;padding:34px 56px 28px;background:linear-gradient(160deg,#F5F3F7,#EDF2F2);color:var(--ink);font-family:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif}
+.eyebrow{font-size:10px;letter-spacing:.28em;font-weight:700;color:var(--aqua-deep);text-transform:uppercase}
+h1{font-size:42px;line-height:1.04;letter-spacing:-.025em;font-weight:600;margin:9px 0 10px}
+h1 em{font-style:normal;color:var(--aqua)}
+.lead{max-width:840px;font-size:13px;line-height:1.55;color:var(--muted);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.card{background:#fff;border-radius:18px;padding:20px 22px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(10,60,64,.06)}
+.tag{display:inline-block;font-size:9px;letter-spacing:.18em;font-weight:700;color:var(--muted);background:#EEF2F3;border-radius:99px;padding:6px 10px;margin-bottom:14px}
+.concept-title{font-size:20px;font-weight:600;letter-spacing:-.01em;margin:0 0 4px}
+.concept-sub{font-size:11.5px;color:var(--aqua-deep);font-weight:600;letter-spacing:.02em;margin:0 0 14px}
+.duo{display:flex;align-items:flex-end;gap:22px;margin:2px 0 4px}
+.duo figure{margin:0;text-align:center}
+.duo img{display:block;margin:0 auto 8px;filter:drop-shadow(0 10px 22px rgba(8,72,79,.24))}
+.duo figcaption{font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.big{width:140px}.mid{width:104px}
+.sizes{display:flex;align-items:flex-end;gap:18px;margin-top:12px}
+.sizes figure{margin:0;text-align:center;font-size:9px;letter-spacing:.08em;color:var(--muted)}
+.sizes img{display:block;margin:0 auto 7px;filter:drop-shadow(0 6px 14px rgba(8,72,79,.22))}
+.dark{margin-top:16px;border-radius:12px;padding:12px 16px;background:linear-gradient(120deg,#062A31,#0A5560);display:flex;align-items:center;gap:13px}
+.dark img{width:44px}
+.dark .t{font-size:8px;letter-spacing:.16em;color:rgba(247,244,239,.72);text-transform:uppercase;line-height:1.7}
+.dark .t b{display:block;color:#5FE0E8;letter-spacing:.22em}
+.bullets{margin:14px 0 0;padding:0;list-style:none;font-size:11.5px;line-height:1.85;color:#3A4446}
+.bullets li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--aqua-light);margin-right:10px;vertical-align:middle}
+.wide{grid-column:1/-1;display:grid;grid-template-columns:1.35fr 1fr;gap:28px}
+.col-title{font-size:9px;letter-spacing:.2em;font-weight:700;color:var(--aqua-deep);text-transform:uppercase;margin-bottom:12px}
+.dock{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.dock figure{margin:0;text-align:center;font-size:8px;color:var(--muted);letter-spacing:.06em;max-width:72px}
+.dock img{width:46px;display:block;margin:0 auto 7px;filter:drop-shadow(0 6px 14px rgba(8,72,79,.28))}
+.dock .cur img{opacity:.55}
+.tiny-row{display:flex;align-items:center;gap:18px;margin-top:20px;padding-top:16px;border-top:1px dashed #DCE3E3}
+.tiny-row figure{margin:0;text-align:center;font-size:8px;color:var(--muted)}
+.tiny-row img{width:18px;display:block;margin:0 auto 6px}
+.tiny-row .cur img{opacity:.55}
+.versus{display:flex;gap:14px;margin-top:20px;padding-top:16px;border-top:1px dashed #DCE3E3}
+.versus figure{margin:0;text-align:center;font-size:8px;color:var(--muted)}
+.versus img{width:56px;display:block;margin:0 auto 6px}
+footer{display:flex;justify-content:space-between;margin-top:18px;font-size:8px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="eyebrow">Parrita Labs · CalendarPRO · propuesta de iconos</div>
+<h1>Menos marco, <em>más calendario</em></h1>
+<p class="lead">La misma actualización que SuperNotes 0.4.1: que el arte llene el icono. Tres caminos — la hoja a sangre completa, el conejo blanco asomado tras la hoja y el pájaro madrugador en la primera línea — todos conservando las señales de calendario (anillas, cuadrícula, hoy marcado y punto ámbar del evento). Y una pregunta de color: aguamarina (la app hoy) o índigo (como propone la hoja de identidad, para diferenciarse de SuperNotes).</p>
+<div class="grid">
+
+  <section class="card">
+    <span class="tag">PROPUESTA 01 · PÁGINA A SANGRE</span>
+    <p class="concept-title">La agenda llena el icono</p>
+    <p class="concept-sub">Sin marco · el icono es la marca ampliada</p>
+    <div class="duo">
+      <figure><img class="big" src="icon-page-full.svg" alt="">Aguamarina</figure>
+      <figure><img class="mid" src="icon-page-violet.svg" alt="">Variante índigo</figure>
+    </div>
+    <div class="sizes">
+      <figure><img src="icon-page-full.svg" width="72" alt="">72</figure>
+      <figure><img src="icon-page-full.svg" width="44" alt="">44</figure>
+      <figure><img src="icon-page-full.svg" width="28" alt="">28</figure>
+      <figure><img src="icon-page-full.svg" width="18" alt="">18</figure>
+      <figure><img src="icon-page-violet.svg" width="72" alt="">72</figure>
+      <figure><img src="icon-page-violet.svg" width="44" alt="">44</figure>
+      <figure><img src="icon-page-violet.svg" width="28" alt="">28</figure>
+      <figure><img src="icon-page-violet.svg" width="18" alt="">18</figure>
+    </div>
+    <div class="dark">
+      <img src="icon-page-full.svg" alt="">
+      <div class="t"><b>Barra lateral oscura · splash</b>Anillas recortadas de verdad, como el doblez de SuperNotes</div>
+    </div>
+    <ul class="bullets">
+      <li>Agujeros de anillas transparentes, hoy en marfil con check y punto ámbar del evento.</li>
+      <li>Como SuperNotes 0.4.1: sin marco; a 16 px sigue leyéndose «calendario».</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <span class="tag">PROPUESTA 02 · CONEJO ASOMADO</span>
+    <p class="concept-title">Nunca llegas tarde</p>
+    <p class="concept-sub">El conejo blanco de Alicia, tras la hoja</p>
+    <div class="duo">
+      <figure><img class="mid" src="icon-rabbit.svg" alt="">Con marco</figure>
+      <figure><img class="big" src="icon-rabbit-noframe.svg" alt="">Sin marco (nuevo)</figure>
+    </div>
+    <div class="sizes">
+      <figure><img src="icon-rabbit.svg" width="72" alt="">72 marco</figure>
+      <figure><img src="icon-rabbit.svg" width="44" alt="">44 marco</figure>
+      <figure><img src="icon-rabbit-noframe.svg" width="72" alt="">72 sin marco</figure>
+      <figure><img src="icon-rabbit-noframe.svg" width="44" alt="">44 sin marco</figure>
+    </div>
+    <div class="dark">
+      <img src="icon-rabbit.svg" alt="">
+      <div class="t"><b>Barra lateral oscura · splash</b>Orejas por encima de las anillas: silueta única</div>
+    </div>
+    <ul class="bullets">
+      <li>«¡Llego tarde!»: el conejo del tiempo; contigo, nunca.</li>
+      <li>Los fondos vintage de la app ya tienen conejos (<code>assets/art</code>): la mascota ya vive aquí.</li>
+      <li>La escena actual no cambia: solo el conejo se asoma entre las anillas.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <span class="tag">PROPUESTA 03 · PÁJARO MADRUGADOR</span>
+    <p class="concept-title">El que madruga</p>
+    <p class="concept-sub">Posado en la primera línea · a sangre completa</p>
+    <div class="duo">
+      <figure><img class="big" src="icon-bird.svg" alt="">Aguamarina</figure>
+    </div>
+    <div class="sizes">
+      <figure><img src="icon-bird.svg" width="72" alt="">72</figure>
+      <figure><img src="icon-bird.svg" width="44" alt="">44</figure>
+      <figure><img src="icon-bird.svg" width="28" alt="">28</figure>
+      <figure><img src="icon-bird.svg" width="18" alt="">18</figure>
+    </div>
+    <div class="dark">
+      <img src="icon-bird.svg" alt="">
+      <div class="t"><b>Barra lateral oscura · splash</b>La primera línea es la rama; el pico es el ámbar del evento</div>
+    </div>
+    <ul class="bullets">
+      <li>El pájaro madrugador planea tu día desde la primera línea.</li>
+      <li>Los fondos vintage también tienen aves: coherente con la app.</li>
+      <li>Con o sin marco combina: aquí se muestra a sangre, como la 01.</li>
+    </ul>
+  </section>
+
+  <section class="card wide">
+    <div>
+      <div class="col-title">En contexto · todos juntos</div>
+      <div class="dock">
+        <figure class="cur"><img src="../assets/app-icon.svg" alt="">Actual</figure>
+        <figure><img src="icon-page-full.svg" alt="">Página a sangre</figure>
+        <figure><img src="icon-rabbit.svg" alt="">Conejo asomado</figure>
+        <figure><img src="icon-rabbit-noframe.svg" alt="">Conejo sin marco (nuevo)</figure>
+        <figure><img src="icon-bird.svg" alt="">Pájaro madrugador</figure>
+        <figure><img src="icon-page-violet.svg" alt="">Página índigo</figure>
+      </div>
+      <div class="tiny-row">
+        <span style="font-size:8px;color:#6C7476;letter-spacing:.2em;text-transform:uppercase">16 px real</span>
+        <figure class="cur"><img src="../assets/app-icon.svg" alt="">Actual</figure>
+        <figure><img src="icon-page-full.svg" alt="">Página</figure>
+        <figure><img src="icon-rabbit.svg" alt="">Conejo</figure>
+        <figure><img src="icon-rabbit-noframe.svg" alt="">Conejo sin marco</figure>
+        <figure><img src="icon-bird.svg" alt="">Pájaro</figure>
+        <figure><img src="icon-page-violet.svg" alt="">Índigo</figure>
+      </div>
+      <div class="versus">
+        <figure><img src="icon-page-full.svg" alt="">Aguamarina · la app hoy</figure>
+        <figure><img src="icon-page-violet.svg" alt="">Índigo · hoja de identidad</figure>
+      </div>
+    </div>
+    <div>
+      <div class="col-title">Qué se mantiene · qué cambia</div>
+      <ul class="bullets" style="margin:0;line-height:1.9">
+        <li>Se mantiene: paleta aguamarina/ámbar (o índigo), anillas, cuadrícula, casilla de hoy con check y punto de evento.</li>
+        <li>Cambia: el marco (01 y 03 lo quitan, como SuperNotes 0.4.1) o la escena superior (02 añade al conejo).</li>
+        <li>Color: la app usa aguamarina por defecto; la hoja de identidad propone índigo para diferenciarse de SuperNotes. El índigo también es el color por defecto de los calendarios nuevos.</li>
+        <li>Elegida una, se copia a <b>assets/app-icon.svg</b> y <code>npm run icons</code> regenera todos los PNG/ICO/ICNS.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+<footer><span>CalendarPRO · propuesta de iconos</span><span>Parrita Labs · 2026</span><span>v0.2.0</span></footer>
+</body>
+</html>

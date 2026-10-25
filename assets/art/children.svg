@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="child-title">
+  <title id="child-title">Niños jugando</title>
+  <defs>
+    <filter id="wc" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="53" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <radialGradient id="sunwash" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#C9A86A" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#C9A86A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="222" cy="206" r="170" fill="url(#sunwash)"/>
+
+  <g filter="url(#wc)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- sun -->
+    <circle cx="222" cy="206" r="62" fill="#C9A86A" fill-opacity=".3" stroke="#9A7A44" stroke-opacity=".3" stroke-width="2"/>
+    <g stroke="#C9A86A" stroke-opacity=".4" stroke-width="4" fill="none">
+      <path d="M222 106v-28M222 334v-28M122 206H94M350 206h-28M151 135l-20-20M313 297l-20-20M293 135l20-20M151 277l-20 20"/>
+    </g>
+
+    <!-- overhanging foliage -->
+    <path d="M-20 40C140 96 250 150 356 236" fill="none" stroke="#8B6B4E" stroke-opacity=".42" stroke-width="9"/>
+    <g fill="#8A9A72" fill-opacity=".26" stroke="#64764E" stroke-opacity=".28" stroke-width="2">
+      <ellipse cx="40" cy="52" rx="86" ry="44" transform="rotate(12 40 52)"/>
+      <ellipse cx="150" cy="86" rx="78" ry="40" transform="rotate(18 150 86)"/>
+      <ellipse cx="252" cy="132" rx="68" ry="36" transform="rotate(24 252 132)"/>
+      <ellipse cx="96" cy="140" rx="56" ry="30" transform="rotate(-8 96 140)"/>
+      <ellipse cx="330" cy="196" rx="48" ry="26" transform="rotate(30 330 196)"/>
+    </g>
+    <g fill="#7C8B63" fill-opacity=".3">
+      <ellipse cx="196" cy="60" rx="44" ry="22" transform="rotate(20 196 60)"/>
+      <ellipse cx="290" cy="110" rx="40" ry="20" transform="rotate(26 290 110)"/>
+      <ellipse cx="42" cy="112" rx="38" ry="20" transform="rotate(6 42 112)"/>
+    </g>
+
+    <!-- ground -->
+    <path d="M0 792c180-26 340-16 508 2 172 18 330 20 500-6 70-10 140-12 192-4v116H0z" fill="#8A9A72" fill-opacity=".13"/>
+    <g stroke="#7C8B63" stroke-opacity=".35" stroke-width="3" fill="none">
+      <path d="M80 900c4-30 10-54 18-74M110 900c-2-26 2-50 10-70M140 900c4-26 10-46 18-64"/>
+      <path d="M1000 900c-2-28 4-52 12-72M1030 900c4-26 8-48 16-66M1060 900c0-24 6-44 14-60"/>
+      <path d="M580 900c2-24 8-44 16-60M606 900c0-20 4-38 10-54"/>
+    </g>
+
+    <!-- girl with hoop -->
+    <g transform="translate(388 700)">
+      <ellipse cx="6" cy="0" rx="58" ry="11" fill="#7C8B63" fill-opacity=".12"/>
+      <g stroke="#8E5F5C" stroke-opacity=".42" stroke-width="2.4">
+        <path d="M-18-120 20-120 46-46Q0-34-46-46Z" fill="#C98F8B" fill-opacity=".3"/>
+        <path d="M-16-44-30-4" fill="none" stroke="#8E5F5C" stroke-width="5"/>
+        <path d="M14-44 30-4" fill="none" stroke="#8E5F5C" stroke-width="5"/>
+        <ellipse cx="-34" cy="-1" rx="12" ry="6" fill="#8E5F5C" fill-opacity=".35"/>
+        <ellipse cx="34" cy="-1" rx="12" ry="6" fill="#8E5F5C" fill-opacity=".35"/>
+        <path d="M-16-110-48-80" fill="none" stroke="#8E5F5C" stroke-width="5"/>
+        <path d="M18-110 50-92" fill="none" stroke="#8E5F5C" stroke-width="5"/>
+        <circle cx="0" cy="-146" r="27" fill="#E8DCC8" fill-opacity=".55"/>
+        <path d="M-27-150a27 27 0 0 1 54 0c-10-10-40-12-54 0z" fill="#8B6B4E" fill-opacity=".45"/>
+      </g>
+      <circle cx="9" cy="-148" r="3" fill="#5A4A3A"/>
+      <path d="M2-138c6 5 12 5 17 0" fill="none" stroke="#8E5F5C" stroke-opacity=".55" stroke-width="2.2"/>
+      <path d="M50-92 96-74" fill="none" stroke="#8B6B4E" stroke-opacity=".55" stroke-width="3.4"/>
+    </g>
+    <circle cx="520" cy="626" r="60" fill="none" stroke="#C08464" stroke-opacity=".45" stroke-width="6"/>
+    <circle cx="520" cy="626" r="60" fill="none" stroke="#E8DCC8" stroke-opacity=".25" stroke-width="2"/>
+
+    <!-- boy with kite -->
+    <g transform="translate(824 706)">
+      <ellipse cx="0" cy="0" rx="50" ry="10" fill="#7C8B63" fill-opacity=".12"/>
+      <g stroke="#6B7A63" stroke-opacity=".42" stroke-width="2.4">
+        <path d="M-16-118 16-118 22-62-22-62Z" fill="#8A9A72" fill-opacity=".32"/>
+        <path d="M-22-62-30-6M22-62 30-6" fill="none" stroke="#6B7A63" stroke-width="5"/>
+        <ellipse cx="-34" cy="-3" rx="11" ry="6" fill="#6B7A63" fill-opacity=".35"/>
+        <ellipse cx="34" cy="-3" rx="11" ry="6" fill="#6B7A63" fill-opacity=".35"/>
+        <path d="M-14-108-38-142" fill="none" stroke="#6B7A63" stroke-width="5"/>
+        <path d="M14-108 42-144" fill="none" stroke="#6B7A63" stroke-width="5"/>
+        <circle cx="0" cy="-142" r="25" fill="#E8DCC8" fill-opacity=".55"/>
+        <path d="M-25-146a25 25 0 0 1 50 0c-8-12-40-12-50 0z" fill="#6B7A63" fill-opacity=".4"/>
+      </g>
+      <circle cx="8" cy="-144" r="3" fill="#5A4A3A"/>
+      <path d="M2-134c6 4 11 4 16 0" fill="none" stroke="#6B7A63" stroke-opacity=".5" stroke-width="2.2"/>
+      <path d="M42-144C74-160 108-142 128-166" fill="none" stroke="#8B6B4E" stroke-opacity=".4" stroke-width="2"/>
+    </g>
+
+    <!-- kite -->
+    <g transform="translate(950 268)">
+      <path d="M0-92 66 0 0 92-66 0Z" fill="#C98F8B" fill-opacity=".3" stroke="#8E5F5C" stroke-opacity=".45" stroke-width="3"/>
+      <path d="M0-92V92M-66 0H66" fill="none" stroke="#8E5F5C" stroke-opacity=".3" stroke-width="2"/>
+      <path d="M0 92c-14 26-34 40-58 46 10 22 30 34 58 34" fill="none" stroke="#B99A5E" stroke-opacity=".45" stroke-width="2.4"/>
+      <g fill="#C9A86A" fill-opacity=".4">
+        <path d="M-34 128l14 8-14 8-14-8z"/>
+        <path d="M-8 158l14 8-14 8-14-8z"/>
+      </g>
+    </g>
+
+    <!-- child with ball -->
+    <g transform="translate(646 742) scale(.62)">
+      <ellipse cx="0" cy="0" rx="55" ry="11" fill="#7C8B63" fill-opacity=".12"/>
+      <g stroke="#8B6B4E" stroke-opacity=".4" stroke-width="2.6">
+        <path d="M-16-96 16-96 20-44H-20Z" fill="#C9A86A" fill-opacity=".3"/>
+        <path d="M-14-44-28-2M14-44 28-2" fill="none" stroke-width="5"/>
+        <path d="M-14-88-40-62M14-88 40-52" fill="none" stroke-width="5"/>
+        <circle cx="0" cy="-120" r="24" fill="#E8DCC8" fill-opacity=".55"/>
+        <path d="M-24-124a24 24 0 0 1 48 0c-10-10-36-10-48 0z" fill="#8B6B4E" fill-opacity=".35"/>
+      </g>
+      <circle cx="7" cy="-122" r="3" fill="#5A4A3A"/>
+    </g>
+    <circle cx="712" cy="724" r="17" fill="#C08464" fill-opacity=".35" stroke="#8F5B44" stroke-opacity=".4" stroke-width="2"/>
+    <path d="M696 718c10-8 22-8 32 0M696 724c10 8 22 8 32 0" fill="none" stroke="#8F5B44" stroke-opacity=".35" stroke-width="1.6"/>
+
+    <!-- butterflies -->
+    <g transform="translate(300 420) scale(.9)" fill="#C9A86A" fill-opacity=".35" stroke="#9A7A44" stroke-opacity=".3" stroke-width="1.5">
+      <ellipse cx="-11" cy="-6" rx="13" ry="10" transform="rotate(-24 -11 -6)"/>
+      <ellipse cx="11" cy="-6" rx="13" ry="10" transform="rotate(24 11 -6)"/>
+      <ellipse cx="-8" cy="8" rx="9" ry="7" transform="rotate(-16 -8 8)"/>
+      <ellipse cx="8" cy="8" rx="9" ry="7" transform="rotate(16 8 8)"/>
+    </g>
+  </g>
+</svg>

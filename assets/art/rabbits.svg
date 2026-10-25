@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="rabbit-title">
+  <title id="rabbit-title">Conejos</title>
+  <defs>
+    <filter id="wc" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.013" numOctaves="3" seed="37" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <radialGradient id="moonwash" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#C9A86A" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#C9A86A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="902" cy="206" r="190" fill="url(#moonwash)"/>
+
+  <g filter="url(#wc)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- moon and stars -->
+    <path d="M930 118a86 86 0 1 0 0 168 70 70 0 0 1 0-168z" fill="#C9A86A" fill-opacity=".34" stroke="#9A7A44" stroke-opacity=".3" stroke-width="2"/>
+    <g fill="#B99A5E" fill-opacity=".45">
+      <path d="M1046 96l5 14 14 5-14 5-5 14-5-14-14-5 14-5z"/>
+      <path d="M196 176l4 11 11 4-11 4-4 11-4-11-11-4 11-4z"/>
+      <path d="M846 356l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
+      <circle cx="1088" cy="268" r="3"/>
+      <circle cx="268" cy="96" r="3"/>
+      <circle cx="760" cy="88" r="2.5"/>
+    </g>
+
+    <!-- meadow -->
+    <path d="M0 740c160-40 300-22 452 6 150 28 292 26 444-8 142-32 236-28 304-6v168H0z" fill="#8A9A72" fill-opacity=".12"/>
+    <g stroke="#7C8B63" stroke-opacity=".4" stroke-width="3" fill="none">
+      <path d="M120 900c10-44 18-82 24-116M148 900c-4-40-2-76 6-110M176 900c6-38 14-70 24-98"/>
+      <path d="M1040 900c-8-46-14-84-12-118M1068 900c4-42 10-78 20-112M1096 900c-2-36 6-68 16-96"/>
+      <path d="M320 900c6-36 12-64 22-90M344 900c-4-32 0-60 8-86"/>
+      <path d="M886 900c-6-38-10-70-6-98M912 900c4-34 10-64 20-90"/>
+    </g>
+    <g fill="#A9BC8E" fill-opacity=".4">
+      <path d="M96 900c-18-30-40-48-66-56 8 26 28 46 66 56z"/>
+      <path d="M1128 900c16-28 36-46 62-54-8 26-26 44-62 54z"/>
+    </g>
+
+    <!-- clover -->
+    <g transform="translate(560 806)">
+      <path d="M0 34V0" stroke="#7C8B63" stroke-opacity=".5" stroke-width="3"/>
+      <g fill="#8A9A72" fill-opacity=".4" stroke="#64764E" stroke-opacity=".35" stroke-width="1.6">
+        <circle cx="-13" cy="-4" r="11"/><circle cx="13" cy="-4" r="11"/><circle cx="0" cy="-16" r="11"/>
+      </g>
+    </g>
+    <g transform="translate(980 830) scale(.8)">
+      <path d="M0 34V0" stroke="#7C8B63" stroke-opacity=".5" stroke-width="3"/>
+      <g fill="#8A9A72" fill-opacity=".4" stroke="#64764E" stroke-opacity=".35" stroke-width="1.6">
+        <circle cx="-13" cy="-4" r="11"/><circle cx="13" cy="-4" r="11"/><circle cx="0" cy="-16" r="11"/>
+      </g>
+    </g>
+
+    <!-- rabbit one -->
+    <g transform="translate(420 590)">
+      <ellipse cx="0" cy="62" rx="104" ry="18" fill="#7C8B63" fill-opacity=".12"/>
+      <ellipse cx="-74" cy="6" rx="20" ry="18" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".4" stroke-width="2"/>
+      <ellipse cx="0" cy="6" rx="70" ry="52" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.6"/>
+      <ellipse cx="-22" cy="18" rx="44" ry="40" fill="#DCCDB4" fill-opacity=".4" stroke="#A98F72" stroke-opacity=".3" stroke-width="2"/>
+      <ellipse cx="-2" cy="50" rx="34" ry="13" fill="#DCCDB4" fill-opacity=".5" stroke="#A98F72" stroke-opacity=".35" stroke-width="2"/>
+      <ellipse cx="34" cy="44" rx="15" ry="10" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".3" stroke-width="2"/>
+      <g transform="translate(62 -44)">
+        <ellipse cx="-18" cy="-52" rx="14" ry="40" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.4" transform="rotate(-14)"/>
+        <ellipse cx="12" cy="-50" rx="14" ry="40" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.4" transform="rotate(10)"/>
+        <ellipse cx="-18" cy="-52" rx="6" ry="30" fill="#D9A6A0" fill-opacity=".4" transform="rotate(-14)"/>
+        <ellipse cx="12" cy="-50" rx="6" ry="30" fill="#D9A6A0" fill-opacity=".4" transform="rotate(10)"/>
+        <circle cx="0" cy="0" r="34" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.6"/>
+        <ellipse cx="26" cy="8" rx="16" ry="13" fill="#E8DCC8" fill-opacity=".6" stroke="#A98F72" stroke-opacity=".35" stroke-width="2"/>
+        <circle cx="12" cy="-8" r="4" fill="#5A4A3A"/>
+        <circle cx="34" cy="6" r="4" fill="#B07C77"/>
+        <g stroke="#A98F72" stroke-opacity=".45" stroke-width="1.8">
+          <path d="M38 4h22M38 10l22 8M34 2l-6-12"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- rabbit two (smaller, facing left) -->
+    <g transform="translate(760 632) scale(.74) scale(-1 1)">
+      <ellipse cx="0" cy="62" rx="104" ry="18" fill="#7C8B63" fill-opacity=".12"/>
+      <ellipse cx="-74" cy="6" rx="20" ry="18" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".4" stroke-width="2"/>
+      <ellipse cx="0" cy="6" rx="66" ry="50" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.6"/>
+      <ellipse cx="-20" cy="18" rx="42" ry="38" fill="#DCCDB4" fill-opacity=".4" stroke="#A98F72" stroke-opacity=".3" stroke-width="2"/>
+      <ellipse cx="-2" cy="48" rx="32" ry="12" fill="#DCCDB4" fill-opacity=".5" stroke="#A98F72" stroke-opacity=".35" stroke-width="2"/>
+      <g transform="translate(58 -46)">
+        <ellipse cx="-16" cy="-50" rx="13" ry="38" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.4" transform="rotate(-18)"/>
+        <ellipse cx="14" cy="-48" rx="13" ry="38" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.4" transform="rotate(8)"/>
+        <ellipse cx="-16" cy="-50" rx="5" ry="28" fill="#D9A6A0" fill-opacity=".4" transform="rotate(-18)"/>
+        <ellipse cx="14" cy="-48" rx="5" ry="28" fill="#D9A6A0" fill-opacity=".4" transform="rotate(8)"/>
+        <circle cx="0" cy="0" r="32" fill="#E8DCC8" fill-opacity=".55" stroke="#A98F72" stroke-opacity=".45" stroke-width="2.6"/>
+        <ellipse cx="24" cy="8" rx="15" ry="12" fill="#E8DCC8" fill-opacity=".6" stroke="#A98F72" stroke-opacity=".35" stroke-width="2"/>
+        <circle cx="12" cy="-8" r="3.8" fill="#5A4A3A"/>
+        <circle cx="32" cy="6" r="3.8" fill="#B07C77"/>
+      </g>
+    </g>
+
+    <!-- butterflies -->
+    <g transform="translate(300 360)" fill="#C98F8B" fill-opacity=".35" stroke="#96605C" stroke-opacity=".35" stroke-width="1.5">
+      <ellipse cx="-11" cy="-6" rx="13" ry="10" transform="rotate(-24 -11 -6)"/>
+      <ellipse cx="11" cy="-6" rx="13" ry="10" transform="rotate(24 11 -6)"/>
+      <ellipse cx="-8" cy="8" rx="9" ry="7" transform="rotate(-16 -8 8)"/>
+      <ellipse cx="8" cy="8" rx="9" ry="7" transform="rotate(16 8 8)"/>
+    </g>
+    <g transform="translate(1010 470) scale(.8)" fill="#C9A86A" fill-opacity=".35" stroke="#9A7A44" stroke-opacity=".3" stroke-width="1.5">
+      <ellipse cx="-11" cy="-6" rx="13" ry="10" transform="rotate(-24 -11 -6)"/>
+      <ellipse cx="11" cy="-6" rx="13" ry="10" transform="rotate(24 11 -6)"/>
+      <ellipse cx="-8" cy="8" rx="9" ry="7" transform="rotate(-16 -8 8)"/>
+      <ellipse cx="8" cy="8" rx="9" ry="7" transform="rotate(16 8 8)"/>
+    </g>
+  </g>
+</svg>

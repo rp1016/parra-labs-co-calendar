@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Parrita Calendar — identidad</title>
+    <style>
+      :root {
+        --violet: #4f46e5;
+        --ink: #14121f;
+        --muted: #6f6b7d;
+        --line: #e7e5eb;
+        --ivory: #f7f4ef;
+        font-family: "Segoe UI Variable Display", "Segoe UI", Inter, system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 48px;
+        background: #f7f6fa;
+        color: var(--ink);
+      }
+      .sheet {
+        max-width: 980px;
+        margin: 0 auto;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 44px 48px 40px;
+        box-shadow: 0 20px 60px rgba(20, 18, 40, 0.08);
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      h1 { font-size: 30px; margin: 8px 0 4px; letter-spacing: -0.02em; }
+      .lead { color: var(--muted); font-size: 14px; margin-bottom: 34px; }
+      .lockups { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
+      .lockup { display: flex; align-items: center; gap: 14px; }
+      .lockup img { width: 68px; height: 68px; border-radius: 18px; box-shadow: 0 8px 22px rgba(49, 46, 129, 0.28); }
+      .lockup.small img { width: 34px; height: 34px; border-radius: 9px; box-shadow: none; }
+      .name {
+        display: flex;
+        gap: 5px;
+        font-size: 25px;
+        line-height: 1;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .lockup.small .name { font-size: 14px; }
+      .name b { font-weight: 800; }
+      .name span { font-weight: 300; opacity: 0.72; }
+      .by {
+        font-size: 9.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+      .divider { height: 1px; background: var(--line); margin: 38px 0; }
+      .grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; }
+      h2 {
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 14px;
+      }
+      .palette { display: flex; gap: 10px; }
+      .swatch { flex: 1; }
+      .swatch i {
+        display: block;
+        height: 52px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .swatch span { font-size: 10.5px; color: var(--muted); display: block; margin-top: 6px; }
+      .themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .theme {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: 10.5px;
+        color: var(--muted);
+      }
+      .theme i { display: flex; height: 34px; }
+      .theme i b { flex: 1; }
+      .theme span { display: block; padding: 6px 8px; }
+      .markbox { display: flex; align-items: center; gap: 22px; }
+      .markbox img { width: 96px; }
+      .markbox p { font-size: 12px; color: var(--muted); line-height: 1.6; max-width: 250px; margin: 0; }
+      .footer { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+      code { font-family: Consolas, monospace; font-size: 11px; }
+    </style>
+  </head>
+  <body>
+    <div class="sheet">
+      <div class="eyebrow">Parrita Labs · Identidad de producto</div>
+      <h1>Parrita Calendar</h1>
+      <p class="lead">Calendario, agenda y notas 100 % locales. Violeta índigo para diferenciarse de SuperNotes (aguamarina) dentro de la misma familia visual.</p>
+
+      <div class="lockups">
+        <div class="lockup">
+          <img src="../assets/app-icon.svg" alt="Icono de Parrita Calendar" />
+          <div>
+            <div class="name"><b>PARRITA</b><span>CALENDAR</span></div>
+            <div class="by">by Parrita Labs</div>
+          </div>
+        </div>
+        <div class="lockup small">
+          <img src="../assets/app-icon.svg" alt="" />
+          <div>
+            <div class="name"><b>PARRITA</b><span>CALENDAR</span></div>
+            <div class="by">by Parrita Labs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid">
+        <section>
+          <h2>Paleta</h2>
+          <div class="palette">
+            <div class="swatch"><i style="background:#6366f1"></i><span>#6366F1</span></div>
+            <div class="swatch"><i style="background:#4f46e5"></i><span>#4F46E5</span></div>
+            <div class="swatch"><i style="background:#312e81"></i><span>#312E81</span></div>
+            <div class="swatch"><i style="background:#f59e0b"></i><span>#F59E0B</span></div>
+            <div class="swatch"><i style="background:#f7f4ef;border-color:#e7e5eb"></i><span>#F7F4EF</span></div>
+          </div>
+
+          <h2 style="margin-top: 26px">Marcas</h2>
+          <div class="markbox">
+            <img src="../assets/app-mark.svg" alt="Marca de Parrita Calendar" />
+            <p>Hoja de calendario con dos anillas, conejo asomado tras la hoja, casilla marcada y punto ámbar. El mismo trazo que la marca de SuperNotes, en aguamarina.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Temas</h2>
+          <div class="themes">
+            <div class="theme"><i><b style="background:#fff"></b><b style="background:#f2f1f5"></b><b style="background:#33323a"></b></i><span>Claro</span></div>
+            <div class="theme"><i><b style="background:#141318"></b><b style="background:#2b2835"></b><b style="background:#e8e6ee"></b></i><span>Oscuro</span></div>
+            <div class="theme"><i><b style="background:#0b1020"></b><b style="background:#1b2a4d"></b><b style="background:#dde5f7"></b></i><span>Medianoche</span></div>
+            <div class="theme"><i><b style="background:#f8f1e4"></b><b style="background:#ece0cc"></b><b style="background:#423729"></b></i><span>Sepia</span></div>
+            <div class="theme"><i><b style="background:#000"></b><b style="background:#2e2e2e"></b><b style="background:#fff"></b></i><span>Contraste</span></div>
+            <div class="theme"><i><b style="background:#4f46e5"></b><b style="background:#0b7f86"></b><b style="background:#c2740b"></b></i><span>Acentos</span></div>
+          </div>
+
+          <h2 style="margin-top: 26px">Empaquetado</h2>
+          <p style="font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0">
+            Producto <b style="color: var(--ink)">Parrita Calendar</b><br />
+            Paquete <code>parritalabs-calendar</code> · <code>com.parritalabs.calendar</code><br />
+            Instaladores NSIS, DMG, AppImage y .deb
+          </p>
+        </section>
+      </div>
+
+      <div class="footer">
+        <span>Parrita Calendar v0.2.0</span>
+        <span>by Parrita Labs · 2026</span>
+      </div>
+    </div>
+  </body>
+</html>

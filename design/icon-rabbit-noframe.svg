@@ -11,15 +11,15 @@
     </filter>
   </defs>
   <g>
-    <g fill="#F7F4EF">
+    <g fill="#F59E0B">
       <rect x="201" y="10" width="50" height="128" rx="25" transform="rotate(-7 226 74)"/>
       <rect x="261" y="10" width="50" height="128" rx="25" transform="rotate(7 286 74)"/>
       <circle cx="256" cy="150" r="100"/>
     </g>
-    <rect x="215" y="38" width="22" height="70" rx="11" fill="#B6ECF2" transform="rotate(-7 226 74)"/>
-    <rect x="275" y="38" width="22" height="70" rx="11" fill="#B6ECF2" transform="rotate(7 286 74)"/>
-    <circle cx="233" cy="95" r="7" fill="#0C7C89"/>
-    <circle cx="279" cy="95" r="7" fill="#0C7C89"/>
+    <rect x="215" y="38" width="22" height="70" rx="11" fill="#FDE8C8" transform="rotate(-7 226 74)"/>
+    <rect x="275" y="38" width="22" height="70" rx="11" fill="#FDE8C8" transform="rotate(7 286 74)"/>
+    <circle cx="233" cy="95" r="7" fill="#3A2A1A"/>
+    <circle cx="279" cy="95" r="7" fill="#3A2A1A"/>
   </g>
   <g filter="url(#pageshadow)">
     <rect x="141" y="98" width="34" height="70" rx="17" fill="#F7F4EF"/>

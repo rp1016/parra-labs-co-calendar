@@ -91,8 +91,8 @@ respaldo completo o restaurarlo.
 
 ## Identidad
 
-- **Icono:** el conejo blanco de CalendarPRO — «¡llego tarde!», pero contigo siempre a tiempo. Sigue la idea del elefante de Evernote: un animal que cuenta la promesa de la app. El conejo ya vive en los fondos vintage de la app (`assets/art/rabbits.svg`).
-- La hoja marfil llena el icono sin marco, con dos anillas recortadas, la casilla de hoy marcada y el punto ámbar del evento. El símbolo de la app (`assets/app-mark.svg`) es la versión invertida: hoja aguamarina con el conejo asomado.
+- **Icono:** el pájaro madrugador de CalendarPRO — «el que madruga». Sigue la idea del elefante de Evernote: un animal que cuenta la promesa de la app. La hoja marfil llena el icono sin marco, con dos anillas recortadas, la casilla de hoy marcada y el punto ámbar del evento. El pájaro se posa en la primera línea (la rama) y el pico es el mismo ámbar del evento. El símbodo de la app (`assets/app-mark.svg`) es la versión invertida: hoja aguamarina con el pájaro.
+- La hoja marfil llena el icono sin marco, con dos anillas recortadas, la casilla de hoy marcada y el punto ámbar del evento. El símbolo de la app (`assets/app-mark.svg`) es la versión invertida: hoja aguamarina con el pájaro madrugador.
 - Regenerar: tras editar `assets/app-icon.svg`, `npm run icons`.
 
 ## Stack

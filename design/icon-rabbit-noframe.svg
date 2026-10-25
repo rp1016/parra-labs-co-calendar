@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="icon-title icon-desc">
-  <title id="icon-title">CalendarPRO · conejo asomado sin marco</title>
-  <desc id="icon-desc">Hoja de calendario marfil que llena casi todo el icono, con dos anillas, un conejo asomado por encima, casilla marcada y punto ámbar, sin marco.</desc>
+  <title id="icon-title">CalendarPRO app icon</title>
+  <desc id="icon-desc">Hoja de calendario marfil que llena casi todo el icono, con dos anillas, un conejo asomado por encima (más visible), casilla marcada y punto ámbar, sin marco.</desc>
   <defs>
     <linearGradient id="today" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#4FD9E4"/>
@@ -12,14 +12,14 @@
   </defs>
   <g>
     <g fill="#F7F4EF">
-      <rect x="206" y="22" width="40" height="118" rx="20" transform="rotate(-7 226 81)"/>
-      <rect x="266" y="22" width="40" height="118" rx="20" transform="rotate(7 286 81)"/>
-      <circle cx="256" cy="176" r="92"/>
+      <rect x="201" y="10" width="50" height="128" rx="25" transform="rotate(-7 226 74)"/>
+      <rect x="261" y="10" width="50" height="128" rx="25" transform="rotate(7 286 74)"/>
+      <circle cx="256" cy="150" r="100"/>
     </g>
-    <rect x="217.5" y="50" width="17" height="62" rx="8.5" fill="#B6ECF2" transform="rotate(-7 226 81)"/>
-    <rect x="277.5" y="50" width="17" height="62" rx="8.5" fill="#B6ECF2" transform="rotate(7 286 81)"/>
-    <circle cx="237" cy="118" r="6.5" fill="#0C7C89"/>
-    <circle cx="275" cy="118" r="6.5" fill="#0C7C89"/>
+    <rect x="215" y="38" width="22" height="70" rx="11" fill="#B6ECF2" transform="rotate(-7 226 74)"/>
+    <rect x="275" y="38" width="22" height="70" rx="11" fill="#B6ECF2" transform="rotate(7 286 74)"/>
+    <circle cx="233" cy="95" r="7" fill="#0C7C89"/>
+    <circle cx="279" cy="95" r="7" fill="#0C7C89"/>
   </g>
   <g filter="url(#pageshadow)">
     <rect x="141" y="98" width="34" height="70" rx="17" fill="#F7F4EF"/>

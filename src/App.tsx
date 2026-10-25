@@ -78,7 +78,7 @@ export default function App() {
   if (!ready) {
     return (
       <div className="splash">
-        <img src="/app-icon.svg" alt="" />
+        <img src="/app-mark.svg" alt="" />
         <span>{t("app.name")}</span>
       </div>
     );

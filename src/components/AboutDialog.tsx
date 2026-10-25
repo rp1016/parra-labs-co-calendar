@@ -17,7 +17,7 @@ export function AboutDialog() {
         </div>
 
         <div className="modal-body about-body">
-          <img src="/app-icon.svg" alt="" className="about-icon" />
+          <img src="/app-mark.svg" alt="" className="about-icon" />
           <div className="about-name">
             <b>Calendar</b>
             <span>PRO</span>

@@ -107,7 +107,7 @@ export function PrintSheet() {
     <section className="print-sheet print-only" aria-hidden="true">
       <header className="print-head">
         <div className="print-brand">
-          <img src="/app-icon.svg" alt="" />
+          <img src="/app-mark.svg" alt="" />
           <div>
             <div className="print-brand-name">
               <b>Calendar</b>

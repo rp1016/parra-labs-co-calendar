@@ -1,6 +1,6 @@
 [package]
 name = "parritalabs-calendar"
-version = "0.2.0"
+version = "0.2.1"
 description = "CalendarPRO by Parrita Labs"
 authors = ["ParritaLabs <https://parritalabs.com>"]
 license = "MIT"

@@ -270,7 +270,7 @@ export function SettingsModal() {
           </button>
 
           <div className="settings-nav-foot">
-            <img src="/app-icon.svg" alt="" />
+            <img src="/app-mark.svg" alt="" />
             <div>
               <b>CalendarPRO</b>
               <span>{t("app.by")}</span>

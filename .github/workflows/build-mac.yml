@@ -1,0 +1,47 @@
+name: Build macOS installers
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-mac:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest   # Apple Silicon (arm64)
+            target: aarch64-apple-darwin
+            label: apple-silicon
+          - os: macos-13       # Intel (x64)
+            target: x86_64-apple-darwin
+            label: intel
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - run: npm ci
+
+      - name: Build DMG
+        run: npx tauri build --target ${{ matrix.target }} --bundles dmg
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CalendarPRO-mac-${{ matrix.label }}
+          path: src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+          if-no-files-found: error

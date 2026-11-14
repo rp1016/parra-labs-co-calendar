@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CalendarPRO 07 · pájaro sobre hoja">
+  <title>CalendarPRO 07 · pájaro sobre hoja</title>
+  <desc>Hoja aguamarina con banda ámbar y pájaro marfil grande.</desc>
+  <defs></defs>
+  <rect x="44" y="72" width="440" height="424" rx="68" fill="#084F5B"/>
+  <rect x="24" y="40" width="440" height="424" rx="68" fill="#0C7C89"/>
+  <path d="M24 108a68 68 0 0 1 68-68H396a68 68 0 0 1 68 68V150H24Z" fill="#F59E0B"/>
+  <rect x="120" y="8" width="40" height="76" rx="20" fill="#084F5B"/>
+  <rect x="320" y="8" width="40" height="76" rx="20" fill="#084F5B"/>
+  <g transform="translate(236 318) scale(0.95)">
+    <path d="M-60 -6L-150 -46L-132 22Z" fill="#F7F4EF" stroke="#F7F4EF" stroke-width="14" stroke-linejoin="round"/>
+    <ellipse cx="0" cy="8" rx="94" ry="64" fill="#F7F4EF"/>
+    <circle cx="64" cy="-40" r="46" fill="#F7F4EF"/>
+    <path d="M100 -52L158 -32L100 -12Z" fill="#F59E0B" stroke="#F59E0B" stroke-width="8" stroke-linejoin="round"/>
+    <ellipse cx="-12" cy="14" rx="54" ry="30" transform="rotate(-18 -12 14)" fill="#5FE0E8"/>
+    <circle cx="80" cy="-50" r="10" fill="#084F5B"/>
+  </g>
+</svg>

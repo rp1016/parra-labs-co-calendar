@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CalendarPRO 08 · banda ámbar">
+  <title>CalendarPRO 08 · banda ámbar</title>
+  <desc>Hoja que llena el lienzo: banda ámbar con anillas y 7 marfil sobre aguamarina oscuro.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#1FAFBD"/><stop offset="1" stop-color="#084F5B"/></linearGradient></defs>
+  <rect width="512" height="512" rx="104" fill="url(#bg)"/>
+  <path d="M0 104A104 104 0 0 1 104 0H408A104 104 0 0 1 512 104V176H0Z" fill="#F59E0B"/>
+  <rect x="124" y="30" width="44" height="86" rx="22" fill="#084F5B"/>
+  <rect x="344" y="30" width="44" height="86" rx="22" fill="#084F5B"/>
+  <path transform="translate(160 214) scale(1.12)" d="M0 26H150L58 214" fill="none" stroke="#F7F4EF" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

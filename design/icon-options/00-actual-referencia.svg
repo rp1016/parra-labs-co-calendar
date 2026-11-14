@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="icon-title icon-desc">
+  <title id="icon-title">CalendarPRO · pájaro madrugador</title>
+  <desc id="icon-desc">Hoja de calendario aguamarina que llena todo el icono, con agujeros de anillas, un pájaro marfil posado en la primera línea, casilla de hoy marcada y punto ámbar.</desc>
+  <defs>
+    <linearGradient id="page" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5FE0E8"/>
+      <stop offset=".52" stop-color="#1FAFBD"/>
+      <stop offset="1" stop-color="#084F5B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".27" cy=".15" r=".85">
+      <stop offset="0" stop-color="#C6F8FB" stop-opacity=".45"/>
+      <stop offset=".55" stop-color="#33C6D4" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#33C6D4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <path fill-rule="evenodd" fill="url(#page)" d="M118 0H394A118 118 0 0 1 512 118V394A118 118 0 0 1 394 512H118A118 118 0 0 1 0 394V118A118 118 0 0 1 118 0ZM157 48h22a11 11 0 0 1 0 22h-22a11 11 0 0 1 0-22ZM333 48h22a11 11 0 0 1 0 22h-22a11 11 0 0 1 0-22Z"/>
+  <path fill-rule="evenodd" fill="url(#glow)" d="M118 0H394A118 118 0 0 1 512 118V394A118 118 0 0 1 394 512H118A118 118 0 0 1 0 394V118A118 118 0 0 1 118 0ZM157 48h22a11 11 0 0 1 0 22h-22a11 11 0 0 1 0-22ZM333 48h22a11 11 0 0 1 0 22h-22a11 11 0 0 1 0-22Z"/>
+  <path d="M64 150h384" stroke="#F7F4EF" stroke-opacity=".45" stroke-width="8" stroke-linecap="round"/>
+  <path d="M206 76l-34-6 14 30z" fill="#F7F4EF"/>
+  <circle cx="256" cy="92" r="58" fill="#F7F4EF"/>
+  <ellipse cx="238" cy="106" rx="16" ry="26" transform="rotate(-24 238 106)" fill="#B6ECF2" fill-opacity=".9"/>
+  <circle cx="282" cy="84" r="6" fill="#084F5B"/>
+  <path d="M312 84l30 10-26 14z" fill="#F59E0B"/>
+  <g fill="#F7F4EF" fill-opacity=".38">
+    <rect x="62" y="176" width="108" height="76" rx="16"/>
+    <rect x="202" y="176" width="108" height="76" rx="16"/>
+    <rect x="342" y="176" width="108" height="76" rx="16"/>
+    <rect x="62" y="282" width="108" height="76" rx="16"/>
+    <rect x="342" y="282" width="108" height="76" rx="16"/>
+    <rect x="62" y="388" width="108" height="76" rx="16"/>
+    <rect x="202" y="388" width="108" height="76" rx="16"/>
+    <rect x="342" y="388" width="108" height="76" rx="16"/>
+  </g>
+  <rect x="202" y="282" width="108" height="76" rx="16" fill="#F7F4EF"/>
+  <path d="M232 320l15 15 33-38" fill="none" stroke="#0C7C89" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="396" cy="426" r="10" fill="#F59E0B"/>
+</svg>

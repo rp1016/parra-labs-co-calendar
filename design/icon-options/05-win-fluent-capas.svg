@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CalendarPRO 05 · capas Fluent">
+  <title>CalendarPRO 05 · capas Fluent</title>
+  <desc>Calendario plano en capas: placa trasera oscura, hoja marfil, banda aguamarina y un 7.</desc>
+  <defs></defs>
+  <rect x="52" y="76" width="440" height="420" rx="64" fill="#084F5B"/>
+  <rect x="20" y="40" width="440" height="420" rx="64" fill="#F7F4EF"/>
+  <path d="M20 104a64 64 0 0 1 64-64H396a64 64 0 0 1 64 64V176H20Z" fill="#1FAFBD"/>
+  <rect x="120" y="8" width="40" height="80" rx="20" fill="#084F5B"/>
+  <rect x="320" y="8" width="40" height="80" rx="20" fill="#084F5B"/>
+  <path transform="translate(138 200) scale(0.95)" d="M0 26H150L58 214" fill="none" stroke="#0C7C89" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="378" cy="372" r="30" fill="#F59E0B"/>
+</svg>

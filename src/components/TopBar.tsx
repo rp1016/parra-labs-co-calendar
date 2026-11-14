@@ -13,6 +13,7 @@ import { useMemo } from "react";
 import { localeOf, useT } from "../i18n";
 import { formatLongDate, formatMonthYear, formatShortDate, parseDateKey, startOfWeek, endOfWeek } from "../lib/dates";
 import { useAppStore } from "../state/store";
+import { isMac } from "../platform";
 import { Brand } from "./Brand";
 
 const VIEWS = [
@@ -59,14 +60,17 @@ export function TopBar() {
     return t("views.agenda");
   }, [cursor, view, locale, language, weekStartsOn, t]);
 
+  // On macOS the window uses an overlay title bar, so the toolbar is the drag handle.
+  const drag = isMac || document.documentElement.classList.contains("is-mac") ? { "data-tauri-drag-region": "" } : {};
+
   return (
-    <header className="topbar">
-      <div className="topbar-brand">
+    <header className="topbar" {...drag}>
+      <div className="topbar-brand" {...drag}>
         <Brand />
       </div>
 
-      <div className="period">
-        <h1 className="period-title">{title}</h1>
+      <div className="period" {...drag}>
+        <h1 className="period-title" {...drag}>{title}</h1>
       </div>
 
       <nav className="segmented" aria-label={t("views.label")}>
@@ -86,7 +90,7 @@ export function TopBar() {
         })}
       </nav>
 
-      <div className="topbar-actions">
+      <div className="topbar-actions" {...drag}>
         <div className="period-nav">
           <button onClick={() => shiftPeriod(-1)} aria-label={t("actions.previous")}>
             <ChevronLeft size={15} />
@@ -102,12 +106,13 @@ export function TopBar() {
         </div>
 
         <button
-          className="icon-btn"
+          className="search-field"
           onClick={() => setSearchOpen(true)}
           aria-label={t("nav.search")}
           title={`${t("nav.search")} (Ctrl+K)`}
         >
-          <Search size={17} />
+          <Search size={14} />
+          <span>{t("nav.search")}</span>
         </button>
         <button
           className="icon-btn"

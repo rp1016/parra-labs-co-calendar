@@ -1,0 +1,230 @@
+[
+ {
+  "file": "01-primavera-cerezo.svg",
+  "id": "primavera-cerezo",
+  "title": "Primavera de cerezo",
+  "group": "vintage",
+  "season": "primavera",
+  "mood": "Lamina botanica serena",
+  "months": [
+   3,
+   4,
+   5
+  ],
+  "veilLight": 0.58,
+  "veilDark": 0.74,
+  "calm": "Centro y franja superior de papel casi limpio; ramas solo en esquinas",
+  "dark": false,
+  "bytes": 20678
+ },
+ {
+  "file": "02-verano-trigo-girasol.svg",
+  "id": "verano-trigo-girasol",
+  "title": "Verano: trigo y girasol",
+  "group": "vintage",
+  "season": "verano",
+  "mood": "Almanaque dorado, calido",
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.6,
+  "veilDark": 0.74,
+  "calm": "Sol grande tenue arriba al centro; espigas y girasoles en las esquinas inferiores",
+  "dark": false,
+  "bytes": 52087
+ },
+ {
+  "file": "03-otono-hojas.svg",
+  "id": "otono-hojas",
+  "title": "Otono: hojas y bellotas",
+  "group": "vintage",
+  "season": "otono",
+  "mood": "Pergamino de hojas rojizas",
+  "months": [
+   9,
+   10,
+   11
+  ],
+  "veilLight": 0.6,
+  "veilDark": 0.76,
+  "calm": "Hojas agrupadas en esquinas; centro de pergamino limpio",
+  "dark": false,
+  "bytes": 17328
+ },
+ {
+  "file": "04-invierno-acebo.svg",
+  "id": "invierno-acebo",
+  "title": "Invierno: acebo y escarcha",
+  "group": "vintage",
+  "season": "invierno",
+  "mood": "Papel frio con acebo",
+  "months": [
+   12,
+   1,
+   2
+  ],
+  "veilLight": 0.6,
+  "veilDark": 0.76,
+  "calm": "Copos tenues distribuidos; esquinas con acebo y pino",
+  "dark": false,
+  "bytes": 33249
+ },
+ {
+  "file": "05-almanaque-celeste.svg",
+  "id": "almanaque-celeste",
+  "title": "Almanaque celeste",
+  "group": "vintage",
+  "season": "todo el ano",
+  "mood": "Fases lunares y estrellas",
+  "months": [],
+  "veilLight": 0.62,
+  "veilDark": 0.78,
+  "calm": "Aro solar grande en el cielo superior; fases de luna en franja inferior",
+  "dark": false,
+  "bytes": 9148
+ },
+ {
+  "file": "06-herbario-hojas.svg",
+  "id": "herbario-hojas",
+  "title": "Herbario de hojas prensadas",
+  "group": "vintage",
+  "season": "todo el ano",
+  "mood": "Cuaderno de naturalista",
+  "months": [],
+  "veilLight": 0.6,
+  "veilDark": 0.76,
+  "calm": "Especimenes pequenos en los bordes; centro de papel liso",
+  "dark": false,
+  "bytes": 12886
+ },
+ {
+  "file": "07-colina-verano.svg",
+  "id": "colina-verano",
+  "title": "Colina de verano con cumulos",
+  "group": "acuarela",
+  "season": "verano",
+  "mood": "Luminoso, brisa en la hierba",
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.74,
+  "calm": "Cielo azul despejado en el tercio superior; nubes laterales",
+  "dark": false,
+  "bytes": 30895
+ },
+ {
+  "file": "08-bosque-niebla.svg",
+  "id": "bosque-niebla",
+  "title": "Bosque con niebla y rayos de luz",
+  "group": "acuarela",
+  "season": "primavera",
+  "mood": "Quieto y misterioso, luz verde",
+  "months": [
+   4,
+   5,
+   9
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.72,
+  "calm": "Niebla clara arriba y al centro; troncos oscuros solo a los lados",
+  "dark": false,
+  "bytes": 22556
+ },
+ {
+  "file": "09-tren-sobre-el-mar.svg",
+  "id": "tren-sobre-el-mar",
+  "title": "Tren sobre el mar al mediodia",
+  "group": "acuarela",
+  "season": "verano",
+  "mood": "Viaje tranquilo, horizonte abierto",
+  "months": [
+   5,
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.52,
+  "veilDark": 0.74,
+  "calm": "Cielo y horizonte altos y claros; tren pequeno en el tercio inferior",
+  "dark": false,
+  "bytes": 17622
+ },
+ {
+  "file": "10-aldea-atardecer.svg",
+  "id": "aldea-atardecer",
+  "title": "Aldea al atardecer",
+  "group": "acuarela",
+  "season": "otono",
+  "mood": "Calido, hora dorada",
+  "months": [
+   9,
+   10,
+   3
+  ],
+  "veilLight": 0.52,
+  "veilDark": 0.76,
+  "calm": "Cielo degradado alto y suave; casas agrupadas abajo",
+  "dark": false,
+  "bytes": 12210
+ },
+ {
+  "file": "11-tormenta-suave.svg",
+  "id": "tormenta-suave",
+  "title": "Cielo de tormenta suave",
+  "group": "acuarela",
+  "season": "primavera",
+  "mood": "Lluvia mansa y un rayo de sol",
+  "months": [
+   4,
+   5,
+   10,
+   11
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.74,
+  "calm": "Nubes grises claras arriba; lluvia fina uniforme",
+  "dark": false,
+  "bytes": 22926
+ },
+ {
+  "file": "12-noche-luciernagas.svg",
+  "id": "noche-luciernagas",
+  "title": "Noche estrellada con luciernagas",
+  "group": "acuarela",
+  "season": "verano",
+  "mood": "Magico y sereno, noche de verano",
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.7,
+  "veilDark": 0.5,
+  "calm": "Cielo de estrellas muy tenues arriba; luciernagas dispersas abajo",
+  "dark": true,
+  "bytes": 37048
+ },
+ {
+  "file": "13-aldea-nevada.svg",
+  "id": "aldea-nevada",
+  "title": "Aldea nevada con ventanas encendidas",
+  "group": "acuarela",
+  "season": "invierno",
+  "mood": "Acogedor, silencio de nieve",
+  "months": [
+   12,
+   1,
+   2
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.74,
+  "calm": "Cielo pastel liso arriba; nieve suave y casas en el tercio inferior",
+  "dark": false,
+  "bytes": 25650
+ }
+]

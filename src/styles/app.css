@@ -2071,3 +2071,9 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
 .mini-empty { color: var(--faint); font-size: 13px; margin: 6px 0; }
 .mini-foot { display: flex; justify-content: flex-end; }
 .mini-foot .btn { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Mini calendar: holidays from the active holiday calendars */
+.mini-day.is-holiday:not(.is-today) { color: #c2740b; font-weight: 700; background: rgba(194, 116, 11, 0.12); }
+.mini-day.is-holiday.is-selected:not(.is-today) { border-color: #c2740b; }
+.mini-events li.is-holiday .mini-name { color: #c2740b; font-weight: 600; }
+.mini-events li.is-holiday .mini-time { color: #c2740b; }

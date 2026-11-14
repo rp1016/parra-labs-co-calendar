@@ -16,6 +16,7 @@ import {
   toDateKey,
   weekdayOrder,
 } from "../lib/dates";
+import { holidayEvents } from "../lib/holidays";
 import { normalizeData } from "../lib/normalize";
 import { occurrencesBetween, sortOccurrences } from "../lib/recurrence";
 import { defaultData, type AppData, type Occurrence } from "../lib/types";
@@ -101,13 +102,36 @@ export function MiniCalendar() {
     [month, settings.weekStartsOn],
   );
 
+  const holidayCalendarIds = useMemo(
+    () =>
+      new Set(
+        data.calendars
+          .filter((calendar) => calendar.kind === "holiday" && calendar.visible)
+          .map((calendar) => calendar.id),
+      ),
+    [data.calendars],
+  );
+
   const occurrences = useMemo(() => {
     const from = startOfDay(grid[0]);
     const to = endOfDay(grid[41]);
-    return sortOccurrences(
-      visibleEvents(data).flatMap((event) => occurrencesBetween(event, from, to)),
-    );
-  }, [data, grid]);
+    const events = visibleEvents(data);
+
+    // Holidays saved in the data file only cover the years chosen in Settings,
+    // so the visible months are completed from the built-in tables. The
+    // deterministic uid keeps them from duplicating the saved ones.
+    const known = new Set(events.map((event) => event.uid).filter(Boolean));
+    const years = [...new Set([from.getFullYear(), to.getFullYear()])];
+    for (const calendar of data.calendars) {
+      if (calendar.kind !== "holiday" || !calendar.visible || !calendar.country) continue;
+      for (const event of holidayEvents(calendar.country, years, calendar.id, language)) {
+        if (event.uid && known.has(event.uid)) continue;
+        events.push(event);
+      }
+    }
+
+    return sortOccurrences(events.flatMap((event) => occurrencesBetween(event, from, to)));
+  }, [data, grid, language]);
 
   const byDay = useMemo(() => {
     const map = new Map<string, Occurrence[]>();
@@ -180,8 +204,11 @@ export function MiniCalendar() {
         {grid.map((day) => {
           const key = toDateKey(day);
           const events = byDay.get(key) ?? [];
+          const isHoliday = events.some((item) => holidayCalendarIds.has(item.event.calendarId));
+          const hasOwnEvents = events.some((item) => !holidayCalendarIds.has(item.event.calendarId));
           const classes = [
             "mini-day",
+            isHoliday ? "is-holiday" : "",
             day.getMonth() !== anchor.getMonth() ? "is-out" : "",
             isSameDay(day, today) ? "is-today" : "",
             key === selected ? "is-selected" : "",
@@ -189,9 +216,22 @@ export function MiniCalendar() {
             .filter(Boolean)
             .join(" ");
           return (
-            <button key={key} type="button" className={classes} onClick={() => setSelected(key)}>
+            <button
+              key={key}
+              type="button"
+              className={classes}
+              title={
+                isHoliday
+                  ? events
+                      .filter((item) => holidayCalendarIds.has(item.event.calendarId))
+                      .map((item) => item.event.title)
+                      .join(" · ")
+                  : undefined
+              }
+              onClick={() => setSelected(key)}
+            >
               <span>{day.getDate()}</span>
-              <i className={events.length > 0 ? "has-events" : ""} />
+              <i className={hasOwnEvents ? "has-events" : ""} />
             </button>
           );
         })}
@@ -200,15 +240,18 @@ export function MiniCalendar() {
       <section className="mini-events" aria-live="polite">
         <h2>
           {isSameDay(selectedDate, today)
-            ? `${t("actions.today")} · ${formatLongDate(selectedDate, locale)}`
-            : formatLongDate(selectedDate, locale)}
+            ? `${t("actions.today")} · ${formatLongDate(selectedDate, locale)}, ${selectedDate.getFullYear()}`
+            : `${formatLongDate(selectedDate, locale)}, ${selectedDate.getFullYear()}`}
         </h2>
         {!loaded ? null : dayItems.length === 0 ? (
           <p className="mini-empty">{t("mini.noEvents")}</p>
         ) : (
           <ul>
             {dayItems.map((item) => (
-              <li key={item.key}>
+              <li
+                key={item.key}
+                className={holidayCalendarIds.has(item.event.calendarId) ? "is-holiday" : undefined}
+              >
                 <span
                   className="mini-dot"
                   style={{ background: colors[item.event.calendarId] ?? "var(--accent)" }}

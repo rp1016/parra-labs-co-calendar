@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CalendarPRO - Opciones de fondo</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#2b2824;--mut:#6f685e;--card:#fff;--ac:#3b6ea5}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:24px 32px 8px}h1{margin:0 0 4px;font-size:26px}p.s{margin:0;color:var(--mut);max-width:900px}
+.bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:12px 32px;position:sticky;top:0;background:#f4f1ee;z-index:5;border-bottom:1px solid #0001}
+button{font:inherit;padding:8px 16px;border-radius:8px;border:0;background:var(--ac);color:#fff;cursor:pointer}button:hover{filter:brightness(1.08)}
+select,input[type=range]{font:inherit}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;padding:18px 32px}
+.th{background:var(--card);border-radius:10px;overflow:hidden;box-shadow:0 1px 4px #0002;cursor:pointer;border:2px solid transparent}
+.th img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}.th div{padding:6px 10px;font-size:13px}.th small{color:var(--mut);display:block}
+.th.on,.sec.on{border-color:var(--ac)}
+.sec{margin:12px 32px 34px;padding:16px;background:var(--card);border-radius:14px;border:2px solid transparent;box-shadow:0 1px 6px #0002;scroll-margin-top:70px}
+.sec h2{margin:0;font-size:19px}.meta{color:var(--mut);font-size:13px;margin:2px 0 12px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:1000px){.pair{grid-template-columns:1fr}}
+.mock{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background-size:cover;background-position:center;container-type:inline-size}
+.veil{position:absolute;inset:0}
+.cal{position:absolute;inset:0;display:flex;flex-direction:column;padding:2.2cqw 2.4cqw}
+.hd{display:flex;justify-content:space-between;align-items:baseline;font-size:2.4cqw;font-weight:600;margin-bottom:1cqw}
+.hd span{font-size:1.5cqw;font-weight:400;opacity:.75}
+.wd,.gr{display:grid;grid-template-columns:repeat(7,1fr)}
+.wd div{font-size:1.25cqw;text-transform:uppercase;letter-spacing:.06em;padding:.4cqw .6cqw;opacity:.7}
+.gr{flex:1;grid-template-rows:repeat(6,1fr)}
+.c{border-top:1px solid var(--ln);border-left:1px solid var(--ln);padding:.35cqw .6cqw;font-size:1.35cqw;overflow:hidden;min-height:0}
+.c:nth-child(7n){border-right:1px solid var(--ln)}.gr .c:nth-last-child(-n+7){border-bottom:1px solid var(--ln)}
+.c.o{opacity:.45}.c b{font-weight:500}.c.t b{display:inline-block;background:var(--acc);color:#fff;border-radius:99px;padding:0 .6cqw;min-width:2cqw;text-align:center}
+.e{display:block;margin-top:.25cqw;padding:.1cqw .5cqw;border-radius:.4cqw;font-size:1.05cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+.light{color:#2b2824;--ln:#2b282426;--acc:#3b6ea5}.dark{color:#eceef3;--ln:#ffffff22;--acc:#6aa5e6}
+.ctl{margin-top:8px;font-size:13px;color:var(--mut)}
+</style></head><body>
+<header><h1>CalendarPRO - familia de fondos</h1><p class="s">13 fondos SVG autocontenidos (1600x1000, menos de 60 KB). Cada uno se valida con una maqueta de la vista mensual en tema claro y oscuro, con el velo recomendado. Ilustraciones originales de ambiente vintage y acuarela calida; ninguna recrea escenas ni personajes de peliculas existentes.</p></header>
+<div class="bar"><button id="rnd">Aleatorio</button><label>Filtro <select id="flt"><option value="">Todos</option><option value="vintage">Almanaque vintage</option><option value="acuarela">Paisaje acuarela</option><option value="primavera">Primavera</option><option value="verano">Verano</option><option value="otono">Otono</option><option value="invierno">Invierno</option></select></label>
+<label>Velo <input id="vl" type="range" min="0" max="95" value="50" step="1"> <span id="vv">recomendado</span></label><button id="rs" style="background:#8a8378">Restablecer velo</button><span id="pick" style="color:var(--mut)"></span></div>
+<div class="gal" id="gal"></div><div id="secs"></div>
+<script>
+const DATA=[
+ {
+  "file": "01-primavera-cerezo.svg",
+  "id": "primavera-cerezo",
+  "title": "Primavera de cerezo",
+  "group": "vintage",
+  "season": "primavera",
+  "mood": "Lamina botanica serena",
+  "months": [
+   3,
+   4,
+   5
+  ],
+  "veilLight": 0.58,
+  "veilDark": 0.74,
+  "calm": "Centro y franja superior de papel casi limpio; ramas solo en esquinas",
+  "dark": false,
+  "bytes": 20678
+ },
+ {
+  "file": "02-verano-trigo-girasol.svg",
+  "id": "verano-trigo-girasol",
+  "title": "Verano: trigo y girasol",
+  "group": "vintage",
+  "season": "verano",
+  "mood": "Almanaque dorado, calido",
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.6,
+  "veilDark": 0.74,
+  "calm": "Sol grande tenue arriba al centro; espigas y girasoles en las esquinas inferiores",
+  "dark": false,
+  "bytes": 52087
+ },
+ {
+  "file": "03-otono-hojas.svg",
+  "id": "otono-hojas",
+  "title": "Otono: hojas y bellotas",
+  "group": "vintage",
+  "season": "otono",
+  "mood": "Pergamino de hojas rojizas",
+  "months": [
+   9,
+   10,
+   11
+  ],
+  "veilLight": 0.6,
+  "veilDark": 0.76,
+  "calm": "Hojas agrupadas en esquinas; centro de pergamino limpio",
+  "dark": false,
+  "bytes": 17328
+ },
+ {
+  "file": "04-invierno-acebo.svg",
+  "id": "invierno-acebo",
+  "title": "Invierno: acebo y escarcha",
+  "group": "vintage",
+  "season": "invierno",
+  "mood": "Papel frio con acebo",
+  "months": [
+   12,
+   1,
+   2
+  ],
+  "veilLight": 0.6,
+  "veilDark": 0.76,
+  "calm": "Copos tenues distribuidos; esquinas con acebo y pino",
+  "dark": false,
+  "bytes": 33249
+ },
+ {
+  "file": "05-almanaque-celeste.svg",
+  "id": "almanaque-celeste",
+  "title": "Almanaque celeste",
+  "group": "vintage",
+  "season": "todo el ano",
+  "mood": "Fases lunares y estrellas",
+  "months": [],
+  "veilLight": 0.62,
+  "veilDark": 0.78,
+  "calm": "Aro solar grande en el cielo superior; fases de luna en franja inferior",
+  "dark": false,
+  "bytes": 9148
+ },
+ {
+  "file": "06-herbario-hojas.svg",
+  "id": "herbario-hojas",
+  "title": "Herbario de hojas prensadas",
+  "group": "vintage",
+  "season": "todo el ano",
+  "mood": "Cuaderno de naturalista",
+  "months": [],
+  "veilLight": 0.6,
+  "veilDark": 0.76,
+  "calm": "Especimenes pequenos en los bordes; centro de papel liso",
+  "dark": false,
+  "bytes": 12886
+ },
+ {
+  "file": "07-colina-verano.svg",
+  "id": "colina-verano",
+  "title": "Colina de verano con cumulos",
+  "group": "acuarela",
+  "season": "verano",
+  "mood": "Luminoso, brisa en la hierba",
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.74,
+  "calm": "Cielo azul despejado en el tercio superior; nubes laterales",
+  "dark": false,
+  "bytes": 30895
+ },
+ {
+  "file": "08-bosque-niebla.svg",
+  "id": "bosque-niebla",
+  "title": "Bosque con niebla y rayos de luz",
+  "group": "acuarela",
+  "season": "primavera",
+  "mood": "Quieto y misterioso, luz verde",
+  "months": [
+   4,
+   5,
+   9
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.72,
+  "calm": "Niebla clara arriba y al centro; troncos oscuros solo a los lados",
+  "dark": false,
+  "bytes": 22556
+ },
+ {
+  "file": "09-tren-sobre-el-mar.svg",
+  "id": "tren-sobre-el-mar",
+  "title": "Tren sobre el mar al mediodia",
+  "group": "acuarela",
+  "season": "verano",
+  "mood": "Viaje tranquilo, horizonte abierto",
+  "months": [
+   5,
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.52,
+  "veilDark": 0.74,
+  "calm": "Cielo y horizonte altos y claros; tren pequeno en el tercio inferior",
+  "dark": false,
+  "bytes": 17622
+ },
+ {
+  "file": "10-aldea-atardecer.svg",
+  "id": "aldea-atardecer",
+  "title": "Aldea al atardecer",
+  "group": "acuarela",
+  "season": "otono",
+  "mood": "Calido, hora dorada",
+  "months": [
+   9,
+   10,
+   3
+  ],
+  "veilLight": 0.52,
+  "veilDark": 0.76,
+  "calm": "Cielo degradado alto y suave; casas agrupadas abajo",
+  "dark": false,
+  "bytes": 12210
+ },
+ {
+  "file": "11-tormenta-suave.svg",
+  "id": "tormenta-suave",
+  "title": "Cielo de tormenta suave",
+  "group": "acuarela",
+  "season": "primavera",
+  "mood": "Lluvia mansa y un rayo de sol",
+  "months": [
+   4,
+   5,
+   10,
+   11
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.74,
+  "calm": "Nubes grises claras arriba; lluvia fina uniforme",
+  "dark": false,
+  "bytes": 22926
+ },
+ {
+  "file": "12-noche-luciernagas.svg",
+  "id": "noche-luciernagas",
+  "title": "Noche estrellada con luciernagas",
+  "group": "acuarela",
+  "season": "verano",
+  "mood": "Magico y sereno, noche de verano",
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "veilLight": 0.7,
+  "veilDark": 0.5,
+  "calm": "Cielo de estrellas muy tenues arriba; luciernagas dispersas abajo",
+  "dark": true,
+  "bytes": 37048
+ },
+ {
+  "file": "13-aldea-nevada.svg",
+  "id": "aldea-nevada",
+  "title": "Aldea nevada con ventanas encendidas",
+  "group": "acuarela",
+  "season": "invierno",
+  "mood": "Acogedor, silencio de nieve",
+  "months": [
+   12,
+   1,
+   2
+  ],
+  "veilLight": 0.5,
+  "veilDark": 0.74,
+  "calm": "Cielo pastel liso arriba; nieve suave y casas en el tercio inferior",
+  "dark": false,
+  "bytes": 25650
+ }
+];
+const ev=[['#3b6ea5','09:00 Reunion'],['#4d8a63','Gimnasio'],['#b5653f','Cumple de Ana'],['#7b5ea7','Entrega'],['#c0504d','Dentista 16:30']];
+const evAt={3:[0],5:[1,2],9:[3],12:[0,1],14:[4],17:[2],19:[0,3],23:[1],26:[4,0],28:[2]};
+function cal(){let h=`<div class="cal"><div class="hd">Noviembre 2026<span>Semana 46</span></div><div class="wd">${['Lun','Mar','Mie','Jue','Vie','Sab','Dom'].map(d=>`<div>${d}</div>`).join('')}</div><div class="gr">`;
+for(let i=0;i<42;i++){const d=i-5+1;const out=d<1||d>30;const n=out?(d<1?31+d:d-30):d;h+=`<div class="c${out?' o':''}${d==14?' t':''}"><b>${n}</b>${out?'':(evAt[d]||[]).map(k=>`<span class="e" style="background:${ev[k][0]}">${ev[k][1]}</span>`).join('')}</div>`}
+return h+'</div></div>'}
+const ov={v:null};
+function veilCss(b,th){const a=ov.v!=null?ov.v/100:(th=='dark'?b.veilDark:b.veilLight);return th=='dark'?`rgba(16,18,24,${a})`:`rgba(252,248,240,${a})`}
+function build(){const g=document.getElementById('gal'),s=document.getElementById('secs');
+DATA.forEach((b,i)=>{g.insertAdjacentHTML('beforeend',`<div class="th" data-i="${i}"><img src="${b.file}" alt="${b.title}" loading="lazy"><div>${String(i+1).padStart(2,'0')} ${b.title}<small>${b.group} - ${b.season}</small></div></div>`);
+const mk=th=>`<div><div class="mock ${th}" style="background-image:url('${b.file}')"><div class="veil" data-i="${i}" data-th="${th}" style="background:${veilCss(b,th)}"></div>${cal()}</div><div class="ctl">Tema ${th=='dark'?'oscuro':'claro'} - velo recomendado ${Math.round((th=='dark'?b.veilDark:b.veilLight)*100)}%</div></div>`;
+s.insertAdjacentHTML('beforeend',`<section class="sec" id="s${i}"><h2>${String(i+1).padStart(2,'0')} ${b.title}</h2><div class="meta">${b.group} - ${b.season} - ${b.mood}<br>Respiro: ${b.calm} - ${(b.bytes/1024).toFixed(0)} KB - <code>${b.file}</code></div><div class="pair">${mk('light')}${mk('dark')}</div></section>`)});
+document.querySelectorAll('.th').forEach(t=>t.onclick=()=>select(+t.dataset.i))}
+function revel(){document.querySelectorAll('.veil').forEach(v=>{v.style.background=veilCss(DATA[v.dataset.i],v.dataset.th)})}
+function select(i){document.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));document.querySelector(`.th[data-i="${i}"]`).classList.add('on');const s=document.getElementById('s'+i);s.classList.add('on');s.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('pick').textContent='Elegido: '+DATA[i].title}
+let last=-1;document.getElementById('rnd').onclick=()=>{const f=document.getElementById('flt').value;let pool=DATA.map((b,i)=>[b,i]).filter(([b])=>!f||b.group==f||b.season==f||b.season=='todo el ano');if(pool.length>1)pool=pool.filter(([,i])=>i!=last);const [,i]=pool[Math.floor(Math.random()*pool.length)];last=i;select(i)};
+document.getElementById('vl').oninput=e=>{ov.v=+e.target.value;document.getElementById('vv').textContent=ov.v+'%';revel()};
+document.getElementById('rs').onclick=()=>{ov.v=null;document.getElementById('vl').value=50;document.getElementById('vv').textContent='recomendado';revel()};
+build();
+</script></body></html>

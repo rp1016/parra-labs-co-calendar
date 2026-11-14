@@ -1,16 +1,24 @@
 /* Design tokens. <html data-theme data-accent> is written by App.tsx.
-   The default palette follows the calm, flat look of a desktop calendar:
-   a light-gray chrome, a white canvas and a single sky-blue accent. */
+   The look follows macOS (Big Sur to Sequoia): translucent "vibrancy"
+   sidebar and toolbar, hairline separators, layered soft shadows, SF type
+   and generous rounded corners. Components only read these tokens. */
 :root {
-  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Inter", Roboto, sans-serif;
-  --brand-font: "Segoe UI Variable Display", "Segoe UI", "Inter Variable", system-ui, sans-serif;
-  --mono: "Cascadia Code", "Fira Code", Consolas, "SF Mono", Menlo, monospace;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter Variable", "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, sans-serif;
+  --brand-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter Variable", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --mono: "SF Mono", ui-monospace, Menlo, "Cascadia Code", "Fira Code", Consolas, monospace;
 
   --sidebar-width: 232px;
   --rail-width: 288px;
-  --topbar-height: 56px;
+  --topbar-height: 52px;
+  /* Left inset of the toolbar reserved for the macOS traffic lights
+     (set to a real value only under html.is-mac, see mac.css). */
+  --traffic-inset: 0px;
+  --radius-sm: 6px;
   --radius: 8px;
+  --radius-md: 10px;
   --radius-lg: 12px;
+  --radius-xl: 14px;
+  --blur: saturate(180%) blur(22px);
 
   --accent-h: 186;
   --accent-s: 82%;
@@ -19,28 +27,38 @@
   /* Vintage watermark behind the month grid (0 hides it entirely). */
   --art-opacity: 0.11;
 
-  /* Light neutrals: flat, low contrast, almost no shadows. */
+  /* Light neutrals: Apple-like grays with hairline, semi-transparent lines. */
   --bg: #ffffff;
-  --bg-subtle: #fafafa;
-  --bg-muted: #f4f4f4;
-  --bg-hover: #ececec;
-  --line: #e7e7e7;
-  --line-strong: #d3d3d3;
-  --text: #2b2b2b;
-  --text-strong: #171717;
-  --muted: #6f6f6f;
-  --faint: #9a9a9a;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.07);
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 16px 44px rgba(0, 0, 0, 0.16);
-  --danger: #c42b1c;
+  --bg-subtle: #f7f7f8;
+  --bg-muted: #f0f0f2;
+  --bg-hover: rgba(60, 60, 67, 0.08);
+  --line: rgba(60, 60, 67, 0.13);
+  --line-strong: rgba(60, 60, 67, 0.28);
+  --text: #1d1d1f;
+  --text-strong: #000000;
+  --muted: #68686d;
+  --faint: #8a8a90;
+  --shadow-sm: 0 0.5px 1px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08), 0 12px 28px rgba(0, 0, 0, 0.13), 0 28px 64px rgba(0, 0, 0, 0.12);
+  --danger: #cf2a1f;
   --warning-bg: #fff6e0;
+  --now: #ff3b30;
+  --switch-on: #2fb350;
+  /* Translucent surfaces (popovers, sheets, toolbar). */
+  --glass: rgba(255, 255, 255, 0.88);
+  --glass-line: rgba(60, 60, 67, 0.16);
+  --scrim: rgba(0, 0, 0, 0.22);
+  /* Controls: raised button/field fill, its hairline, selected segment. */
+  --ctl-bg: #ffffff;
+  --ctl-line: rgba(60, 60, 67, 0.2);
+  --seg-active: #ffffff;
 
-  --side-bg: #f3f3f3;
-  --side-hover: #ebebeb;
-  --side-active: #e2e2e2;
-  --side-text: #2b2b2b;
-  --side-muted: #6f6f6f;
-  --side-line: #e4e4e4;
+  --side-bg: rgba(246, 246, 248, 0.74);
+  --side-hover: rgba(60, 60, 67, 0.07);
+  --side-active: rgba(60, 60, 67, 0.14);
+  --side-text: #1d1d1f;
+  --side-muted: #6c6c72;
+  --side-line: rgba(60, 60, 67, 0.14);
 
   --rail-a: hsl(var(--accent-h) 85% 96%);
   --rail-b: hsl(var(--accent-h) 70% 99%);
@@ -51,6 +69,11 @@
   --accent-soft: hsl(var(--accent-h) 84% 95%);
   --accent-ring: hsl(var(--accent-h) 78% 52% / 0.4);
   --on-accent: #ffffff;
+  /* Solid accent surfaces that carry text (selected rows, primary buttons,
+     today's date): a notch darker so white text keeps good contrast. */
+  --accent-strong: hsl(var(--accent-h) 78% calc(var(--accent-l) - 11%));
+  --accent-strong-hover: hsl(var(--accent-h) 78% calc(var(--accent-l) - 16%));
+  --on-accent-strong: var(--on-accent);
   --today-bg: hsl(var(--accent-h) 82% 96%);
   --today-line: hsl(var(--accent-h) 72% 58%);
 
@@ -66,27 +89,35 @@
 :root[data-accent="rose"] { --accent-h: 337; }
 
 :root[data-theme="dark"] {
-  --bg: #17171a;
-  --bg-subtle: #1c1c20;
-  --bg-muted: #232328;
-  --bg-hover: #2c2c32;
-  --line: #2e2e35;
-  --line-strong: #41414a;
-  --text: #e7e7ea;
+  --bg: #1c1c1e;
+  --bg-subtle: #222225;
+  --bg-muted: #2a2a2d;
+  --bg-hover: rgba(235, 235, 245, 0.1);
+  --line: rgba(235, 235, 245, 0.1);
+  --line-strong: rgba(235, 235, 245, 0.24);
+  --text: #f2f2f5;
   --text-strong: #ffffff;
-  --muted: #a0a0a8;
-  --faint: #71717a;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.45), 0 16px 44px rgba(0, 0, 0, 0.6);
-  --danger: #ff7365;
+  --muted: #a3a3aa;
+  --faint: #7d7d84;
+  --shadow-sm: 0 0.5px 1px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.14), 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 32px rgba(0, 0, 0, 0.45), 0 30px 70px rgba(0, 0, 0, 0.5);
+  --danger: #ff6a5f;
   --warning-bg: #3a2f14;
+  --now: #ff453a;
+  --switch-on: #30d158;
+  --glass: rgba(44, 44, 48, 0.86);
+  --glass-line: rgba(255, 255, 255, 0.14);
+  --scrim: rgba(0, 0, 0, 0.45);
+  --ctl-bg: rgba(255, 255, 255, 0.1);
+  --ctl-line: rgba(255, 255, 255, 0.16);
+  --seg-active: rgba(255, 255, 255, 0.2);
 
-  --side-bg: #1b1b1f;
-  --side-hover: #26262c;
-  --side-active: #2e2e35;
-  --side-text: #e7e7ea;
-  --side-muted: #a0a0a8;
-  --side-line: #2b2b32;
+  --side-bg: rgba(38, 38, 42, 0.72);
+  --side-hover: rgba(235, 235, 245, 0.08);
+  --side-active: rgba(235, 235, 245, 0.16);
+  --side-text: #f2f2f5;
+  --side-muted: #a3a3aa;
+  --side-line: rgba(235, 235, 245, 0.1);
 
   --rail-a: hsl(var(--accent-h) 28% 13%);
   --rail-b: hsl(var(--accent-h) 22% 11%);
@@ -96,6 +127,8 @@
   --accent-soft: hsl(var(--accent-h) 55% 28% / 0.4);
   --accent-ring: hsl(var(--accent-h) 85% 70% / 0.45);
   --on-accent: hsl(var(--accent-h) 60% 10%);
+  --accent-strong: var(--accent);
+  --accent-strong-hover: var(--accent-hover);
   --today-bg: hsl(var(--accent-h) 42% 22% / 0.55);
   --today-line: hsl(var(--accent-h) 80% 62%);
   --art-opacity: 0.2;
@@ -114,12 +147,20 @@
   --text-strong: #ffffff;
   --muted: #8ea0c4;
   --faint: #5f7196;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 16px 44px rgba(0, 0, 0, 0.65);
+  --shadow-sm: 0 0.5px 1px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow: 0 0 0 0.5px rgba(160, 190, 255, 0.16), 0 2px 6px rgba(0, 0, 0, 0.4), 0 14px 32px rgba(0, 0, 0, 0.5), 0 30px 70px rgba(0, 0, 0, 0.55);
   --danger: #ff7a6b;
   --warning-bg: #2b2410;
+  --now: #ff5a4f;
+  --switch-on: #30d158;
+  --glass: rgba(18, 28, 54, 0.82);
+  --glass-line: rgba(160, 190, 255, 0.18);
+  --scrim: rgba(0, 4, 16, 0.5);
+  --ctl-bg: #14203d;
+  --ctl-line: #2b3c62;
+  --seg-active: #243a68;
 
-  --side-bg: #0c1428;
+  --side-bg: rgba(12, 20, 40, 0.76);
   --side-hover: #14203d;
   --side-active: #1b2a4d;
   --side-text: #dde5f7;
@@ -134,6 +175,8 @@
   --accent-soft: hsl(var(--accent-h) 55% 26% / 0.5);
   --accent-ring: hsl(var(--accent-h) 90% 72% / 0.45);
   --on-accent: #08101f;
+  --accent-strong: var(--accent);
+  --accent-strong-hover: var(--accent-hover);
   --today-bg: hsl(var(--accent-h) 50% 24% / 0.6);
   --today-line: hsl(var(--accent-h) 88% 66%);
   --art-opacity: 0.22;
@@ -152,12 +195,20 @@
   --text-strong: #2a2118;
   --muted: #7d6f5b;
   --faint: #a6957c;
-  --shadow-sm: 0 1px 2px rgba(66, 55, 41, 0.08);
-  --shadow: 0 2px 8px rgba(66, 55, 41, 0.1), 0 16px 38px rgba(66, 55, 41, 0.2);
+  --shadow-sm: 0 0.5px 1px rgba(66, 55, 41, 0.12), 0 1px 2px rgba(66, 55, 41, 0.08);
+  --shadow: 0 0 0 0.5px rgba(66, 55, 41, 0.18), 0 2px 6px rgba(66, 55, 41, 0.1), 0 12px 28px rgba(66, 55, 41, 0.16), 0 28px 64px rgba(66, 55, 41, 0.14);
   --danger: #b23a2a;
   --warning-bg: #f8e6b8;
+  --now: #e0402f;
+  --switch-on: #4a9d3f;
+  --glass: rgba(250, 243, 230, 0.84);
+  --glass-line: rgba(66, 55, 41, 0.2);
+  --scrim: rgba(40, 30, 15, 0.26);
+  --ctl-bg: #fbf5ea;
+  --ctl-line: #cdbb9c;
+  --seg-active: #fbf5ea;
 
-  --side-bg: #f2e7d5;
+  --side-bg: rgba(242, 231, 213, 0.78);
   --side-hover: #e9dcc6;
   --side-active: #e0d0b4;
   --side-text: #423729;
@@ -194,6 +245,14 @@
   --shadow: 0 0 0 1px #ffffff;
   --danger: #ff8f80;
   --warning-bg: #3b3200;
+  --now: #ff6a5c;
+  --switch-on: #4cd964;
+  --glass: #000000;
+  --glass-line: #ffffff;
+  --scrim: rgba(0, 0, 0, 0.7);
+  --ctl-bg: #000000;
+  --ctl-line: #ffffff;
+  --seg-active: #333333;
 
   --side-bg: #000000;
   --side-hover: #1c1c1c;
@@ -210,6 +269,8 @@
   --accent-soft: hsl(var(--accent-h) 100% 22%);
   --accent-ring: hsl(var(--accent-h) 100% 80% / 0.7);
   --on-accent: #000000;
+  --accent-strong: var(--accent);
+  --accent-strong-hover: var(--accent-hover);
   --today-bg: hsl(var(--accent-h) 100% 18%);
   --today-line: hsl(var(--accent-h) 100% 72%);
 
@@ -222,10 +283,13 @@ html, body, #root { height: 100%; margin: 0; }
 
 body {
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: -0.003em;
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overflow: hidden;
   user-select: none;
 }
@@ -234,11 +298,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 h1, h2, h3, h4, p { margin: 0; }
 
-:focus-visible { outline: 2px solid var(--accent-ring); outline-offset: 1px; }
+:focus-visible { outline: 3px solid var(--accent-ring); outline-offset: 0; }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-thumb {
-  border: 3px solid transparent;
+  border: 3.5px solid transparent;
   border-radius: 10px;
   background: var(--line-strong) padding-box;
 }

@@ -7,9 +7,27 @@
 use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::sync::Mutex;
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
-use tauri::{AppHandle, Manager};
+use tauri::menu::{Menu, MenuItem, PredefinedMenuItem};
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
+use tauri::{
+    AppHandle, Emitter, Manager, PhysicalPosition, Rect, RunEvent, WebviewUrl,
+    WebviewWindowBuilder, WindowEvent,
+};
+use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
+
+const MAIN_WINDOW: &str = "main";
+const MINI_WINDOW: &str = "mini";
+const MINI_WIDTH: f64 = 340.0;
+const MINI_HEIGHT: f64 = 470.0;
+const TRAY_NOTICE_FILE: &str = "tray-notice-shown";
+
+/// When the mini calendar last lost focus. Clicking the tray icon blurs the
+/// popup before the click event arrives, so without this the same click would
+/// hide it and immediately show it again.
+static MINI_HIDDEN_AT: Mutex<Option<Instant>> = Mutex::new(None);
 
 /// Files bigger than this are refused instead of being loaded into memory.
 const MAX_READ_BYTES: u64 = 64 * 1024 * 1024;
@@ -203,21 +221,261 @@ fn read_text_file(path: PathBuf) -> Result<String, String> {
     fs::read_to_string(&path).map_err(|error| format!("cannot read {}: {error}", path.display()))
 }
 
+/// Texts of the tray menu and the first-close notice, in the saved UI language.
+struct TrayTexts {
+    open_app: &'static str,
+    mini: &'static str,
+    quit: &'static str,
+    tooltip: &'static str,
+    notice_title: &'static str,
+    notice_body: &'static str,
+}
+
+fn tray_texts(app: &AppHandle) -> TrayTexts {
+    let english = data_file(app)
+        .ok()
+        .and_then(|path| read_data_file(&path).ok().flatten())
+        .and_then(|text| serde_json::from_str::<serde_json::Value>(&text).ok())
+        .map(|value| value["settings"]["language"] == "en")
+        .unwrap_or(false);
+
+    if english {
+        TrayTexts {
+            open_app: "Open CalendarPRO",
+            mini: "Mini calendar",
+            quit: "Quit CalendarPRO",
+            tooltip: "CalendarPRO",
+            notice_title: "CalendarPRO keeps running",
+            notice_body: "Closing the window does not quit the app: it keeps running in the \
+                system tray so your reminders still arrive.\n\nClick the tray icon for a mini \
+                calendar, or right-click it and choose \"Quit CalendarPRO\" to close it for good.",
+        }
+    } else {
+        TrayTexts {
+            open_app: "Abrir CalendarPRO",
+            mini: "Mini calendario",
+            quit: "Salir de CalendarPRO",
+            tooltip: "CalendarPRO",
+            notice_title: "CalendarPRO sigue activo",
+            notice_body: "Al cerrar la ventana la app no se cierra: sigue activa en la bandeja \
+                del sistema para que tus recordatorios lleguen.\n\nHaz clic en el icono de la \
+                bandeja para ver un mini calendario, o clic derecho y \"Salir de CalendarPRO\" \
+                para cerrarla definitivamente.",
+        }
+    }
+}
+
+fn show_main(app: &AppHandle) {
+    if let Some(mini) = app.get_webview_window(MINI_WINDOW) {
+        let _ = mini.hide();
+    }
+    if let Some(window) = app.get_webview_window(MAIN_WINDOW) {
+        let _ = window.unminimize();
+        let _ = window.show();
+        let _ = window.set_focus();
+    }
+}
+
+/// Tells the UI to save right now, then exits. The fallback thread exits anyway
+/// if the UI never answers, so "Quit" can never hang.
+fn request_quit(app: &AppHandle) {
+    if app.get_webview_window(MAIN_WINDOW).is_some()
+        && app.emit_to(MAIN_WINDOW, "quit-requested", ()).is_ok()
+    {
+        let handle = app.clone();
+        std::thread::spawn(move || {
+            std::thread::sleep(Duration::from_millis(2000));
+            handle.exit(0);
+        });
+    } else {
+        app.exit(0);
+    }
+}
+
+#[tauri::command]
+fn open_main(app: AppHandle) {
+    show_main(&app);
+}
+
+#[tauri::command]
+fn quit_app(app: AppHandle) {
+    app.exit(0);
+}
+
+/// Shows the mini calendar next to the tray icon, or hides it if it is open.
+fn toggle_mini(app: &AppHandle, tray: Rect) {
+    let Some(window) = app.get_webview_window(MINI_WINDOW) else {
+        return;
+    };
+    if window.is_visible().unwrap_or(false) {
+        let _ = window.hide();
+        return;
+    }
+    let recently_hidden = MINI_HIDDEN_AT
+        .lock()
+        .ok()
+        .and_then(|guard| *guard)
+        .map(|at| at.elapsed() < Duration::from_millis(300))
+        .unwrap_or(false);
+    if recently_hidden {
+        return;
+    }
+
+    let scale = window.scale_factor().unwrap_or(1.0);
+    let icon_pos = tray.position.to_physical::<f64>(scale);
+    let icon_size = tray.size.to_physical::<f64>(scale);
+    let width = MINI_WIDTH * scale;
+    let height = MINI_HEIGHT * scale;
+    let gap = 8.0 * scale;
+
+    let (mx, my, mw, mh) = app
+        .monitor_from_point(icon_pos.x, icon_pos.y)
+        .ok()
+        .flatten()
+        .or_else(|| window.current_monitor().ok().flatten())
+        .map(|monitor| {
+            let pos = monitor.position();
+            let size = monitor.size();
+            (pos.x as f64, pos.y as f64, size.width as f64, size.height as f64)
+        })
+        .unwrap_or((0.0, 0.0, 1920.0, 1080.0));
+
+    let mut x = icon_pos.x + icon_size.width / 2.0 - width / 2.0;
+    x = x.clamp(mx + gap, (mx + mw - width - gap).max(mx + gap));
+    // A taskbar or menu bar in the lower half opens the popup upwards.
+    let mut y = if icon_pos.y > my + mh / 2.0 {
+        icon_pos.y - height - gap
+    } else {
+        icon_pos.y + icon_size.height + gap
+    };
+    y = y.clamp(my + gap, (my + mh - height - gap).max(my + gap));
+
+    let _ = window.set_position(PhysicalPosition::new(x.round() as i32, y.round() as i32));
+    let _ = window.show();
+    let _ = window.set_focus();
+}
+
+fn show_mini_centered(app: &AppHandle) {
+    if let Some(window) = app.get_webview_window(MINI_WINDOW) {
+        let _ = window.center();
+        let _ = window.show();
+        let _ = window.set_focus();
+    }
+}
+
+fn setup_tray(app: &AppHandle) -> tauri::Result<()> {
+    let texts = tray_texts(app);
+
+    WebviewWindowBuilder::new(app, MINI_WINDOW, WebviewUrl::App("index.html?mini=1".into()))
+        .title("CalendarPRO")
+        .inner_size(MINI_WIDTH, MINI_HEIGHT)
+        .decorations(false)
+        .resizable(false)
+        .maximizable(false)
+        .minimizable(false)
+        .skip_taskbar(true)
+        .always_on_top(true)
+        .visible(false)
+        .shadow(true)
+        .build()?;
+
+    let open = MenuItem::with_id(app, "open", texts.open_app, true, None::<&str>)?;
+    let mini = MenuItem::with_id(app, "mini", texts.mini, true, None::<&str>)?;
+    let separator = PredefinedMenuItem::separator(app)?;
+    let quit = MenuItem::with_id(app, "quit", texts.quit, true, None::<&str>)?;
+    let menu = Menu::with_items(app, &[&open, &mini, &separator, &quit])?;
+
+    let mut tray = TrayIconBuilder::with_id("main")
+        .tooltip(texts.tooltip)
+        .menu(&menu)
+        .show_menu_on_left_click(false)
+        .on_menu_event(|app, event| match event.id().as_ref() {
+            "open" => show_main(app),
+            "mini" => show_mini_centered(app),
+            "quit" => request_quit(app),
+            _ => {}
+        })
+        .on_tray_icon_event(|tray, event| {
+            if let TrayIconEvent::Click {
+                button: MouseButton::Left,
+                button_state: MouseButtonState::Up,
+                rect,
+                ..
+            } = event
+            {
+                toggle_mini(tray.app_handle(), rect);
+            }
+        });
+    if let Some(icon) = app.default_window_icon() {
+        tray = tray.icon(icon.clone());
+    }
+    tray.build(app)?;
+    Ok(())
+}
+
+/// First time the main window is closed, explains that the app stays in the tray.
+fn announce_tray_once(app: &AppHandle) {
+    let Ok(marker) = data_file(app).map(|path| path.with_file_name(TRAY_NOTICE_FILE)) else {
+        return;
+    };
+    if marker.exists() {
+        return;
+    }
+    let _ = fs::write(&marker, "1");
+    let texts = tray_texts(app);
+    app.dialog()
+        .message(texts.notice_body)
+        .title(texts.notice_title)
+        .kind(MessageDialogKind::Info)
+        .show(|_| {});
+}
+
+fn on_window_event(window: &tauri::Window, event: &WindowEvent) {
+    match event {
+        // Closing the main window keeps the app (and its reminders) alive.
+        WindowEvent::CloseRequested { api, .. } if window.label() == MAIN_WINDOW => {
+            api.prevent_close();
+            let _ = window.hide();
+            announce_tray_once(window.app_handle());
+        }
+        WindowEvent::Focused(false) if window.label() == MINI_WINDOW => {
+            let _ = window.hide();
+            if let Ok(mut guard) = MINI_HIDDEN_AT.lock() {
+                *guard = Some(Instant::now());
+            }
+        }
+        _ => {}
+    }
+}
+
+fn on_run_event(app: &AppHandle, event: &RunEvent) {
+    // Clicking the Dock icon of a hidden app brings the main window back.
+    #[cfg(target_os = "macos")]
+    if let RunEvent::Reopen { .. } = event {
+        show_main(app);
+    }
+    #[cfg(not(target_os = "macos"))]
+    let _ = (app, event);
+}
+
 pub fn run() {
     tauri::Builder::default()
         // Must be first: a second launch focuses the running window instead of
         // opening a second writer on the same data file.
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-            if let Some(window) = app.get_webview_window("main") {
-                let _ = window.unminimize();
-                let _ = window.show();
-                let _ = window.set_focus();
-            }
+            show_main(app);
         }))
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_opener::init())
+        .setup(|app| {
+            setup_tray(app.handle())?;
+            Ok(())
+        })
+        .on_window_event(on_window_event)
         .invoke_handler(tauri::generate_handler![
+            open_main,
+            quit_app,
             load_data,
             save_data,
             data_location,
@@ -226,8 +484,9 @@ pub fn run() {
             auto_backup,
             backup_location
         ])
-        .run(tauri::generate_context!())
-        .expect("error while running CalendarPRO");
+        .build(tauri::generate_context!())
+        .expect("error while building CalendarPRO")
+        .run(|app, event| on_run_event(app, &event));
 }
 
 #[cfg(test)]

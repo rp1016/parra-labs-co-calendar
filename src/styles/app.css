@@ -2033,3 +2033,41 @@ input[type="date"], input[type="time"] { font-variant-numeric: tabular-nums; }
     color: #666;
   }
 }
+
+/* ---- Tray mini calendar (window "mini") ---- */
+html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(--bg); }
+.mini {
+  display: flex; flex-direction: column; height: 100vh; padding: 12px 12px 10px;
+  gap: 8px; background: var(--bg); color: var(--text); user-select: none;
+  border: 1px solid var(--line-strong); box-sizing: border-box;
+}
+.mini-head { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.mini-title {
+  flex: 1; border: 0; background: transparent; color: var(--text-strong);
+  font: 600 15px/1.2 var(--font); padding: 6px; border-radius: 6px; cursor: pointer;
+}
+.mini-title:hover { background: var(--bg-hover); }
+.mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.mini-dow { text-align: center; font: 600 11px/1.6 var(--font); color: var(--muted); text-transform: uppercase; }
+.mini-day {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  height: 34px; border: 1px solid transparent; border-radius: 8px; background: transparent;
+  color: var(--text); font: 500 13px/1 var(--font); cursor: pointer;
+}
+.mini-day:hover { background: var(--bg-hover); }
+.mini-day.is-out { color: var(--faint); }
+.mini-day.is-today { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.mini-day.is-selected:not(.is-today) { border-color: var(--accent); background: var(--accent-soft); }
+.mini-day i { width: 4px; height: 4px; border-radius: 50%; background: transparent; }
+.mini-day i.has-events { background: var(--accent); }
+.mini-day.is-today i.has-events { background: var(--on-accent); }
+.mini-events { flex: 1; min-height: 0; overflow: auto; border-top: 1px solid var(--line); padding-top: 8px; }
+.mini-events h2 { margin: 0 0 6px; font: 600 12px/1.3 var(--font); color: var(--muted); }
+.mini-events ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.mini-events li { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 2px; }
+.mini-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.mini-time { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 52px; }
+.mini-name { color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mini-empty { color: var(--faint); font-size: 13px; margin: 6px 0; }
+.mini-foot { display: flex; justify-content: flex-end; }
+.mini-foot .btn { display: inline-flex; align-items: center; gap: 6px; }

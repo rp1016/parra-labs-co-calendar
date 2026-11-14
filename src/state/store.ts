@@ -396,18 +396,35 @@ export const useAppStore = create<AppStore>()((set, get) => ({
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
 let lastSerialized = "";
 
+async function persist(data: AppData): Promise<void> {
+  const serialized = JSON.stringify(data);
+  if (serialized === lastSerialized) return;
+  lastSerialized = serialized;
+  try {
+    await saveData(data);
+  } catch {
+    useAppStore.getState().pushToast("No se pudo guardar en disco.", "error");
+  }
+}
+
 useAppStore.subscribe((state, previous) => {
   if (!state.ready || state.data === previous.data) return;
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    const serialized = JSON.stringify(state.data);
-    if (serialized === lastSerialized) return;
-    lastSerialized = serialized;
-    void saveData(state.data).catch(() => {
-      useAppStore.getState().pushToast("No se pudo guardar en disco.", "error");
-    });
+    saveTimer = null;
+    void persist(state.data);
   }, 350);
 });
+
+/** Writes any pending change right away; used before the app quits. */
+export async function flushPendingSave(): Promise<void> {
+  if (saveTimer) {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+  }
+  const state = useAppStore.getState();
+  if (state.ready) await persist(state.data);
+}
 
 export function visibleEvents(data: AppData): CalendarEvent[] {
   const visible = new Set(data.calendars.filter((calendar) => calendar.visible).map((calendar) => calendar.id));

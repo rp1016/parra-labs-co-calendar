@@ -2,6 +2,7 @@ import "@fontsource-variable/inter";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { MiniCalendar } from "./components/MiniCalendar";
 import "./styles/theme.css";
 import "./styles/app.css";
 
@@ -11,10 +12,11 @@ async function boot() {
     installDemo();
   }
 
+  const isMini = new URLSearchParams(window.location.search).has("mini");
+  if (isMini) document.documentElement.classList.add("is-mini");
+
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
+    <React.StrictMode>{isMini ? <MiniCalendar /> : <App />}</React.StrictMode>,
   );
 }
 

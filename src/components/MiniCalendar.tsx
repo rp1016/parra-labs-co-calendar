@@ -1,0 +1,235 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { translate, localeOf } from "../i18n";
+import { isDesktop, loadData } from "../lib/api";
+import {
+  addMonths,
+  endOfDay,
+  formatLongDate,
+  formatMonthYear,
+  formatTime,
+  formatWeekday,
+  isSameDay,
+  monthGrid,
+  parseDateKey,
+  startOfDay,
+  toDateKey,
+  weekdayOrder,
+} from "../lib/dates";
+import { normalizeData } from "../lib/normalize";
+import { occurrencesBetween, sortOccurrences } from "../lib/recurrence";
+import { defaultData, type AppData, type Occurrence } from "../lib/types";
+import { visibleEvents } from "../state/store";
+
+/** Read-only popup shown from the tray icon. It never writes the data file:
+ *  the main window is the only writer, this one just re-reads on focus. */
+export function MiniCalendar() {
+  const [data, setData] = useState<AppData>(() => defaultData());
+  const [loaded, setLoaded] = useState(false);
+  const [month, setMonth] = useState(() => toDateKey(new Date()));
+  const [selected, setSelected] = useState(() => toDateKey(new Date()));
+  const [systemDark, setSystemDark] = useState(
+    () => window.matchMedia("(prefers-color-scheme: dark)").matches,
+  );
+
+  const settings = data.settings;
+  const language = settings.language;
+  const t = useCallback(
+    (key: Parameters<typeof translate>[1], params?: Record<string, string | number>) =>
+      translate(language, key, params),
+    [language],
+  );
+  const locale = localeOf(language);
+
+  const refresh = useCallback(() => {
+    loadData()
+      .then((stored) => {
+        setData(stored ? normalizeData(stored) : defaultData());
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    refresh();
+    const onShow = () => {
+      if (document.visibilityState === "hidden") return;
+      const today = toDateKey(new Date());
+      setMonth(today);
+      setSelected(today);
+      refresh();
+    };
+    window.addEventListener("focus", onShow);
+    document.addEventListener("visibilitychange", onShow);
+    const timer = setInterval(refresh, 60_000);
+    return () => {
+      window.removeEventListener("focus", onShow);
+      document.removeEventListener("visibilitychange", onShow);
+      clearInterval(timer);
+    };
+  }, [refresh]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = (event: MediaQueryListEvent) => setSystemDark(event.matches);
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.theme = settings.theme === "auto" ? (systemDark ? "dark" : "light") : settings.theme;
+    root.dataset.accent = settings.accent;
+    root.lang = language;
+  }, [settings.theme, settings.accent, language, systemDark]);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      void import("@tauri-apps/api/window").then(({ getCurrentWindow }) =>
+        getCurrentWindow().hide(),
+      );
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const anchor = parseDateKey(month);
+  const grid = useMemo(
+    () => monthGrid(anchor.getFullYear(), anchor.getMonth(), settings.weekStartsOn),
+    [month, settings.weekStartsOn],
+  );
+
+  const occurrences = useMemo(() => {
+    const from = startOfDay(grid[0]);
+    const to = endOfDay(grid[41]);
+    return sortOccurrences(
+      visibleEvents(data).flatMap((event) => occurrencesBetween(event, from, to)),
+    );
+  }, [data, grid]);
+
+  const byDay = useMemo(() => {
+    const map = new Map<string, Occurrence[]>();
+    for (const item of occurrences) {
+      const key = toDateKey(item.start);
+      const list = map.get(key);
+      if (list) list.push(item);
+      else map.set(key, [item]);
+    }
+    return map;
+  }, [occurrences]);
+
+  const colors = useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const calendar of data.calendars) map[calendar.id] = calendar.color;
+    return map;
+  }, [data.calendars]);
+
+  const today = new Date();
+  const selectedDate = parseDateKey(selected);
+  const dayItems = byDay.get(selected) ?? [];
+  const weekdays = weekdayOrder(settings.weekStartsOn).map((index) =>
+    formatWeekday(new Date(2024, 0, 7 + index), locale, "narrow"),
+  );
+
+  const openApp = () => {
+    if (!isDesktop) return;
+    void import("@tauri-apps/api/core").then(({ invoke }) => invoke("open_main"));
+  };
+
+  return (
+    <div className="mini">
+      <header className="mini-head">
+        <button
+          type="button"
+          className="icon-btn"
+          aria-label={t("actions.previous")}
+          onClick={() => setMonth(toDateKey(addMonths(anchor, -1)))}
+        >
+          <ChevronLeft size={16} />
+        </button>
+        <button
+          type="button"
+          className="mini-title"
+          title={t("actions.today")}
+          onClick={() => {
+            const key = toDateKey(new Date());
+            setMonth(key);
+            setSelected(key);
+          }}
+        >
+          {formatMonthYear(anchor, locale)}
+        </button>
+        <button
+          type="button"
+          className="icon-btn"
+          aria-label={t("actions.next")}
+          onClick={() => setMonth(toDateKey(addMonths(anchor, 1)))}
+        >
+          <ChevronRight size={16} />
+        </button>
+      </header>
+
+      <div className="mini-grid" role="grid">
+        {weekdays.map((label, index) => (
+          <span key={`${label}-${index}`} className="mini-dow">
+            {label}
+          </span>
+        ))}
+        {grid.map((day) => {
+          const key = toDateKey(day);
+          const events = byDay.get(key) ?? [];
+          const classes = [
+            "mini-day",
+            day.getMonth() !== anchor.getMonth() ? "is-out" : "",
+            isSameDay(day, today) ? "is-today" : "",
+            key === selected ? "is-selected" : "",
+          ]
+            .filter(Boolean)
+            .join(" ");
+          return (
+            <button key={key} type="button" className={classes} onClick={() => setSelected(key)}>
+              <span>{day.getDate()}</span>
+              <i className={events.length > 0 ? "has-events" : ""} />
+            </button>
+          );
+        })}
+      </div>
+
+      <section className="mini-events" aria-live="polite">
+        <h2>
+          {isSameDay(selectedDate, today)
+            ? `${t("actions.today")} · ${formatLongDate(selectedDate, locale)}`
+            : formatLongDate(selectedDate, locale)}
+        </h2>
+        {!loaded ? null : dayItems.length === 0 ? (
+          <p className="mini-empty">{t("mini.noEvents")}</p>
+        ) : (
+          <ul>
+            {dayItems.map((item) => (
+              <li key={item.key}>
+                <span
+                  className="mini-dot"
+                  style={{ background: colors[item.event.calendarId] ?? "var(--accent)" }}
+                />
+                <span className="mini-time">
+                  {item.event.allDay
+                    ? t("common.allDay")
+                    : formatTime(item.start, locale, settings.use24h)}
+                </span>
+                <span className="mini-name">{item.event.title || t("mini.untitled")}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <footer className="mini-foot">
+        <button type="button" className="btn" onClick={openApp}>
+          <ExternalLink size={14} /> {t("mini.openApp")}
+        </button>
+      </footer>
+    </div>
+  );
+}

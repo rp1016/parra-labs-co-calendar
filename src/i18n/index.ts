@@ -216,6 +216,9 @@ const es = {
   "toast.holidaysAdded": "{count} festivos agregados.",
   "toast.holidaysNone": "Esos festivos ya estaban en el calendario.",
   "toast.autoBackupError": "No se pudo crear la copia automática.",
+  "mini.noEvents": "Sin eventos este día",
+  "mini.untitled": "Sin título",
+  "mini.openApp": "Abrir CalendarPRO",
 
   "empty.day": "No hay eventos este día",
   "empty.agenda": "No hay eventos próximos",
@@ -451,6 +454,9 @@ const en: Record<keyof typeof es, string> = {
   "toast.holidaysAdded": "{count} holidays added.",
   "toast.holidaysNone": "Those holidays were already in the calendar.",
   "toast.autoBackupError": "The automatic backup could not be created.",
+  "mini.noEvents": "No events this day",
+  "mini.untitled": "Untitled",
+  "mini.openApp": "Open CalendarPRO",
 
   "empty.day": "No events on this day",
   "empty.agenda": "No upcoming events",

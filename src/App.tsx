@@ -19,7 +19,8 @@ import { useShortcuts } from "./hooks/useShortcuts";
 import { useT } from "./i18n";
 import { autoBackup } from "./lib/api";
 import { buildBackup } from "./lib/exporters";
-import { useAppStore } from "./state/store";
+import { flushPendingSave, useAppStore } from "./state/store";
+import { isDesktop } from "./lib/api";
 
 let hydrationStarted = false;
 let backupStarted = false;
@@ -71,6 +72,26 @@ export default function App() {
     root.lang = settings.language;
     document.title = "CalendarPRO — by Parrita Labs";
   }, [resolvedTheme, settings.accent, settings.language]);
+
+  // The tray "Quit" asks the UI to save first, then closes the app for good.
+  useEffect(() => {
+    if (!isDesktop) return;
+    let unlisten: (() => void) | undefined;
+    let disposed = false;
+    void import("@tauri-apps/api/event").then(async ({ listen }) => {
+      const stop = await listen("quit-requested", async () => {
+        await flushPendingSave();
+        const { invoke } = await import("@tauri-apps/api/core");
+        await invoke("quit_app");
+      });
+      if (disposed) stop();
+      else unlisten = stop;
+    });
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, []);
 
   useShortcuts();
   useReminders();

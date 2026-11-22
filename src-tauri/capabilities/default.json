@@ -12,6 +12,9 @@
     "dialog:allow-ask",
     "dialog:allow-message",
     "notification:default",
+    "autostart:allow-enable",
+    "autostart:allow-disable",
+    "autostart:allow-is-enabled",
     "opener:allow-reveal-item-in-dir",
     "opener:allow-open-path"
   ]

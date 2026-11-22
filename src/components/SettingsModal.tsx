@@ -20,6 +20,9 @@ import {
 import { useT } from "../i18n";
 import {
   autoBackupPath,
+  getAutostart,
+  setAutostart,
+  isDesktop,
   dataFilePath,
   ensureNotificationPermission,
   openPath,
@@ -45,6 +48,7 @@ import {
   type AccentName,
   type ArtThemeId,
   type Language,
+  type MiniStyle,
   type ThemeName,
 } from "../lib/types";
 import { useAppStore } from "../state/store";
@@ -76,6 +80,10 @@ export function SettingsModal() {
 
   const [tab, setTab] = useState<TabId>("general");
   const [location, setLocation] = useState("…");
+  const [autostart, setAutostartState] = useState(false);
+  useEffect(() => {
+    void getAutostart().then(setAutostartState).catch(() => undefined);
+  }, []);
   const [country, setCountry] = useState("ES");
   const [holidayYears, setHolidayYears] = useState("1");
 
@@ -524,6 +532,30 @@ export function SettingsModal() {
                     </select>
                   </div>
 
+                  <div className="setting-row">
+                    <div className="setting-main">
+                      <span className="setting-icon">
+                        <Flower2 size={15} />
+                      </span>
+                      <div>
+                        {t("settings.miniStyle")}
+                        <div className="sub">{t("settings.miniStyleHint")}</div>
+                      </div>
+                    </div>
+                    <select
+                      value={settings.miniStyle}
+                      onChange={(event) =>
+                        updateSettings({ miniStyle: event.target.value as MiniStyle })
+                      }
+                    >
+                      {(["popover", "sonoma", "botanico"] as const).map((id) => (
+                        <option key={id} value={id}>
+                          {t(`miniStyle.${id}`)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                   {artPreview && (
                     <div className="art-preview">
                       <div className="art-preview-sheet" aria-hidden="true">
@@ -591,6 +623,29 @@ export function SettingsModal() {
                       onChange={(event) => updateSettings({ autoBackup: event.target.checked })}
                     />
                   </div>
+
+                  {isDesktop && (
+                    <div className="setting-row">
+                      <div className="setting-main">
+                        <span className="setting-icon">
+                          <FolderOpen size={15} />
+                        </span>
+                        <div>
+                          {t("settings.autostart")}
+                          <div className="sub">{t("settings.autostartHint")}</div>
+                        </div>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={autostart}
+                        onChange={(event) => {
+                          const value = event.target.checked;
+                          setAutostartState(value);
+                          void setAutostart(value).catch(() => setAutostartState(!value));
+                        }}
+                      />
+                    </div>
+                  )}
 
                   <div className="settings-actions">
                     <button

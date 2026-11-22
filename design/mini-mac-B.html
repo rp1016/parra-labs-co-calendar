@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CalendarPRO mini - propuesta B (popover macOS)</title>
+<style>
+:root{
+  --page:#d9dde1; --bg:rgba(248,249,250,.96); --text:#1d1d1f; --muted:#6e6e73; --faint:#b0b3b8;
+  --line:rgba(0,0,0,.08); --hover:rgba(0,0,0,.05); --seg:rgba(0,0,0,.06); --seg-on:#fff;
+  --accent:#15bed1; --accent-soft:rgba(21,190,209,.16); --on-accent:#fff; --holiday:#c2740b;
+  --shadow:0 18px 50px rgba(0,0,0,.28),0 0 0 .5px rgba(0,0,0,.18);
+}
+[data-theme="dark"]{
+  --page:#15171a; --bg:rgba(38,40,44,.97); --text:#f2f2f4; --muted:#9a9ca3; --faint:#5d6068;
+  --line:rgba(255,255,255,.09); --hover:rgba(255,255,255,.07); --seg:rgba(255,255,255,.09); --seg-on:#5a5d64;
+  --accent:#2fd0e2; --accent-soft:rgba(47,208,226,.2); --on-accent:#06262b; --holiday:#f0a040;
+  --shadow:0 18px 50px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.16);
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--page);font:13px/1.4 -apple-system,"SF Pro Text","Segoe UI",system-ui,sans-serif;color:var(--text);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px 0}
+.toggle{border:0;border-radius:999px;padding:7px 16px;font:600 12px inherit;font-family:inherit;background:var(--seg-on);color:var(--text);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.stage{position:relative;padding-top:10px}
+.notch{position:absolute;top:2px;left:50%;width:16px;height:16px;margin-left:-8px;background:var(--bg);transform:rotate(45deg);border-radius:3px;box-shadow:-1px -1px 0 0 var(--line)}
+.mini{position:relative;width:340px;height:540px;background:var(--bg);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;padding:14px 14px 12px}
+.mini>*{position:relative;z-index:1}
+.art{position:absolute!important;z-index:0!important;right:-30px;top:-34px;width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,var(--accent-soft),transparent 68%);opacity:.9}
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.title{display:flex;align-items:baseline;gap:7px}
+.month{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.year{font-size:22px;font-weight:300;color:var(--muted);letter-spacing:-.01em}
+.seg{display:flex;background:var(--seg);border-radius:8px;padding:2px;gap:1px}
+.seg button{border:0;background:transparent;color:var(--text);height:24px;min-width:28px;padding:0 8px;border-radius:6px;font:500 12px inherit;font-family:inherit;cursor:pointer}
+.seg button:hover{background:var(--hover)}
+.seg button.hoy{background:var(--seg-on);box-shadow:0 1px 2px rgba(0,0,0,.18)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px 0}
+.dow{text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--muted);padding:2px 0 4px}
+.day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;height:36px;border:0;background:transparent;color:var(--text);font:400 13px inherit;font-family:inherit;border-radius:50%;cursor:pointer;width:36px;margin:0 auto}
+.day:hover{background:var(--hover)}
+.day.out{color:var(--faint)}
+.day i{width:4px;height:4px;border-radius:50%;background:transparent}
+.day i.ev{background:var(--accent)}
+.day i.hol{background:var(--holiday)}
+.day.hl{color:var(--holiday);font-weight:600}
+.day.today{background:var(--accent);color:var(--on-accent);font-weight:700}
+.day.today i.ev{background:var(--on-accent)}
+.day.sel:not(.today){box-shadow:inset 0 0 0 1.5px var(--accent);background:var(--accent-soft)}
+.list{flex:1;min-height:0;margin-top:8px;border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column}
+.list h2{margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+ul{list-style:none;margin:0;padding:0}
+li,.new{display:flex;align-items:center;gap:10px;padding:7px 4px;border-bottom:1px solid var(--line)}
+.chk{appearance:none;-webkit-appearance:none;flex:none;width:18px;height:18px;margin:0;border-radius:50%;border:1.5px solid var(--faint);background:transparent;cursor:pointer;display:grid;place-content:center;transition:.12s}
+.chk:hover{border-color:var(--accent)}
+.chk:checked{background:var(--accent);border-color:var(--accent)}
+.chk:checked::after{content:"";width:8px;height:4px;border-left:2px solid var(--on-accent);border-bottom:2px solid var(--on-accent);transform:rotate(-45deg) translate(1px,-1px)}
+.name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12px}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+li.done .name{text-decoration:line-through;color:var(--faint)}
+li.done .time{color:var(--faint)}
+.new{border-bottom:0;color:var(--muted)}
+.plus{flex:none;width:18px;height:18px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-content:center;font-size:15px;line-height:1;font-weight:500}
+.new input{flex:1;border:0;outline:0;background:transparent;font:inherit;color:var(--text)}
+.new input::placeholder{color:var(--muted)}
+.foot{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);display:flex;justify-content:center}
+.open{border:0;background:transparent;color:var(--accent);font:500 12.5px inherit;font-family:inherit;cursor:pointer;padding:4px 10px;border-radius:6px}
+.open:hover{background:var(--hover)}
+</style>
+</head>
+<body>
+<button class="toggle" id="t" type="button">Cambiar a modo oscuro</button>
+<div class="stage">
+  <div class="notch"></div>
+  <div class="mini">
+    <div class="art" aria-hidden="true"></div>
+    <header class="head">
+      <div class="title"><span class="month">Noviembre</span><span class="year">2026</span></div>
+      <div class="seg"><button type="button" aria-label="Anterior">&#8249;</button><button type="button" class="hoy">Hoy</button><button type="button" aria-label="Siguiente">&#8250;</button></div>
+    </header>
+    <div class="grid" id="g"></div>
+    <section class="list">
+      <h2>Hoy &middot; domingo 22 de noviembre, 2026</h2>
+      <ul>
+        <li class="done"><input class="chk" type="checkbox" checked aria-label="Hecho"><span class="dot" style="background:#15bed1"></span><span class="name">Llamar al dentista</span><span class="time">9:00</span></li>
+        <li><input class="chk" type="checkbox" aria-label="Hecho"><span class="dot" style="background:#8e6bd8"></span><span class="name">Almuerzo con mamá</span><span class="time">12:30</span></li>
+        <li><input class="chk" type="checkbox" aria-label="Hecho"><span class="dot" style="background:#e5605b"></span><span class="name">Entregar informe de ventas</span><span class="time">16:00</span></li>
+      </ul>
+      <label class="new"><span class="plus">+</span><input placeholder="Nuevo recordatorio"></label>
+    </section>
+    <footer class="foot"><button class="open" type="button">Abrir CalendarPRO</button></footer>
+  </div>
+</div>
+<script>
+var g=document.getElementById('g'),h='';
+['L','M','M','J','V','S','D'].forEach(function(d){h+='<span class="dow">'+d+'</span>'});
+// Noviembre 2026 empieza en domingo; semana inicia lunes -> 26 oct ... 6 dic
+var start=new Date(2026,9,26);
+var evs={5:1,12:1,22:1,24:1,27:1},hol={2:1,25:1};
+for(var i=0;i<42;i++){var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i),n=d.getDate(),inM=d.getMonth()===10;
+ var c='day'+(inM?'':' out')+(inM&&n===22?' today sel':'')+(inM&&hol[n]?' hl':'');
+ h+='<button type="button" class="'+c+'"><span>'+n+'</span><i class="'+(inM&&evs[n]?'ev':inM&&hol[n]?'hol':'')+'"></i></button>'}
+g.innerHTML=h;
+document.querySelectorAll('.chk').forEach(function(c){c.onchange=function(){c.closest('li').classList.toggle('done',c.checked)}});
+var b=document.getElementById('t');b.onclick=function(){var r=document.documentElement,d=r.dataset.theme==='dark';r.dataset.theme=d?'light':'dark';b.textContent=d?'Cambiar a modo oscuro':'Cambiar a modo claro'};
+</script>
+</body>
+</html>

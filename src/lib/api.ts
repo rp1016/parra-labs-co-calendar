@@ -142,3 +142,28 @@ export async function notify(title: string, body: string): Promise<void> {
   const { sendNotification } = await import("@tauri-apps/plugin-notification");
   sendNotification({ title, body });
 }
+
+/** "Start with the system" state (desktop only). */
+export async function getAutostart(): Promise<boolean> {
+  if (!inTauri) return false;
+  const { isEnabled } = await import("@tauri-apps/plugin-autostart");
+  return isEnabled();
+}
+
+export async function setAutostart(enabled: boolean): Promise<void> {
+  if (!inTauri) return;
+  const { enable, disable } = await import("@tauri-apps/plugin-autostart");
+  if (enabled) await enable();
+  else await disable();
+}
+
+/** Adds an event through the backend, so the file is never overwritten wholesale. */
+export async function miniAddEvent(event: unknown): Promise<AppData> {
+  const { invoke } = await import("@tauri-apps/api/core");
+  return JSON.parse(await invoke<string>("mini_add_event", { event })) as AppData;
+}
+
+export async function miniToggleDone(eventId: string, date: string): Promise<AppData> {
+  const { invoke } = await import("@tauri-apps/api/core");
+  return JSON.parse(await invoke<string>("mini_toggle_done", { eventId, date })) as AppData;
+}

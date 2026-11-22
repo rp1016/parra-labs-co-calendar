@@ -2047,6 +2047,19 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
   font: 600 15px/1.2 var(--font); padding: 6px; border-radius: 6px; cursor: pointer;
 }
 .mini-title:hover { background: var(--bg-hover); }
+.mini { position: relative; }
+.mini > * { position: relative; z-index: 1; }
+.mini > .mini-art {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.18;
+  background-repeat: no-repeat; background-position: center 55%; background-size: 92% auto;
+}
+:root[data-theme="dark"] .mini-art, :root[data-theme="midnight"] .mini-art {
+  filter: invert(1) hue-rotate(180deg) saturate(0.6);
+}
+:root[data-theme="contrast"] .mini-art { display: none; }
+.mini-title { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.mini-month { font: 600 14px/1.2 var(--font); text-transform: capitalize; }
+.mini-year { font: 700 20px/1.1 var(--font); color: var(--accent, var(--text-strong)); letter-spacing: 0.02em; }
 .mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
 .mini-dow { text-align: center; font: 600 11px/1.6 var(--font); color: var(--muted); text-transform: uppercase; }
 .mini-day {
@@ -2068,6 +2081,14 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
 .mini-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .mini-time { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 52px; }
 .mini-name { color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mini-check { flex: none; width: 15px; height: 15px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+.mini-events li.is-done .mini-name { text-decoration: line-through; color: var(--faint); }
+.mini-add { display: flex; gap: 6px; }
+.mini-add input {
+  flex: 1; min-width: 0; padding: 7px 9px; border: 1px solid var(--line-strong); border-radius: 8px;
+  background: var(--bg); color: var(--text); font: 13px var(--font);
+}
+.mini-add input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
 .mini-empty { color: var(--faint); font-size: 13px; margin: 6px 0; }
 .mini-foot { display: flex; justify-content: flex-end; }
 .mini-foot .btn { display: inline-flex; align-items: center; gap: 6px; }
@@ -2077,3 +2098,92 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
 .mini-day.is-holiday.is-selected:not(.is-today) { border-color: #c2740b; }
 .mini-events li.is-holiday .mini-name { color: #c2740b; font-weight: 600; }
 .mini-events li.is-holiday .mini-time { color: #c2740b; }
+
+/* ---- Mini calendar styles (popover / sonoma / botanico) ---- */
+.mini { border-radius: 14px; overflow: hidden; }
+.mini-year { font-weight: 300; }
+.mini-style-popover .mini-title { flex-direction: row; align-items: baseline; justify-content: flex-start; gap: 7px; padding-left: 4px; }
+.mini-style-popover .mini-month { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
+.mini-style-popover .mini-year { font-size: 21px; color: var(--muted); }
+.mini-style-popover .mini-day { border-radius: 50%; width: 36px; margin: 0 auto; }
+.mini-style-popover .mini-add input { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+.mini-check { appearance: none; -webkit-appearance: none; border-radius: 50%; border: 1.5px solid var(--faint); display: grid; place-content: center; background: transparent; }
+.mini-check:checked { background: var(--accent); border-color: var(--accent); }
+.mini-check:checked::after { content: ""; width: 7px; height: 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px, -1px); }
+
+/* Sonoma: frosted glass with a red accent */
+.mini-style-sonoma { --accent: #ff3b30; border-radius: 26px; background: color-mix(in srgb, var(--bg) 82%, transparent); }
+.mini-style-sonoma .mini-title { flex-direction: row; align-items: baseline; justify-content: center; gap: 6px; }
+.mini-style-sonoma .mini-month { font-size: 19px; font-weight: 700; }
+.mini-style-sonoma .mini-year { font-size: 19px; color: var(--accent); font-weight: 600; }
+.mini-style-sonoma .mini-day { border-radius: 50%; width: 36px; margin: 0 auto; }
+.mini-style-sonoma .mini-add input { border-radius: 999px; background: var(--bg-hover, rgba(0,0,0,.05)); border-color: transparent; }
+.mini-style-sonoma .mini-add .btn { border-radius: 999px; }
+.mini-style-sonoma .mini-foot .btn { border-radius: 999px; }
+
+/* Botanical: illustration banner (follows the illustration theme) */
+.mini-style-botanico { --accent: #b4553f; border-radius: 18px; background: #fbf7ee; color: #2d2a26; padding-top: 0; }
+:root[data-theme="dark"] .mini-style-botanico, :root[data-theme="midnight"] .mini-style-botanico { background: var(--bg); color: var(--text); }
+.mini > .mini-banner {
+  position: absolute; left: 0; right: 0; top: 0; height: 116px; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, #dfe7e2, #efe9d9) center / cover;
+  background-size: cover; background-position: center 30%; opacity: .9;
+  -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent);
+}
+:root[data-theme="dark"] .mini-banner, :root[data-theme="midnight"] .mini-banner { filter: invert(1) hue-rotate(180deg) saturate(.6); opacity: .5; }
+.mini-style-botanico .mini-head { margin-top: 62px; padding-top: 0; }
+.mini-style-botanico .mini-title { flex-direction: row; justify-content: flex-start; align-items: baseline; gap: 8px; }
+.mini-style-botanico .mini-month, .mini-style-botanico .mini-year { font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; font-size: 30px; line-height: 1; font-weight: 500; }
+.mini-style-botanico .mini-year { font-style: italic; font-weight: 400; color: var(--accent); }
+.mini-style-botanico .mini-day { border-radius: 50%; width: 34px; margin: 0 auto; }
+.mini-style-botanico .mini-day.is-today { background: var(--accent); color: #fff; }
+.mini-style-botanico .mini-foot .btn { background: #2d2a26; color: #fbf7ee; border-color: #2d2a26; }
+:root[data-theme="dark"] .mini-style-botanico .mini-foot .btn, :root[data-theme="midnight"] .mini-style-botanico .mini-foot .btn { background: var(--accent); border-color: var(--accent); }
+.mini-style-botanico .mini-art { display: none; }
+
+/* December: lights garland, snowflakes and festive colors */
+.is-december { --xmas-red: #d6403a; --xmas-green: #2e9e5b; padding-top: 26px; }
+.is-december .mini-year { color: var(--xmas-red) !important; }
+.mini > .mini-xmas { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.mini-lights {
+  position: absolute; left: 0; right: 0; top: 0; height: 24px; opacity: .95;
+  background:
+    radial-gradient(circle 4px at 8px 11px, #e53935 96%, transparent) 0 0 / 80px 24px repeat-x,
+    radial-gradient(circle 4px at 24px 14px, #43a047 96%, transparent) 0 0 / 80px 24px repeat-x,
+    radial-gradient(circle 4px at 40px 11px, #fbc02d 96%, transparent) 0 0 / 80px 24px repeat-x,
+    radial-gradient(circle 4px at 56px 14px, #1e88e5 96%, transparent) 0 0 / 80px 24px repeat-x,
+    radial-gradient(ellipse 40px 9px at 40px -2px, transparent 70%, rgba(80, 80, 80, .55) 72%, rgba(80, 80, 80, .55) 78%, transparent 80%) 0 0 / 80px 12px repeat-x;
+  animation: xmas-twinkle 2.4s ease-in-out infinite alternate;
+}
+.flake { position: absolute; top: -14px; color: #8fb8d9; opacity: .55; font-size: 14px; animation: flake-fall 9s linear infinite; }
+.flake.f1 { left: 12%; animation-delay: 0s; }
+.flake.f2 { left: 34%; animation-delay: -3s; font-size: 11px; }
+.flake.f3 { left: 58%; animation-delay: -6s; }
+.flake.f4 { left: 78%; animation-delay: -1.5s; font-size: 12px; }
+.flake.f5 { left: 92%; animation-delay: -7.5s; font-size: 10px; }
+@keyframes flake-fall { from { transform: translateY(0) rotate(0); } to { transform: translateY(560px) rotate(200deg); } }
+@keyframes xmas-twinkle { from { filter: brightness(.85); } to { filter: brightness(1.2); } }
+.is-december .mini-day.is-today { background: var(--xmas-red); }
+.is-december .mini-style-sonoma, .is-december.mini-style-sonoma { --accent: #d6403a; }
+.is-december.mini-style-botanico { --accent: #2e7d4f; }
+@media (prefers-reduced-motion: reduce) { .flake, .mini-lights { animation: none; } }
+.mini input.mini-check { border-radius: 50%; width: 17px; height: 17px; background-color: transparent; border: 1.5px solid var(--faint); }
+.mini input.mini-check:checked { background-color: var(--accent); border-color: var(--accent); }
+.mini-style-sonoma { --accent-strong: #ff3b30; --on-accent-strong: #fff; --accent-soft: rgba(255, 59, 48, .14); }
+.mini-style-botanico { --accent-strong: #b4553f; --on-accent-strong: #fff; --accent-soft: rgba(180, 85, 63, .14); }
+.is-december.mini-style-sonoma { --accent-strong: #d6403a; --accent-soft: rgba(214, 64, 58, .14); }
+.is-december.mini-style-botanico { --accent-strong: #2e7d4f; --accent-soft: rgba(46, 125, 79, .14); }
+.is-december.mini-style-popover { --accent-strong: #d6403a; --accent-soft: rgba(214, 64, 58, .14); --accent: #d6403a; }
+.is-december .mini-day.is-today { background: var(--accent-strong); }
+.mini-style-botanico .mini-day.is-today { background: var(--accent-strong); }
+.mini-xmas-scene { display: block; flex: none; width: 100%; height: 84px; margin-top: -2px; pointer-events: none; }
+.firework { transform-box: view-box; animation: firework-burst 3.3s ease-out infinite; opacity: 0; }
+@keyframes firework-burst {
+  0% { opacity: 0; transform: scale(0.2); }
+  15% { opacity: 1; }
+  70% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1.3); }
+}
+@media (prefers-reduced-motion: reduce) { .firework { animation: none; opacity: .9; } }
+.mini-events { min-height: 92px; }
+.mini { height: 100vh; }

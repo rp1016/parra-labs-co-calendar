@@ -16,13 +16,20 @@ use tauri::{
     AppHandle, Emitter, Manager, PhysicalPosition, Rect, RunEvent, WebviewUrl,
     WebviewWindowBuilder, WindowEvent,
 };
+use tauri_plugin_autostart::ManagerExt;
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
 const MAIN_WINDOW: &str = "main";
 const MINI_WINDOW: &str = "mini";
 const MINI_WIDTH: f64 = 340.0;
-const MINI_HEIGHT: f64 = 470.0;
+const MINI_HEIGHT: f64 = 590.0;
 const TRAY_NOTICE_FILE: &str = "tray-notice-shown";
+const AUTOSTART_MARKER: &str = "autostart-initialized";
+const VERSION_MARKER: &str = "last-version";
+const HIDDEN_FLAG: &str = "--hidden";
+
+/// Serializes read-modify-write cycles on the data file.
+static DATA_LOCK: Mutex<()> = Mutex::new(());
 
 /// When the mini calendar last lost focus. Clicking the tray icon blurs the
 /// popup before the click event arrives, so without this the same click would
@@ -186,6 +193,108 @@ fn save_data(app: AppHandle, contents: String) -> Result<(), String> {
     serde_json::from_str::<serde_json::Value>(&contents)
         .map_err(|error| format!("refusing to save invalid data: {error}"))?;
     write_atomic(&data_file(&app)?, &contents)
+}
+
+/// Appends one event to the stored document. Used by the mini calendar, which
+/// must not overwrite the whole file with its own (possibly stale) copy.
+fn apply_add_event(doc: &mut serde_json::Value, event: serde_json::Value) -> Result<(), String> {
+    let events = doc
+        .get_mut("events")
+        .and_then(|value| value.as_array_mut())
+        .ok_or_else(|| "stored data has no events list".to_string())?;
+    let id = event.get("id").and_then(|value| value.as_str()).unwrap_or_default();
+    if id.is_empty() {
+        return Err("event has no id".to_string());
+    }
+    if events.iter().any(|item| item.get("id").and_then(|value| value.as_str()) == Some(id)) {
+        return Ok(());
+    }
+    events.push(event);
+    Ok(())
+}
+
+/// Checks or unchecks one occurrence date of an event.
+fn apply_toggle_done(doc: &mut serde_json::Value, event_id: &str, date: &str) -> Result<(), String> {
+    let events = doc
+        .get_mut("events")
+        .and_then(|value| value.as_array_mut())
+        .ok_or_else(|| "stored data has no events list".to_string())?;
+    let event = events
+        .iter_mut()
+        .find(|item| item.get("id").and_then(|value| value.as_str()) == Some(event_id))
+        .ok_or_else(|| "event not found".to_string())?;
+    let object = event.as_object_mut().ok_or_else(|| "invalid event".to_string())?;
+    let list = object
+        .entry("doneDates")
+        .or_insert_with(|| serde_json::Value::Array(Vec::new()));
+    let array = list.as_array_mut().ok_or_else(|| "invalid doneDates".to_string())?;
+    if let Some(position) = array.iter().position(|item| item.as_str() == Some(date)) {
+        array.remove(position);
+    } else {
+        array.push(serde_json::Value::String(date.to_string()));
+    }
+    Ok(())
+}
+
+fn mutate_data(
+    app: &AppHandle,
+    change: impl FnOnce(&mut serde_json::Value) -> Result<(), String>,
+) -> Result<String, String> {
+    let _guard = DATA_LOCK.lock().map_err(|_| "data lock poisoned".to_string())?;
+    let path = data_file(app)?;
+    let text = read_data_file(&path)?.ok_or_else(|| "no data file yet".to_string())?;
+    let mut doc: serde_json::Value =
+        serde_json::from_str(&text).map_err(|error| format!("invalid stored data: {error}"))?;
+    change(&mut doc)?;
+    let updated = serde_json::to_string(&doc).map_err(|error| error.to_string())?;
+    write_atomic(&path, &updated)?;
+    // The main window reloads from this payload so it never overwrites the change.
+    let _ = app.emit_to(MAIN_WINDOW, "data-changed", updated.clone());
+    Ok(updated)
+}
+
+#[tauri::command]
+fn mini_add_event(app: AppHandle, event: serde_json::Value) -> Result<String, String> {
+    mutate_data(&app, |doc| apply_add_event(doc, event))
+}
+
+#[tauri::command]
+fn mini_toggle_done(app: AppHandle, event_id: String, date: String) -> Result<String, String> {
+    mutate_data(&app, |doc| apply_toggle_done(doc, &event_id, &date))
+}
+
+/// Before the first run of a new version, keeps a copy of the data written by
+/// the previous one, so an update can never cost the user their information.
+fn snapshot_before_upgrade(app: &AppHandle) {
+    let Ok(path) = data_file(app) else { return };
+    let marker = path.with_file_name(VERSION_MARKER);
+    let current = env!("CARGO_PKG_VERSION");
+    let previous = fs::read_to_string(&marker).unwrap_or_default();
+    if previous.trim() == current {
+        return;
+    }
+    if path.exists() {
+        if let Ok(dir) = backup_dir(app) {
+            let label = if previous.trim().is_empty() { "previous" } else { previous.trim() };
+            let target = dir.join(format!("pre-update-{label}-to-{current}.json"));
+            if !target.exists() {
+                let _ = fs::copy(&path, target);
+            }
+        }
+    }
+    let _ = fs::write(&marker, current);
+}
+
+/// Starts with Windows by default (first run only); the user can switch it off
+/// in Settings and that choice is respected afterwards.
+fn init_autostart(app: &AppHandle) {
+    let Ok(path) = data_file(app) else { return };
+    let marker = path.with_file_name(AUTOSTART_MARKER);
+    if marker.exists() {
+        return;
+    }
+    let _ = fs::write(&marker, "1");
+    let _ = app.autolaunch().enable();
 }
 
 #[tauri::command]
@@ -465,11 +574,21 @@ pub fn run() {
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
             show_main(app);
         }))
+        .plugin(tauri_plugin_autostart::init(
+            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
+            Some(vec![HIDDEN_FLAG]),
+        ))
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
+            snapshot_before_upgrade(app.handle());
             setup_tray(app.handle())?;
+            init_autostart(app.handle());
+            // Launched by the system at login: stay in the tray, no window.
+            if !std::env::args().any(|arg| arg == HIDDEN_FLAG) {
+                show_main(app.handle());
+            }
             Ok(())
         })
         .on_window_event(on_window_event)
@@ -482,7 +601,9 @@ pub fn run() {
             write_text_file,
             read_text_file,
             auto_backup,
-            backup_location
+            backup_location,
+            mini_add_event,
+            mini_toggle_done
         ])
         .build(tauri::generate_context!())
         .expect("error while building CalendarPRO")
@@ -529,6 +650,27 @@ mod tests {
         assert_eq!(read_data_file(&path).unwrap().as_deref(), Some(r#"{"version":1}"#));
 
         let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn adds_an_event_without_touching_the_rest() {
+        let mut doc: serde_json::Value =
+            serde_json::from_str(r#"{"events":[{"id":"a"}],"notes":[1],"settings":{"x":1}}"#).unwrap();
+        apply_add_event(&mut doc, serde_json::json!({"id":"b"})).unwrap();
+        apply_add_event(&mut doc, serde_json::json!({"id":"b"})).unwrap();
+        assert_eq!(doc["events"].as_array().unwrap().len(), 2);
+        assert_eq!(doc["notes"][0], 1);
+        assert_eq!(doc["settings"]["x"], 1);
+    }
+
+    #[test]
+    fn toggles_done_dates() {
+        let mut doc: serde_json::Value = serde_json::from_str(r#"{"events":[{"id":"a"}]}"#).unwrap();
+        apply_toggle_done(&mut doc, "a", "2026-11-22").unwrap();
+        assert_eq!(doc["events"][0]["doneDates"][0], "2026-11-22");
+        apply_toggle_done(&mut doc, "a", "2026-11-22").unwrap();
+        assert_eq!(doc["events"][0]["doneDates"].as_array().unwrap().len(), 0);
+        assert!(apply_toggle_done(&mut doc, "zzz", "2026-11-22").is_err());
     }
 
     #[test]

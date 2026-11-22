@@ -9,6 +9,9 @@ export type Language = "es" | "en";
 /** Decorative, offline artwork shown as a faint watermark behind the month grid. */
 export type ArtThemeId = "none" | "botanical" | "birds" | "rabbits" | "children" | "animals";
 
+/** Look of the tray mini calendar. */
+export type MiniStyle = "popover" | "sonoma" | "botanico";
+
 export type RepeatFreq = "none" | "daily" | "weekly" | "monthly" | "yearly";
 
 export type ShowAs = "busy" | "free" | "tentative" | "away";
@@ -91,6 +94,8 @@ export interface Settings {
   autoBackup: boolean;
   /** Vintage illustration used as a watermark behind the month grid. */
   artTheme: ArtThemeId;
+  /** Look of the tray mini calendar. */
+  miniStyle: MiniStyle;
 }
 
 export interface AppData {
@@ -175,6 +180,7 @@ export const DEFAULT_SETTINGS: Settings = {
   secondTimeZone: null,
   autoBackup: true,
   artTheme: "none",
+  miniStyle: "popover",
 };
 
 export function defaultData(): AppData {

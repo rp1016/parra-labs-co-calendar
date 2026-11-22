@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { translate, localeOf } from "../i18n";
-import { isDesktop, loadData } from "../lib/api";
+import { isDesktop, loadData, miniAddEvent, miniToggleDone } from "../lib/api";
+import { XmasScene } from "./XmasScene";
+import { buildQuickEvent, pickQuickSlot, quickCalendarId } from "../lib/quickAdd";
 import {
   addMonths,
   endOfDay,
   formatLongDate,
-  formatMonthYear,
   formatTime,
   formatWeekday,
   isSameDay,
@@ -16,14 +17,16 @@ import {
   toDateKey,
   weekdayOrder,
 } from "../lib/dates";
+import { artBackground } from "../lib/art";
 import { holidayEvents } from "../lib/holidays";
 import { normalizeData } from "../lib/normalize";
 import { occurrencesBetween, sortOccurrences } from "../lib/recurrence";
 import { defaultData, type AppData, type Occurrence } from "../lib/types";
 import { visibleEvents } from "../state/store";
 
-/** Read-only popup shown from the tray icon. It never writes the data file:
- *  the main window is the only writer, this one just re-reads on focus. */
+/** Popup shown from the tray icon. It never saves its own copy of the data:
+ *  quick entries and check-offs go through backend commands that change only
+ *  that one item, and the main window reloads when it is told about it. */
 export function MiniCalendar() {
   const [data, setData] = useState<AppData>(() => defaultData());
   const [loaded, setLoaded] = useState(false);
@@ -150,6 +153,7 @@ export function MiniCalendar() {
     return map;
   }, [data.calendars]);
 
+  const art = artBackground(settings.artTheme);
   const today = new Date();
   const selectedDate = parseDateKey(selected);
   const dayItems = byDay.get(selected) ?? [];
@@ -157,13 +161,58 @@ export function MiniCalendar() {
     formatWeekday(new Date(2024, 0, 7 + index), locale, "narrow"),
   );
 
+  const december = anchor.getMonth() === 11;
+  const [draft, setDraft] = useState("");
+
+  const addQuick = () => {
+    const title = draft.trim();
+    if (!title || !isDesktop) return;
+    const day = parseDateKey(selected);
+    const busy = (byDay.get(selected) ?? [])
+      .filter((item) => !item.event.allDay && !holidayCalendarIds.has(item.event.calendarId))
+      .map((item) => ({ start: item.start, end: item.end }));
+    const event = buildQuickEvent(title, quickCalendarId(data), pickQuickSlot(day, busy));
+    setDraft("");
+    miniAddEvent(event).then((next) => setData(normalizeData(next))).catch(() => refresh());
+  };
+
+  const toggleDone = (eventId: string, date: string) => {
+    if (!isDesktop) return;
+    miniToggleDone(eventId, date)
+      .then((next) => setData(normalizeData(next)))
+      .catch(() => refresh());
+  };
+
   const openApp = () => {
     if (!isDesktop) return;
     void import("@tauri-apps/api/core").then(({ invoke }) => invoke("open_main"));
   };
 
   return (
-    <div className="mini">
+    <div
+      className={["mini", `mini-style-${settings.miniStyle}`, december ? "is-december" : ""]
+        .join(" ")
+        .trim()}
+    >
+      {settings.miniStyle === "botanico" ? (
+        <div
+          className="mini-banner"
+          aria-hidden="true"
+          style={art ? { backgroundImage: art } : undefined}
+        />
+      ) : (
+        art && <div className="mini-art" aria-hidden="true" style={{ backgroundImage: art }} />
+      )}
+      {december && (
+        <div className="mini-xmas" aria-hidden="true">
+          <span className="mini-lights" />
+          <span className="flake f1">❄</span>
+          <span className="flake f2">❅</span>
+          <span className="flake f3">❆</span>
+          <span className="flake f4">❄</span>
+          <span className="flake f5">❅</span>
+        </div>
+      )}
       <header className="mini-head">
         <button
           type="button"
@@ -183,7 +232,10 @@ export function MiniCalendar() {
             setSelected(key);
           }}
         >
-          {formatMonthYear(anchor, locale)}
+          <span className="mini-month">
+            {new Intl.DateTimeFormat(locale, { month: "long" }).format(anchor)}
+          </span>
+          <span className="mini-year">{anchor.getFullYear()}</span>
         </button>
         <button
           type="button"
@@ -247,11 +299,24 @@ export function MiniCalendar() {
           <p className="mini-empty">{t("mini.noEvents")}</p>
         ) : (
           <ul>
-            {dayItems.map((item) => (
+            {dayItems.map((item) => {
+              const isHoliday = holidayCalendarIds.has(item.event.calendarId);
+              const itemDate = toDateKey(item.start);
+              const done = item.event.doneDates?.includes(itemDate) ?? false;
+              return (
               <li
                 key={item.key}
-                className={holidayCalendarIds.has(item.event.calendarId) ? "is-holiday" : undefined}
+                className={[isHoliday ? "is-holiday" : "", done ? "is-done" : ""].join(" ").trim() || undefined}
               >
+                {!isHoliday && (
+                  <input
+                    type="checkbox"
+                    className="mini-check"
+                    checked={done}
+                    aria-label={t("mini.markDone")}
+                    onChange={() => toggleDone(item.event.id, itemDate)}
+                  />
+                )}
                 <span
                   className="mini-dot"
                   style={{ background: colors[item.event.calendarId] ?? "var(--accent)" }}
@@ -263,10 +328,33 @@ export function MiniCalendar() {
                 </span>
                 <span className="mini-name">{item.event.title || t("mini.untitled")}</span>
               </li>
-            ))}
+              );
+            })}
           </ul>
         )}
       </section>
+
+      {december && <XmasScene />}
+
+      {isDesktop && (
+        <form
+          className="mini-add"
+          onSubmit={(event) => {
+            event.preventDefault();
+            addQuick();
+          }}
+        >
+          <input
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            placeholder={t("mini.addPlaceholder")}
+            maxLength={200}
+          />
+          <button type="submit" className="btn" disabled={!draft.trim()}>
+            {t("mini.addButton")}
+          </button>
+        </form>
+      )}
 
       <footer className="mini-foot">
         <button type="button" className="btn" onClick={openApp}>

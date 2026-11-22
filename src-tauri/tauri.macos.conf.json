@@ -10,6 +10,7 @@
         "minWidth": 960,
         "minHeight": 560,
         "center": true,
+        "visible": false,
         "dragDropEnabled": false,
         "titleBarStyle": "Overlay",
         "hiddenTitle": true,

@@ -416,6 +416,17 @@ useAppStore.subscribe((state, previous) => {
   }, 350);
 });
 
+/** Applies data that the backend changed on disk (quick entry from the mini
+ *  calendar) without touching the view, dropping any now-stale pending save. */
+export function applyExternalData(data: AppData): void {
+  if (saveTimer) {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+  }
+  lastSerialized = JSON.stringify(data);
+  useAppStore.setState({ data });
+}
+
 /** Writes any pending change right away; used before the app quits. */
 export async function flushPendingSave(): Promise<void> {
   if (saveTimer) {

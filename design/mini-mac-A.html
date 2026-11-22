@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Mini CalendarPRO - propuesta A (widget Sonoma)</title>
+<style>
+:root{--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue","Segoe UI",system-ui,sans-serif;--red:#ff3b30;--text:#1d1d1f;--muted:rgba(60,60,67,.6);--faint:rgba(60,60,67,.32);--hair:rgba(60,60,67,.14);--hol:#d9730d}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:var(--font);
+background:radial-gradient(60% 50% at 20% 15%,#f6c9a8 0,transparent 70%),radial-gradient(60% 60% at 85% 80%,#9bb7e8 0,transparent 70%),linear-gradient(135deg,#d8c9e6,#b9cbe9 55%,#c7dfd6)}
+.mini{position:relative;width:340px;height:540px;padding:16px 14px 14px;display:flex;flex-direction:column;gap:8px;overflow:hidden;color:var(--text);
+background:linear-gradient(160deg,rgba(255,255,255,.72),rgba(246,246,250,.58));
+-webkit-backdrop-filter:blur(40px) saturate(180%);backdrop-filter:blur(40px) saturate(180%);
+border-radius:26px;border:.5px solid rgba(255,255,255,.7);
+box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 18px 50px rgba(30,30,60,.28),inset 0 1px 0 rgba(255,255,255,.8)}
+.art{position:absolute;right:-30px;top:-40px;width:190px;height:190px;border-radius:50%;opacity:.5;pointer-events:none;
+background:radial-gradient(circle at 35% 35%,rgba(255,59,48,.22),transparent 60%),repeating-radial-gradient(circle at 60% 40%,rgba(255,59,48,.10) 0 2px,transparent 2px 14px)}
+.mini>*{position:relative}
+.head{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 4px}
+.title{display:flex;align-items:baseline;gap:6px}
+.month{font:700 22px/1 var(--font);letter-spacing:-.02em}
+.year{font:500 22px/1 var(--font);color:var(--red);letter-spacing:-.02em}
+.nav{display:flex;gap:2px}
+.nav button{width:26px;height:26px;border:0;border-radius:50%;background:transparent;color:var(--red);font:600 17px/1 var(--font);cursor:pointer}
+.nav button:hover{background:rgba(255,59,48,.1)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:1px}
+.dow{text-align:center;font:600 10.5px/1.8 var(--font);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:.5px solid var(--hair);margin-bottom:3px}
+.day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;height:34px;font:500 14px/1 var(--font);font-variant-numeric:tabular-nums;border-radius:50%}
+.day span{width:26px;height:26px;display:grid;place-items:center;border-radius:50%}
+.day i{width:4px;height:4px;border-radius:50%;background:transparent;margin-top:-2px}
+.day.out{color:var(--faint)}
+.day.ev i{background:var(--muted)}
+.day.hol{color:var(--hol);font-weight:600}.day.hol i{background:var(--hol)}
+.day.today span{background:var(--red);color:#fff;font-weight:700;box-shadow:0 2px 6px rgba(255,59,48,.4)}
+.day.today i{background:transparent}
+.day.sel:not(.today) span{background:rgba(60,60,67,.12)}
+.events{flex:1;min-height:0;overflow:auto;border-top:.5px solid var(--hair);padding-top:8px}
+.events h2{margin:0 0 4px;font:600 11px/1.3 var(--font);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.events ul{list-style:none;margin:0;padding:0}
+.events li{display:flex;align-items:center;gap:9px;padding:7px 2px;font-size:13px;border-bottom:.5px solid var(--hair)}
+.events li:last-child{border-bottom:0}
+.bar{width:3px;align-self:stretch;border-radius:2px;flex:none}
+.chk{appearance:none;-webkit-appearance:none;width:17px;height:17px;margin:0;border-radius:50%;border:1.5px solid var(--faint);flex:none;cursor:pointer;display:grid;place-items:center;background:rgba(255,255,255,.5)}
+.chk:checked{background:var(--red);border-color:var(--red)}
+.chk:checked::after{content:"";width:4px;height:8px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.txt{display:flex;flex-direction:column;min-width:0}
+.name{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.time{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+li.done .name{text-decoration:line-through;color:var(--faint)}
+.add{display:flex;align-items:center;gap:6px;height:36px;padding:0 4px 0 14px;border-radius:999px;background:rgba(255,255,255,.6);border:.5px solid var(--hair);box-shadow:inset 0 1px 2px rgba(0,0,0,.05)}
+.add input{flex:1;border:0;background:transparent;outline:0;font:400 13px var(--font);color:var(--text)}
+.add input::placeholder{color:var(--muted)}
+.add button{width:28px;height:28px;border:0;border-radius:50%;background:var(--red);color:#fff;font:500 20px/1 var(--font);cursor:pointer;display:grid;place-items:center;padding-bottom:2px}
+.open{height:34px;border:0;border-radius:999px;background:rgba(60,60,67,.08);color:var(--red);font:600 13px var(--font);cursor:pointer}
+.open:hover{background:rgba(60,60,67,.14)}
+</style></head><body>
+<div class="mini">
+  <div class="art" aria-hidden="true"></div>
+  <header class="head">
+    <div class="title"><span class="month">Noviembre</span><span class="year">2026</span></div>
+    <div class="nav"><button aria-label="Anterior">&#8249;</button><button aria-label="Siguiente">&#8250;</button></div>
+  </header>
+  <div class="grid" id="g">
+    <span class="dow">L</span><span class="dow">M</span><span class="dow">M</span><span class="dow">J</span><span class="dow">V</span><span class="dow">S</span><span class="dow">D</span>
+  </div>
+  <section class="events">
+    <h2>Hoy &middot; domingo 22 de noviembre, 2026</h2>
+    <ul>
+      <li class="done"><input type="checkbox" class="chk" checked aria-label="Marcar hecho"><span class="bar" style="background:#34c759"></span><span class="txt"><span class="name">Llamar al dentista</span><span class="time">8:30 a. m.</span></span></li>
+      <li><input type="checkbox" class="chk" aria-label="Marcar hecho"><span class="bar" style="background:#0a84ff"></span><span class="txt"><span class="name">Almuerzo con mamá</span><span class="time">12:30 p. m.</span></span></li>
+      <li><input type="checkbox" class="chk" aria-label="Marcar hecho"><span class="bar" style="background:#ff9f0a"></span><span class="txt"><span class="name">Revisar entrega de Parrita Labs</span><span class="time">4:00 p. m.</span></span></li>
+    </ul>
+  </section>
+  <form class="add" onsubmit="return false"><input placeholder="Nuevo evento, ej. Cena 7pm"><button type="submit" aria-label="Agregar">+</button></form>
+  <button class="open" type="button">Abrir CalendarPRO</button>
+</div>
+<script>
+// Nov 2026: el 1 cae domingo; semana inicia lunes -> 26 oct a 6 dic (42 celdas)
+var g=document.getElementById('g'),start=new Date(2026,9,26),ev=[3,10,17,22,24,27],hol={2:1};
+for(var i=0;i<42;i++){var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i),n=d.getDate(),out=d.getMonth()!==10;
+var c=['day'];if(out)c.push('out');if(!out&&n===22)c.push('today','sel','ev');if(!out&&ev.indexOf(n)>-1)c.push('ev');if(!out&&hol[n])c.push('hol');
+if(d.getMonth()===11&&n===1)c.push('hol');
+g.insertAdjacentHTML('beforeend','<div class="'+c.join(' ')+'"><span>'+n+'</span><i></i></div>');}
+</script>
+</body></html>

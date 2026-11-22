@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Mini calendario C - Botanico vintage</title>
+<style>
+:root{--paper:#fbf7ee;--paper2:#f3ecdc;--ink:#2d2a26;--muted:#8a8171;--line:#e6dcc7;--accent:#b4553f;--sage:#6f8460;--sky:#5f84a0;--gold:#c28a2c;--rose:#b4553f}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#d9d6d0;font-family:-apple-system,"Segoe UI",system-ui,sans-serif;color:var(--ink)}
+.w{width:340px;height:540px;background:var(--paper);border-radius:18px;box-shadow:0 18px 50px rgba(60,45,20,.28),0 0 0 .5px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;position:relative}
+.ban{height:104px;position:relative;background:linear-gradient(180deg,#dfe7e2 0%,#efe9d9 100%);border-bottom:1px solid var(--line);flex:none}
+.ban svg{position:absolute;inset:0;width:100%;height:100%}
+.nav{position:absolute;top:8px;right:10px;display:flex;gap:2px}
+.nav button{border:0;background:rgba(251,247,238,.7);width:26px;height:26px;border-radius:50%;color:var(--ink);font-size:15px;cursor:pointer}
+.ttl{position:absolute;left:16px;bottom:8px;font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;line-height:1}
+.ttl b{font-size:34px;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.ttl i{font-size:34px;font-style:italic;color:var(--accent);margin-left:8px;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);padding:8px 12px 4px;gap:0}
+.dow{text-align:center;font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;padding:2px 0 4px}
+.d{height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;position:relative}
+.d span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.d.o{color:#c4baa5}.d.h span{color:var(--gold);font-weight:700}
+.d.t span{background:var(--accent);color:#fff;font-weight:700;box-shadow:0 2px 6px rgba(180,85,63,.4)}
+.d.t span{background:rgba(180,85,63,.16);color:var(--accent);box-shadow:none}
+.dots{display:flex;gap:2px;height:4px;position:absolute;bottom:0}
+.dots u{width:4px;height:4px;border-radius:50%}
+.ag{flex:1;min-height:0;overflow:auto;padding:8px 14px 4px;border-top:1px solid var(--line);margin-top:4px;background:linear-gradient(var(--paper),var(--paper2))}
+.ag h2{margin:0 0 8px;font:italic 400 14px Georgia,serif;color:var(--muted)}
+.ag h2 em{color:var(--accent)}
+.ev{display:flex;align-items:center;gap:9px;padding:6px 0}
+.bar{width:3px;align-self:stretch;border-radius:2px}
+.ck{width:17px;height:17px;border-radius:50%;border:1.5px solid #bdb29a;flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+.ev.x .ck{background:var(--sage);border-color:var(--sage)}.ev.x .n{text-decoration:line-through;color:var(--muted)}
+.n{font-size:13px;font-weight:500}.tm{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ev div{display:flex;flex-direction:column;gap:1px}
+.add{display:flex;align-items:center;gap:8px;margin:6px 12px 8px;padding:0 10px;height:36px;border-radius:10px;background:#fff;border:1px solid var(--line);flex:none}
+.add span{flex:1;font-size:13px;color:#a79d88}.add kbd{font:600 11px system-ui;background:var(--paper2);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 7px;color:var(--muted)}
+.add:before{content:"+";color:var(--accent);font-size:18px;line-height:1}
+.ft{flex:none;padding:0 12px 12px}
+.ft button{width:100%;height:34px;border-radius:10px;border:0;background:var(--ink);color:var(--paper);font:600 13px system-ui;cursor:pointer}
+</style></head><body>
+<div class="w">
+<div class="ban">
+<svg viewBox="0 0 340 104" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<g stroke-linecap="round" stroke-linejoin="round">
+<path d="M-10 92C70 84 140 70 210 46S310 14 360 8" fill="none" stroke="#8b6b4e" stroke-width="5" opacity=".7"/>
+<path d="M120 76c-6-14-4-26 4-36M250 34c-2-12 2-22 10-30" fill="none" stroke="#8b6b4e" stroke-width="2.5" opacity=".6"/>
+<g fill="#8a9a72" stroke="#64764e" stroke-width="1" opacity=".85"><path d="M124 40c14-2 24-10 28-20-12 0-24 8-28 20z"/><path d="M260 4c12-3 20-10 24-18-10 0-20 7-24 18z" transform="translate(0 10)"/><path d="M60 84c10-8 14-18 12-28-10 6-14 16-12 28z"/><path d="M300 22c10-6 16-14 16-24-10 6-16 14-16 24z"/></g>
+<g fill="#e0b7b1" stroke="#a9706c" stroke-width="1"><circle cx="80" cy="82" r="6"/><circle cx="200" cy="52" r="6"/><circle cx="296" cy="22" r="5"/></g><g fill="#c9a86a"><circle cx="80" cy="82" r="2"/><circle cx="200" cy="52" r="2"/><circle cx="296" cy="22" r="2"/></g>
+<g transform="translate(236 40)"><path d="M-14 4c-14 4-22 10-26 16 8 0 18-4 26-10z" fill="#7e8f86"/><ellipse rx="22" ry="15" fill="#8fa0a0" stroke="#5e6f66" stroke-width="1.5" transform="rotate(-6)"/><circle cx="17" cy="-10" r="10" fill="#9dafae" stroke="#5e6f66" stroke-width="1.5"/><path d="M26-12 39-8 26-4z" fill="#c9a86a"/><ellipse cx="-2" cy="0" rx="14" ry="8" fill="#b07c77" opacity=".7" transform="rotate(-18)"/><path d="M-6 13v8M4 13v8" stroke="#a98555" stroke-width="2"/><circle cx="20" cy="-12" r="1.6" fill="#2d2a26"/></g>
+</g></svg>
+<div class="nav"><button>‹</button><button>›</button></div>
+<div class="ttl"><b>Noviembre</b><i>2026</i></div>
+</div>
+<div class="grid" id="g"></div>
+<div class="ag">
+<h2>Hoy · <em>domingo 22 de noviembre</em></h2>
+<div class="ev x"><div class="bar" style="background:var(--sage)"></div><div class="ck">✓</div><div><span class="n">Caminata en el Parque Arví</span><span class="tm">8:00 a. m.</span></div></div>
+<div class="ev"><div class="bar" style="background:var(--sky)"></div><div class="ck"></div><div><span class="n">Almuerzo con la familia</span><span class="tm">1:00 p. m.</span></div></div>
+<div class="ev"><div class="bar" style="background:var(--rose)"></div><div class="ck"></div><div><span class="n">Preparar reunión semanal</span><span class="tm">6:30 p. m.</span></div></div>
+<div class="ev"><div class="bar" style="background:var(--gold)"></div><div class="ck"></div><div><span class="n">Pagar arriendo</span><span class="tm">Todo el día</span></div></div>
+</div>
+<div class="add"><span>Agregar tarea</span><kbd>↵</kbd></div>
+<div class="ft"><button>Abrir CalendarPRO</button></div>
+</div>
+<script>
+const g=document.getElementById('g');
+'LMMJVSD'.split('').forEach(x=>g.insertAdjacentHTML('beforeend','<div class="dow">'+x+'</div>'));
+const ev={3:['sky'],5:['sage'],10:['rose','sky'],12:['gold'],16:['sage'],19:['sky'],22:['sage','sky','rose'],24:['rose'],26:['gold','sage'],28:['sky']};
+const col={sky:'#5f84a0',sage:'#6f8460',rose:'#b4553f',gold:'#c28a2c'};
+const hol={2:1,16:1};
+for(let i=0;i<42;i++){const dt=new Date(2026,9,26+i),m=dt.getMonth(),n=dt.getDate(),cur=m===10;
+const c=['d',cur?'':'o',cur&&hol[n]?'h':'',cur&&n===22?'t':''].join(' ');
+const dots=cur&&ev[n]?'<div class="dots">'+ev[n].map(k=>'<u style="background:'+col[k]+'"></u>').join('')+'</div>':'';
+g.insertAdjacentHTML('beforeend','<div class="'+c+'"><span>'+n+'</span>'+dots+'</div>');}
+</script></body></html>

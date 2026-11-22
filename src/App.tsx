@@ -19,7 +19,8 @@ import { useShortcuts } from "./hooks/useShortcuts";
 import { useT } from "./i18n";
 import { autoBackup } from "./lib/api";
 import { buildBackup } from "./lib/exporters";
-import { flushPendingSave, useAppStore } from "./state/store";
+import { normalizeData } from "./lib/normalize";
+import { applyExternalData, flushPendingSave, useAppStore } from "./state/store";
 import { isDesktop } from "./lib/api";
 
 let hydrationStarted = false;
@@ -92,6 +93,28 @@ export default function App() {
       unlisten?.();
     };
   }, []);
+
+  // Quick entries made from the tray mini calendar arrive here.
+  useEffect(() => {
+    if (!isDesktop) return;
+    let unlisten: (() => void) | undefined;
+    let disposed = false;
+    void import("@tauri-apps/api/event").then(async ({ listen }) => {
+      const stop = await listen<string>("data-changed", (event) => {
+        try {
+          applyExternalData(normalizeData(JSON.parse(event.payload)));
+        } catch {
+          void hydrate();
+        }
+      });
+      if (disposed) stop();
+      else unlisten = stop;
+    });
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, [hydrate]);
 
   useShortcuts();
   useReminders();

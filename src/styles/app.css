@@ -2249,9 +2249,14 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
 :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; letter-spacing: -0.01em; }
 :root[data-ui="botanico"]:not([data-theme="tradicional"]) { --accent-h: 12; --accent-l: 44%; }
 :root[data-ui="botanico"][data-theme="light"] {
-  --bg: #fbf7ee; --bg-subtle: #f3ecdc; --bg-muted: #ece3cf; --bg-hover: #e8ddc6;
+  --bg: #fbf7ee; --bg-subtle: #f7f1e3; --bg-muted: #f3ecdc; --bg-hover: #efe6d2;
   --line: #e6dcc7; --line-strong: #d4c6a8; --text: #2d2a26; --text-strong: #1f1c18;
-  --side-bg: rgba(243, 236, 220, 0.85); --side-hover: #ece3cf; --side-line: #e6dcc7;
+  --side-bg: #fbf7ee; --side-hover: #f3ecdc; --side-active: #ecdfc4; --side-line: #e6dcc7;
+  --rail-a: #fbf7ee; --rail-b: #fbf7ee;
+}
+:root[data-ui="botanico"][data-theme="light"] .app { background: #fbf7ee; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-year {
+  font-style: italic; font-weight: 400; color: var(--accent); margin-left: 0.25em;
 }
 :root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-title {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; font-weight: 500; font-size: 22px;

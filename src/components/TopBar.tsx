@@ -70,7 +70,16 @@ export function TopBar() {
       </div>
 
       <div className="period" {...drag}>
-        <h1 className="period-title" {...drag}>{title}</h1>
+        <h1 className="period-title" {...drag}>
+          {/\d{4}$/.test(title) ? (
+            <>
+              {title.slice(0, -4)}
+              <span className="period-year">{title.slice(-4)}</span>
+            </>
+          ) : (
+            title
+          )}
+        </h1>
       </div>
 
       <nav className="segmented" aria-label={t("views.label")}>

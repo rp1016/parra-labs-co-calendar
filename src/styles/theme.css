@@ -348,14 +348,14 @@ h1, h2, h3, h4, p { margin: 0; }
   --ctl-line: #d2beb0;
   --seg-active: #ffffff;
 
-  --side-bg: rgba(252, 250, 248, 0.94);
+  --side-bg: #ffffff;
   --side-hover: #f3ece4;
   --side-active: #efe2d6;
   --side-text: var(--wall-ink);
   --side-muted: #6b625c;
   --side-line: #e5d9cd;
 
-  --rail-a: #fcfaf8;
+  --rail-a: #ffffff;
   --rail-b: #ffffff;
 
   --accent-l: 46%;
@@ -417,6 +417,8 @@ h1, h2, h3, h4, p { margin: 0; }
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+  /* clear the ornamental corner art on the left so the text stays readable */
+  padding-left: 64px;
 }
 .month-hero-kicker {
   font: 700 10px/1 var(--font);
@@ -653,6 +655,7 @@ h1, h2, h3, h4, p { margin: 0; }
   .month-hero-masthead { height: 96px; }
   .month-hero-zodiac { font-size: 10px; }
   .piel-corner { width: 50px; height: 50px; }
+  .month-hero-copy { padding-left: 44px; }
 }
 @media (max-width: 520px) {
   .month-hero {
@@ -663,5 +666,9 @@ h1, h2, h3, h4, p { margin: 0; }
   .month-hero-masthead { height: 80px; }
   .month-hero-kicker { font-size: 7px; letter-spacing: 0.14em; }
   .piel-corner { width: 38px; height: 38px; }
+  .month-hero-copy { padding-left: 32px; }
 }
 
+
+/* Piel Roja: plain white behind the whole window, including the side panels and top bar */
+:root[data-theme="tradicional"] .app { background: #ffffff; }

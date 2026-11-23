@@ -43,7 +43,6 @@ import { parseICS } from "../lib/icsImport";
 import { ART_THEMES, artBackground } from "../lib/art";
 import {
   ACCENTS,
-  THEMES,
   TIME_ZONES,
   type AccentName,
   type ArtThemeId,
@@ -53,16 +52,6 @@ import {
 import { useAppStore } from "../state/store";
 import { confirmAction } from "../state/confirm";
 
-const SWATCHES: Record<ThemeName, [string, string, string]> = {
-  auto: ["#ffffff", "#f3f3f3", "#2b2b2b"],
-  light: ["#ffffff", "#f3f3f3", "#2b2b2b"],
-  dark: ["#17171a", "#2c2c32", "#e7e7ea"],
-  midnight: ["#0b1020", "#1b2a4d", "#dde5f7"],
-  sepia: ["#f8f1e4", "#ece0cc", "#423729"],
-  contrast: ["#000000", "#2e2e2e", "#ffffff"],
-  tradicional: ["#ffffff", "#d62828", "#171412"],
-};
-
 type TabId = "general" | "calendar" | "appearance" | "data";
 
 export function SettingsModal() {
@@ -70,6 +59,27 @@ export function SettingsModal() {
   const data = useAppStore((state) => state.data);
   const settings = data.settings;
   const artPreview = artBackground(settings.artTheme);
+
+  // One dropdown covers the styles (applied to the app and the mini calendar)
+  // and the plain color themes; the two settings behind it stay separate.
+  const lookValue =
+    settings.theme === "tradicional"
+      ? "tradicional"
+      : settings.miniStyle !== "popover"
+        ? settings.miniStyle
+        : settings.theme === "auto"
+          ? "popover"
+          : settings.theme;
+  const chooseLook = (value: string) => {
+    if (value === "tradicional") updateSettings({ theme: "tradicional" });
+    else if (value === "popover") updateSettings({ theme: "auto", miniStyle: "popover" });
+    else if (value === "sonoma" || value === "botanico")
+      updateSettings({
+        theme: settings.theme === "tradicional" ? "auto" : settings.theme,
+        miniStyle: value,
+      });
+    else updateSettings({ theme: value as ThemeName, miniStyle: "popover" });
+  };
   const close = useAppStore((state) => state.setSettingsOpen);
   const setAboutOpen = useAppStore((state) => state.setAboutOpen);
   const updateSettings = useAppStore((state) => state.updateSettings);
@@ -472,50 +482,30 @@ export function SettingsModal() {
               <>
                 <div className="settings-group-title">{t("settings.theme")}</div>
                 <div className="settings-card">
-                  <div className="theme-grid">
-                    {THEMES.map((theme) => (
-                      <button
-                        key={theme.id}
-                        className={`theme-card ${settings.theme === theme.id ? "active" : ""}`}
-                        onClick={() => updateSettings({ theme: theme.id })}
-                      >
-                        <span className="theme-swatch">
-                          {SWATCHES[theme.id].map((color, index) => (
-                            <i key={index} style={{ background: color }} />
-                          ))}
-                        </span>
-                        <span>{t(`theme.${theme.id}`)}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="settings-group-title">{t("settings.uiStyle")}</div>
-                <div className="settings-card">
                   <div className="setting-row">
                     <div className="setting-main">
                       <span className="setting-icon">
                         <Flower2 size={15} />
                       </span>
                       <div>
-                        {t("settings.uiStyle")}
+                        {t("settings.theme")}
                         <div className="sub">{t("settings.uiStyleHint")}</div>
                       </div>
                     </div>
-                    <select
-                      value={settings.miniStyle}
-                      disabled={settings.theme === "tradicional"}
-                      onChange={(event) =>
-                        updateSettings({
-                          miniStyle: event.target.value as "popover" | "sonoma" | "botanico",
-                        })
-                      }
-                    >
-                      {(["popover", "sonoma", "botanico"] as const).map((id) => (
-                        <option key={id} value={id}>
-                          {t(`uiStyle.${id}`)}
-                        </option>
-                      ))}
+                    <select value={lookValue} onChange={(event) => chooseLook(event.target.value)}>
+                      <optgroup label={t("settings.lookStyles")}>
+                        <option value="popover">{t("uiStyle.popover")}</option>
+                        <option value="sonoma">{t("uiStyle.sonoma")}</option>
+                        <option value="botanico">{t("uiStyle.botanico")}</option>
+                        <option value="tradicional">{t("theme.tradicional")}</option>
+                      </optgroup>
+                      <optgroup label={t("settings.lookColors")}>
+                        {(["light", "dark", "midnight", "sepia", "contrast"] as const).map((id) => (
+                          <option key={id} value={id}>
+                            {t(`theme.${id}`)}
+                          </option>
+                        ))}
+                      </optgroup>
                     </select>
                   </div>
                 </div>

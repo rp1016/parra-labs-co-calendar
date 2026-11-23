@@ -1,4 +1,4 @@
-import { Check, ChevronDown, ListTodo, Lock, Plus } from "lucide-react";
+import { Check, ChevronDown, ListTodo, Lock, Plus, Trash2 } from "lucide-react";
 import { useMemo, useState, type CSSProperties } from "react";
 import { localeOf, useT } from "../i18n";
 import {
@@ -15,8 +15,10 @@ import {
   toDateKey,
 } from "../lib/dates";
 import { hidesDetails } from "../lib/eventVisual";
+import { buildQuickEvent, pickQuickSlot, quickCalendarId } from "../lib/quickAdd";
 import { formatWeekRange, groupWeekTodos, isTodoDone, todoStats } from "../lib/weekTodo";
 import { useCalendarColors, useOccurrences } from "../hooks/useCalendarData";
+import { confirmAction } from "../state/confirm";
 import { useAppStore } from "../state/store";
 
 function capitalize(value: string): string {
@@ -39,8 +41,13 @@ export function WeekTodo() {
   const setSection = useAppStore((state) => state.setSection);
   const openEditor = useAppStore((state) => state.openEditor);
   const toggleEventDone = useAppStore((state) => state.toggleEventDone);
+  const saveEvent = useAppStore((state) => state.saveEvent);
+  const deleteEvent = useAppStore((state) => state.deleteEvent);
+  const selectedDay = useAppStore((state) => state.selectedDay);
+  const data = useAppStore((state) => state.data);
 
   const [open, setOpen] = useState(true);
+  const [draft, setDraft] = useState("");
 
   const locale = localeOf(language);
   const weekStart = useMemo(
@@ -67,6 +74,31 @@ export function WeekTodo() {
   const stats = useMemo(() => todoStats(days), [days]);
   const shownDays = days.filter((day) => day.items.length > 0);
   const progress = stats.total === 0 ? 0 : Math.round((stats.done / stats.total) * 100);
+
+  const addQuick = () => {
+    const title = draft.trim();
+    if (!title) return;
+    const day = parseDateKey(selectedDay);
+    const busy = occurrences
+      .filter(
+        (item) =>
+          !item.event.allDay &&
+          !holidayIds.has(item.event.calendarId) &&
+          toDateKey(item.start) === selectedDay,
+      )
+      .map((item) => ({ start: item.start, end: item.end }));
+    saveEvent(buildQuickEvent(title, quickCalendarId(data), pickQuickSlot(day, busy)));
+    setDraft("");
+  };
+
+  const removeItem = async (id: string, title: string) => {
+    const confirmed = await confirmAction(t("event.deleteConfirm"), {
+      title,
+      confirmLabel: t("actions.delete"),
+      danger: true,
+    });
+    if (confirmed) deleteEvent(id);
+  };
 
   const goToDay = (key: string) => {
     selectDay(key);
@@ -127,6 +159,25 @@ export function WeekTodo() {
               <i style={{ width: `${progress}%` }} />
             </div>
           )}
+
+          <form
+            className="week-todo-quick"
+            onSubmit={(event) => {
+              event.preventDefault();
+              addQuick();
+            }}
+          >
+            <Plus size={13} />
+            <input
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              placeholder={t("weekTodo.quickPlaceholder", {
+                day: formatLongDate(parseDateKey(selectedDay), locale),
+              })}
+              aria-label={t("weekTodo.add")}
+              maxLength={200}
+            />
+          </form>
 
           {stats.total === 0 ? (
             <div className="week-todo-blank">
@@ -217,6 +268,16 @@ export function WeekTodo() {
                             {hidden && <Lock size={9} />}
                             {title}
                           </span>
+                        </button>
+
+                        <button
+                          type="button"
+                          className="week-todo-remove"
+                          title={t("actions.delete")}
+                          aria-label={`${t("actions.delete")}: ${title}`}
+                          onClick={() => void removeItem(item.event.id, title)}
+                        >
+                          <Trash2 size={12} />
                         </button>
                       </div>
                     );

@@ -164,14 +164,18 @@ export function MiniCalendar() {
   const december = anchor.getMonth() === 11;
   const [draft, setDraft] = useState("");
 
-  const addQuick = () => {
-    const title = draft.trim();
-    if (!title || !isDesktop) return;
-    const day = parseDateKey(selected);
+  const nextSlot = () => {
     const busy = (byDay.get(selected) ?? [])
       .filter((item) => !item.event.allDay && !holidayCalendarIds.has(item.event.calendarId))
       .map((item) => ({ start: item.start, end: item.end }));
-    const event = buildQuickEvent(title, quickCalendarId(data), pickQuickSlot(day, busy));
+    return pickQuickSlot(parseDateKey(selected), busy);
+  };
+  const slotHint = draft.trim() ? nextSlot().start.slice(11, 16) : "";
+
+  const addQuick = () => {
+    const title = draft.trim();
+    if (!title || !isDesktop) return;
+    const event = buildQuickEvent(title, quickCalendarId(data), nextSlot());
     setDraft("");
     miniAddEvent(event).then((next) => setData(normalizeData(next))).catch(() => refresh());
   };
@@ -295,6 +299,7 @@ export function MiniCalendar() {
             ? `${t("actions.today")} · ${formatLongDate(selectedDate, locale)}, ${selectedDate.getFullYear()}`
             : `${formatLongDate(selectedDate, locale)}, ${selectedDate.getFullYear()}`}
         </h2>
+        <div className="mini-list">
         {!loaded ? null : dayItems.length === 0 ? (
           <p className="mini-empty">{t("mini.noEvents")}</p>
         ) : (
@@ -332,29 +337,29 @@ export function MiniCalendar() {
             })}
           </ul>
         )}
+        </div>
+        {isDesktop && (
+          <form
+            className="mini-add"
+            onSubmit={(event) => {
+              event.preventDefault();
+              addQuick();
+            }}
+          >
+            <span className="mini-add-plus" aria-hidden="true">+</span>
+            <input
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              placeholder={t("mini.addPlaceholder")}
+              aria-label={t("mini.addPlaceholder")}
+              maxLength={200}
+            />
+            {draft.trim() && <kbd className="mini-add-hint">↵ {slotHint}</kbd>}
+          </form>
+        )}
       </section>
 
       {december && <XmasScene />}
-
-      {isDesktop && (
-        <form
-          className="mini-add"
-          onSubmit={(event) => {
-            event.preventDefault();
-            addQuick();
-          }}
-        >
-          <input
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            placeholder={t("mini.addPlaceholder")}
-            maxLength={200}
-          />
-          <button type="submit" className="btn" disabled={!draft.trim()}>
-            {t("mini.addButton")}
-          </button>
-        </form>
-      )}
 
       <footer className="mini-foot">
         <button type="button" className="btn" onClick={openApp}>

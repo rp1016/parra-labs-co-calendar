@@ -2187,3 +2187,40 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
 @media (prefers-reduced-motion: reduce) { .firework { animation: none; opacity: .9; } }
 .mini-events { min-height: 92px; }
 .mini { height: 100vh; }
+
+/* Quick add lives inside the day card */
+.mini-events { display: flex; flex-direction: column; }
+.mini-events .mini-list { flex: 1; min-height: 0; overflow: auto; }
+.mini-events .mini-add {
+  flex: none; display: flex; align-items: center; gap: 9px; margin-top: 6px; padding: 7px 2px 0;
+  border-top: 1px solid var(--line);
+}
+.mini-add-plus {
+  flex: none; width: 17px; height: 17px; border-radius: 50%; background: var(--accent-strong, var(--accent));
+  color: var(--on-accent-strong, #fff); display: grid; place-content: center; font: 500 14px/1 var(--font);
+}
+.mini-events .mini-add input {
+  flex: 1; min-width: 0; border: 0; border-radius: 0; background: transparent; padding: 3px 0;
+  color: var(--text); font: 13px var(--font);
+}
+.mini-events .mini-add input:focus { outline: none; }
+.mini-add-hint {
+  flex: none; font: 600 11px var(--font); color: var(--muted); background: var(--bg-hover, rgba(0,0,0,.06));
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px;
+}
+
+/* Week to-do: quick add and remove */
+.week-todo-quick {
+  display: flex; align-items: center; gap: 6px; margin: 4px 6px 6px; padding: 5px 8px;
+  border: 1px solid var(--line); border-radius: 8px; color: var(--side-muted);
+}
+.week-todo-quick:focus-within { border-color: var(--accent); color: var(--accent-text); }
+.week-todo-quick input {
+  flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--side-text); font: 12px var(--font);
+}
+.week-todo-remove {
+  flex: none; width: 20px; height: 20px; display: grid; place-items: center; padding: 0; border: 0;
+  border-radius: 5px; background: transparent; color: var(--side-muted); opacity: 0; cursor: pointer;
+}
+.week-todo-item:hover .week-todo-remove, .week-todo-remove:focus-visible { opacity: 1; }
+.week-todo-remove:hover { background: var(--side-hover); color: #d6403a; }

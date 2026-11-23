@@ -22,7 +22,7 @@ use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 const MAIN_WINDOW: &str = "main";
 const MINI_WINDOW: &str = "mini";
 const MINI_WIDTH: f64 = 340.0;
-const MINI_HEIGHT: f64 = 590.0;
+const MINI_HEIGHT: f64 = 560.0;
 const TRAY_NOTICE_FILE: &str = "tray-notice-shown";
 const AUTOSTART_MARKER: &str = "autostart-initialized";
 const VERSION_MARKER: &str = "last-version";

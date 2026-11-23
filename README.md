@@ -33,6 +33,15 @@ carpeta de datos de la aplicación, y puedes exportar respaldos cuando quieras.
   semana visible, agrupado por día y con casillas para marcar cada ocurrencia
   como hecha. Muestra pendientes y progreso, y respeta calendarios ocultos y el
   filtro de etiquetas.
+- **Widget de la bandeja** (clic en el icono): mini calendario con año destacado,
+  tareas del día con casilla de «hecho» y registro rápido; escribes el título,
+  pulsas Enter y se crea un evento de una hora en la próxima hora libre del día.
+  Tres estilos a elegir en Ajustes (Popover, Sonoma, Botánico; este último usa
+  la ilustración del fondo artístico) y decoración especial en diciembre.
+- **Registro rápido también en el calendario grande**: el panel «TODO de la
+  semana» permite agregar tareas al día seleccionado y eliminarlas.
+- **Inicio con Windows**: arranca oculto en la bandeja (activado en la primera
+  ejecución, se cambia en Ajustes) y sigue activo al cerrar la ventana.
 - **Español e inglés**, semana desde lunes o domingo, formato de 12 o 24 horas.
 - **Recordatorios del sistema** opcionales, solo mientras la app está abierta.
 - **Respaldos**: JSON completo (restaurable), `.ics` para otras apps de
@@ -86,7 +95,9 @@ flujo de GitHub Actions o cualquier CI puede ejecutar esos mismos comandos.
 | Linux | `~/.local/share/com.parritalabs.calendar/calendar-data.json` |
 
 El archivo se escribe de forma atómica y la versión anterior queda como
-`calendar-data.json.bak`. En Ajustes → Datos puedes abrir la carpeta, exportar un
+`calendar-data.json.bak`. Antes de la primera ejecución de cada versión nueva se
+guarda una copia en `backups/pre-update-*.json`, así que actualizar no pierde
+datos ni configuración. En Ajustes → Datos puedes abrir la carpeta, exportar un
 respaldo completo o restaurarlo.
 
 ## Identidad

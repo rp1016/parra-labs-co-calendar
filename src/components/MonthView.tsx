@@ -15,6 +15,8 @@ import {
 } from "../lib/dates";
 import { eventClasses } from "../lib/eventVisual";
 import { artBackground } from "../lib/art";
+import { MoonIcon } from "./MoonIcon";
+import { moonPhaseOfDay } from "../lib/moon";
 import type { Occurrence } from "../lib/types";
 import { useAppStore } from "../state/store";
 import { useCalendarColors, useOccurrences } from "../hooks/useCalendarData";
@@ -68,6 +70,7 @@ export function MonthView() {
 
   const weekdays = weekdayOrder(weekStartsOn);
   const art = artBackground(artTheme);
+  const wallTheme = useAppStore((state) => state.data.settings.theme) === "tradicional";
 
   return (
     <div className="month">
@@ -101,6 +104,7 @@ export function MonthView() {
                 "month-cell",
                 outside ? "out" : "",
                 isToday(day) ? "today" : "",
+                day.getDay() === 0 ? "sun" : "",
                 key === selectedDay ? "selected" : "",
               ]
                 .filter(Boolean)
@@ -117,6 +121,11 @@ export function MonthView() {
                   onDoubleClick={() => openEditor({ date: key, time: "09:00" })}
                 >
                   <span className="daynum">{day.getDate()}</span>
+                  {wallTheme && moonPhaseOfDay(day) && (
+                    <span className="cell-moon">
+                      <MoonIcon phase={moonPhaseOfDay(day)!} />
+                    </span>
+                  )}
 
                   <button
                     className="cell-add"

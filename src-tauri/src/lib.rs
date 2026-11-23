@@ -21,8 +21,8 @@ use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
 const MAIN_WINDOW: &str = "main";
 const MINI_WINDOW: &str = "mini";
-const MINI_WIDTH: f64 = 340.0;
-const MINI_HEIGHT: f64 = 560.0;
+const MINI_WIDTH: f64 = 356.0;
+const MINI_HEIGHT: f64 = 576.0;
 const TRAY_NOTICE_FILE: &str = "tray-notice-shown";
 const AUTOSTART_MARKER: &str = "autostart-initialized";
 const VERSION_MARKER: &str = "last-version";
@@ -485,7 +485,8 @@ fn setup_tray(app: &AppHandle) -> tauri::Result<()> {
         .skip_taskbar(true)
         .always_on_top(true)
         .visible(false)
-        .shadow(true)
+        .transparent(true)
+        .shadow(false)
         .build()?;
 
     let open = MenuItem::with_id(app, "open", texts.open_app, true, None::<&str>)?;

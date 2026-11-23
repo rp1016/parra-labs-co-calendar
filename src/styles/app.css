@@ -2176,7 +2176,7 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
 .is-december.mini-style-popover { --accent-strong: #d6403a; --accent-soft: rgba(214, 64, 58, .14); --accent: #d6403a; }
 .is-december .mini-day.is-today { background: var(--accent-strong); }
 .mini-style-botanico .mini-day.is-today { background: var(--accent-strong); }
-.mini-xmas-scene { display: block; flex: none; width: 100%; height: 84px; margin-top: -2px; pointer-events: none; }
+.mini-xmas-scene { display: block; width: 100%; height: 100%; pointer-events: none; }
 .firework { transform-box: view-box; animation: firework-burst 3.3s ease-out infinite; opacity: 0; }
 @keyframes firework-burst {
   0% { opacity: 0; transform: scale(0.2); }
@@ -2224,3 +2224,22 @@ html.is-mini, html.is-mini body { margin: 0; overflow: hidden; background: var(-
 }
 .week-todo-item:hover .week-todo-remove, .week-todo-remove:focus-visible { opacity: 1; }
 .week-todo-remove:hover { background: var(--side-hover); color: #d6403a; }
+
+/* December: the Christmas art takes over the header (no extra block below) */
+.mini > .mini-banner-xmas {
+  position: absolute; left: 0; right: 0; top: 0; height: 136px; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, #e3ebe6, #f4ecdb); opacity: 1; filter: none;
+  -webkit-mask-image: linear-gradient(#000 78%, transparent); mask-image: linear-gradient(#000 78%, transparent);
+}
+:root[data-theme="dark"] .mini-banner-xmas, :root[data-theme="midnight"] .mini-banner-xmas {
+  background: linear-gradient(180deg, rgba(95, 132, 160, .22), transparent); filter: none; opacity: .95;
+}
+.is-december .mini-head { margin-top: 84px; }
+.is-december.mini-style-botanico .mini-head { margin-top: 84px; }
+.is-december .mini-month, .is-december .mini-year { text-shadow: 0 0 6px var(--bg); }
+
+/* Mini window is transparent so the rounded corners are real; the shadow is drawn inside it */
+html.is-mini, html.is-mini body, html.is-mini #root { background: transparent !important; }
+html.is-mini body { padding: 8px; box-sizing: border-box; }
+html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 0, 0, .28), 0 0 0 .5px rgba(0, 0, 0, .2); }
+.mini-style-popover { border-radius: 14px; }

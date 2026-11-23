@@ -36,8 +36,10 @@ carpeta de datos de la aplicación, y puedes exportar respaldos cuando quieras.
 - **Widget de la bandeja** (clic en el icono): mini calendario con año destacado,
   tareas del día con casilla de «hecho» y registro rápido; escribes el título,
   pulsas Enter y se crea un evento de una hora en la próxima hora libre del día.
-  Tres estilos a elegir en Ajustes (Popover, Sonoma, Botánico; este último usa
-  la ilustración del fondo artístico) y decoración especial en diciembre.
+  Su aspecto sigue al del calendario grande (sin elegir dos veces): el tema
+  «Sonoma» da el widget de vidrio con acento rojo; «Calendario de pared» da un look impreso rojo y blanco con fases de la luna y
+  signo del zodiaco; con un fondo artístico activo usa la ilustración como
+  cabecera; y en diciembre se decora con luces, nieve, árbol y ositos.
 - **Registro rápido también en el calendario grande**: el panel «TODO de la
   semana» permite agregar tareas al día seleccionado y eliminarlas.
 - **Inicio con Windows**: arranca oculto en la bandeja (activado en la primera

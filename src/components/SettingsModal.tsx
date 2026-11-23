@@ -48,7 +48,6 @@ import {
   type AccentName,
   type ArtThemeId,
   type Language,
-  type MiniStyle,
   type ThemeName,
 } from "../lib/types";
 import { useAppStore } from "../state/store";
@@ -61,6 +60,8 @@ const SWATCHES: Record<ThemeName, [string, string, string]> = {
   midnight: ["#0b1020", "#1b2a4d", "#dde5f7"],
   sepia: ["#f8f1e4", "#ece0cc", "#423729"],
   contrast: ["#000000", "#2e2e2e", "#ffffff"],
+  tradicional: ["#fffdfa", "#d62828", "#1f2a44"],
+  sonoma: ["#f5f5f7", "#ff3b30", "#1d1d1f"],
 };
 
 type TabId = "general" | "calendar" | "appearance" | "data";
@@ -527,30 +528,6 @@ export function SettingsModal() {
                       {ART_THEMES.map((theme) => (
                         <option key={theme.id} value={theme.id}>
                           {t(`art.${theme.id}`)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="setting-row">
-                    <div className="setting-main">
-                      <span className="setting-icon">
-                        <Flower2 size={15} />
-                      </span>
-                      <div>
-                        {t("settings.miniStyle")}
-                        <div className="sub">{t("settings.miniStyleHint")}</div>
-                      </div>
-                    </div>
-                    <select
-                      value={settings.miniStyle}
-                      onChange={(event) =>
-                        updateSettings({ miniStyle: event.target.value as MiniStyle })
-                      }
-                    >
-                      {(["popover", "sonoma", "botanico"] as const).map((id) => (
-                        <option key={id} value={id}>
-                          {t(`miniStyle.${id}`)}
                         </option>
                       ))}
                     </select>

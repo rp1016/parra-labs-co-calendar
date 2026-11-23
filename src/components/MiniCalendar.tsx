@@ -3,6 +3,9 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { translate, localeOf } from "../i18n";
 import { isDesktop, loadData, miniAddEvent, miniToggleDone } from "../lib/api";
 import { XmasScene } from "./XmasScene";
+import { MoonIcon } from "./MoonIcon";
+import { zodiacOf } from "../lib/zodiac";
+import { moonPhaseOfDay } from "../lib/moon";
 import { buildQuickEvent, pickQuickSlot, quickCalendarId } from "../lib/quickAdd";
 import {
   addMonths,
@@ -21,7 +24,7 @@ import { artBackground } from "../lib/art";
 import { holidayEvents } from "../lib/holidays";
 import { normalizeData } from "../lib/normalize";
 import { occurrencesBetween, sortOccurrences } from "../lib/recurrence";
-import { defaultData, type AppData, type Occurrence } from "../lib/types";
+import { defaultData, miniStyleFor, type AppData, type Occurrence } from "../lib/types";
 import { visibleEvents } from "../state/store";
 
 /** Popup shown from the tray icon. It never saves its own copy of the data:
@@ -154,6 +157,7 @@ export function MiniCalendar() {
   }, [data.calendars]);
 
   const art = artBackground(settings.artTheme);
+  const miniStyle = miniStyleFor(settings);
   const today = new Date();
   const selectedDate = parseDateKey(selected);
   const dayItems = byDay.get(selected) ?? [];
@@ -194,11 +198,15 @@ export function MiniCalendar() {
 
   return (
     <div
-      className={["mini", `mini-style-${settings.miniStyle}`, december ? "is-december" : ""]
+      className={["mini", `mini-style-${miniStyle}`, december ? "is-december" : ""]
         .join(" ")
         .trim()}
     >
-      {settings.miniStyle === "botanico" ? (
+      {december && miniStyle !== "tradicional" ? (
+        <div className="mini-banner mini-banner-xmas" aria-hidden="true">
+          <XmasScene />
+        </div>
+      ) : miniStyle === "botanico" ? (
         <div
           className="mini-banner"
           aria-hidden="true"
@@ -266,6 +274,7 @@ export function MiniCalendar() {
             "mini-day",
             isHoliday ? "is-holiday" : "",
             day.getMonth() !== anchor.getMonth() ? "is-out" : "",
+            day.getDay() === 0 ? "is-sun" : "",
             isSameDay(day, today) ? "is-today" : "",
             key === selected ? "is-selected" : "",
           ]
@@ -288,6 +297,11 @@ export function MiniCalendar() {
             >
               <span>{day.getDate()}</span>
               <i className={hasOwnEvents ? "has-events" : ""} />
+              {miniStyle === "tradicional" && moonPhaseOfDay(day) && (
+                <span className="mini-moon">
+                  <MoonIcon phase={moonPhaseOfDay(day)!} size={9} />
+                </span>
+              )}
             </button>
           );
         })}
@@ -298,6 +312,9 @@ export function MiniCalendar() {
           {isSameDay(selectedDate, today)
             ? `${t("actions.today")} · ${formatLongDate(selectedDate, locale)}, ${selectedDate.getFullYear()}`
             : `${formatLongDate(selectedDate, locale)}, ${selectedDate.getFullYear()}`}
+        {miniStyle === "tradicional" && (
+            <span className="mini-zodiac"> · {`${zodiacOf(selectedDate).symbol}︎`} {zodiacOf(selectedDate).name}</span>
+          )}
         </h2>
         <div className="mini-list">
         {!loaded ? null : dayItems.length === 0 ? (
@@ -358,8 +375,6 @@ export function MiniCalendar() {
           </form>
         )}
       </section>
-
-      {december && <XmasScene />}
 
       <footer className="mini-foot">
         <button type="button" className="btn" onClick={openApp}>

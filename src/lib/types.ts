@@ -1,6 +1,6 @@
 export type ViewMode = "day" | "week" | "month" | "agenda";
 
-export type ThemeName = "auto" | "light" | "dark" | "midnight" | "sepia" | "contrast";
+export type ThemeName = "auto" | "light" | "dark" | "midnight" | "sepia" | "contrast" | "tradicional" | "sonoma";
 
 export type AccentName = "indigo" | "violet" | "teal" | "blue" | "amber" | "rose" | "green";
 
@@ -10,7 +10,7 @@ export type Language = "es" | "en";
 export type ArtThemeId = "none" | "botanical" | "birds" | "rabbits" | "children" | "animals";
 
 /** Look of the tray mini calendar. */
-export type MiniStyle = "popover" | "sonoma" | "botanico";
+export type MiniStyle = "popover" | "sonoma" | "botanico" | "tradicional";
 
 export type RepeatFreq = "none" | "daily" | "weekly" | "monthly" | "yearly";
 
@@ -133,6 +133,8 @@ export const THEMES: { id: ThemeName; label: string }[] = [
   { id: "midnight", label: "Medianoche" },
   { id: "sepia", label: "Sepia" },
   { id: "contrast", label: "Alto contraste" },
+  { id: "tradicional", label: "Calendario de pared" },
+  { id: "sonoma", label: "Sonoma" },
 ];
 
 export const CALENDAR_COLORS = [
@@ -198,4 +200,14 @@ export function defaultData(): AppData {
 export function newId(prefix: string): string {
   const random = Math.random().toString(36).slice(2, 10);
   return `${prefix}_${Date.now().toString(36)}${random}`;
+}
+
+/** The tray mini calendar follows the main look, so there is a single choice:
+ *  the wall-calendar theme gives the printed look, Sonoma the frosted red
+ *  look, an illustration theme the illustrated banner, and everything else the clean popover. */
+export function miniStyleFor(settings: Pick<Settings, "theme" | "artTheme">): MiniStyle {
+  if (settings.theme === "tradicional") return "tradicional";
+  if (settings.theme === "sonoma") return "sonoma";
+  if (settings.artTheme !== "none") return "botanico";
+  return "popover";
 }

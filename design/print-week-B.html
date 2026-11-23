@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es" data-style="popover">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CalendarPRO · Semana imprimible B</title>
+<style>
+@page { size: letter landscape; margin: 0.4in; }
+:root, [data-style="popover"] {
+  --accent: #138d9a; --accent-soft: #e3f6f8; --ink: #1c2a2d; --muted: #6b7a7e; --line: #dfe5e7; --line-strong: #b9c4c7;
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif; --font-title: var(--font);
+  --r-block: 4px; --r-chip: 50%; --r-bar: 999px; --r-box: 6px;
+  --title-w: 800; --title-ls: -0.02em; --title-style: normal; --year-w: 300; --year-color: #9aa7aa; --year-style: normal;
+  --c1: #d9f2f5; --c1t: #0b6a75; --c2: #e0f3e2; --c2t: #1f6b2c; --c3: #fdeccf; --c3t: #8a5300; --c4: #ece6fb; --c4t: #5b3fb0;
+  --stripe: 3px;
+}
+[data-style="sonoma"] {
+  --accent: #e62e24; --accent-soft: #ffeceb; --ink: #1d1d1f; --muted: #6e6e73; --line: #e5e5ea; --line-strong: #c7c7cc;
+  --r-block: 8px; --r-chip: 50%; --r-bar: 999px; --r-box: 12px;
+  --title-w: 700; --title-ls: -0.01em; --year-w: 600; --year-color: #e62e24;
+  --c1: #ffe3e1; --c1t: #a8190f; --c2: #dff4e4; --c2t: #1b6b34; --c3: #fff0d1; --c3t: #8a5a00; --c4: #e4e9fb; --c4t: #3a4fb0;
+  --stripe: 0px;
+}
+[data-style="botanico"] {
+  --accent: #b4553f; --accent-soft: #f8ebe6; --ink: #2d2a26; --muted: #7a7168; --line: #e8e1d8; --line-strong: #c9bfb2;
+  --font-title: Georgia, "Times New Roman", serif;
+  --r-block: 2px; --r-chip: 50%; --r-bar: 2px; --r-box: 3px;
+  --title-w: 400; --title-ls: 0; --year-w: 400; --year-color: #b4553f; --year-style: italic;
+  --c1: #f6e4dd; --c1t: #8a3a27; --c2: #e6eddc; --c2t: #4a6128; --c3: #f6ecd2; --c3t: #7a5a12; --c4: #ebe3ee; --c4t: #67466f;
+  --stripe: 2px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #d6d9dc; color: var(--ink); font-family: var(--font); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { padding: 64px 0 32px; display: flex; justify-content: center; }
+
+.toolbar { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; padding: 6px; background: #fff; border-radius: 999px; box-shadow: 0 2px 10px rgba(0,0,0,.18); z-index: 9; font: 600 13px "Segoe UI", Arial, sans-serif; align-items: center; }
+.toolbar span { padding: 0 8px; color: #666; font-weight: 500; }
+.toolbar button { border: 0; background: #eef0f2; padding: 6px 14px; border-radius: 999px; font: inherit; cursor: pointer; color: #222; }
+.toolbar button.on { background: #222; color: #fff; }
+
+/* Hoja: 11x8.5in; el padding 0.4in equivale al margen de @page */
+.sheet { width: 11in; height: 8.5in; padding: 0.4in; background: #fff; box-shadow: 0 6px 28px rgba(0,0,0,.25); overflow: hidden; flex: none; }
+.inner { width: 100%; height: 100%; display: flex; flex-direction: column; font-size: 8.5pt; line-height: 1.25; overflow: hidden; }
+
+/* Encabezado */
+.top { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 6px; flex: none; }
+.title { font-family: var(--font-title); font-size: 26pt; line-height: 1; font-weight: var(--title-w); letter-spacing: var(--title-ls); }
+.title .year { font-weight: var(--year-w); font-style: var(--year-style); color: var(--year-color); margin-left: .25em; }
+.wk { font-size: 10pt; font-weight: 600; color: var(--accent); text-align: right; }
+.wk small { display: block; font-weight: 500; color: var(--muted); font-size: 8pt; margin-top: 2px; }
+.prog { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; flex: none; font-size: 8pt; color: var(--muted); }
+.bar { flex: 1; height: 5px; background: var(--line); border-radius: var(--r-bar); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 27.27%; background: var(--accent); border-radius: var(--r-bar); }
+.prog b { color: var(--ink); }
+
+/* Cuerpo */
+.main { flex: 1; min-height: 0; display: grid; grid-template-columns: 68fr 32fr; gap: 0.2in; }
+
+/* Cuadrícula semanal */
+.cal { display: flex; flex-direction: column; min-height: 0; border: 1px solid var(--line-strong); border-radius: var(--r-box); overflow: hidden; }
+.cal-head { display: grid; grid-template-columns: 0.38in repeat(7, 1fr); flex: none; border-bottom: 1px solid var(--line-strong); }
+.dh { text-align: center; padding: 3px 0 4px; border-left: 1px solid var(--line); font-size: 7.5pt; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+.dh:first-child { border-left: 0; }
+.dh b { display: block; font-size: 12pt; color: var(--ink); letter-spacing: 0; line-height: 1.1; font-weight: 700; }
+.dh.today b { color: var(--accent); }
+.dh.we { background: #fafafa; }
+.cal-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 0.38in repeat(7, 1fr); }
+.hours, .col { position: relative; }
+.hours span { position: absolute; right: 4px; transform: translateY(-50%); font-size: 6.5pt; color: var(--muted); }
+.col { border-left: 1px solid var(--line);
+  background-image: linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 100% calc(100% / 14); }
+.col.we { background-color: #fafafa; }
+.ev { position: absolute; left: 2px; right: 2px; padding: 2px 4px; overflow: hidden; border-radius: var(--r-block); border-left: var(--stripe) solid currentColor; font-size: 7.5pt; line-height: 1.2; }
+.ev b { display: block; font-weight: 700; font-family: var(--font-title); }
+.ev small { font-size: 6.8pt; opacity: .85; }
+.c1 { background: var(--c1); color: var(--c1t); } .c2 { background: var(--c2); color: var(--c2t); }
+.c3 { background: var(--c3); color: var(--c3t); } .c4 { background: var(--c4); color: var(--c4t); }
+[data-style="botanico"] .ev b { font-weight: 700; }
+
+/* TODO */
+.side { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+.sec-t { font-size: 8pt; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); padding-bottom: 3px; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; flex: none; }
+.sec-t em { font-style: normal; color: var(--muted); font-weight: 600; letter-spacing: 0; text-transform: none; }
+.todo { flex: none; }
+.day { margin-top: 5px; }
+.day h4 { font-size: 8.5pt; font-weight: 800; }
+.day h4 span { font-weight: 500; color: var(--muted); }
+.it { display: flex; gap: 6px; align-items: flex-start; padding: 2px 0; font-size: 8.5pt; }
+.cb { flex: none; width: 10px; height: 10px; margin-top: 1px; border: 1.3px solid var(--ink); border-radius: var(--r-chip); position: relative; }
+.it.done { color: var(--muted); text-decoration: line-through; }
+.it.done .cb { background: var(--accent); border-color: var(--accent); }
+.it.done .cb::after { content: ""; position: absolute; left: 2.5px; top: 0.5px; width: 2.5px; height: 5px; border: solid #fff; border-width: 0 1.3px 1.3px 0; transform: rotate(45deg); }
+.it small { color: var(--muted); }
+.notes { flex: 1; min-height: 0; display: flex; flex-direction: column; border: 1px solid var(--line-strong); border-radius: var(--r-box); padding: 5px 8px 0; overflow: hidden; }
+.notes h5 { font-size: 8pt; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); flex: none; }
+.lines { flex: 1; min-height: 0; background-image: linear-gradient(to bottom, transparent calc(100% - 1px), #8c979a 1px);
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 17px, transparent 17px);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 16px, var(--line-strong) 16px 17px); }
+.lines { border-bottom: 0; mask-image: repeating-linear-gradient(to right, #000 0 2px, transparent 2px 5px); -webkit-mask-image: repeating-linear-gradient(to right, #000 0 2px, transparent 2px 5px); }
+
+/* Pie */
+.foot { flex: none; display: flex; justify-content: space-between; align-items: center; margin-top: 6px; padding-top: 4px; border-top: 1px solid var(--line); font-size: 7pt; color: var(--muted); }
+.mark { font-weight: 700; color: var(--ink); letter-spacing: .01em; }
+.mark i { display: inline-block; width: 7px; height: 7px; background: var(--accent); border-radius: 2px; margin-right: 4px; }
+.mark span { font-weight: 500; color: var(--muted); }
+
+@media print {
+  html, body { background: #fff; }
+  body { padding: 0; display: block; }
+  .toolbar { display: none !important; }
+  .sheet { width: 10.2in; height: 7.7in; padding: 0; margin: 0; box-shadow: none; page-break-after: avoid; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" role="group" aria-label="Estilo">
+  <span>Estilo:</span>
+  <button data-s="popover" class="on">Popover</button>
+  <button data-s="sonoma">Sonoma</button>
+  <button data-s="botanico">Botánico</button>
+</div>
+
+<main class="sheet">
+<div class="inner">
+
+  <header class="top">
+    <div class="title">Noviembre<span class="year">2026</span></div>
+    <div class="wk">Semana 47 · 16–22 nov<small>Lunes a domingo</small></div>
+  </header>
+  <div class="prog"><span><b>3 de 11</b> hechas</span><div class="bar"><i></i></div><span>27 %</span></div>
+
+  <div class="main">
+    <!-- Calendario -->
+    <section class="cal">
+      <div class="cal-head">
+        <div class="dh"></div>
+        <div class="dh">Lun<b>16</b></div><div class="dh">Mar<b>17</b></div><div class="dh">Mié<b>18</b></div>
+        <div class="dh">Jue<b>19</b></div><div class="dh">Vie<b>20</b></div><div class="dh we">Sáb<b>21</b></div><div class="dh we">Dom<b>22</b></div>
+      </div>
+      <div class="cal-body">
+        <div class="hours">
+          <span style="top:0">7</span><span style="top:7.143%">8</span><span style="top:14.286%">9</span><span style="top:21.43%">10</span><span style="top:28.57%">11</span><span style="top:35.71%">12</span><span style="top:42.86%">13</span><span style="top:50%">14</span><span style="top:57.14%">15</span><span style="top:64.29%">16</span><span style="top:71.43%">17</span><span style="top:78.57%">18</span><span style="top:85.71%">19</span><span style="top:92.86%">20</span>
+        </div>
+        <!-- top = (h-7)/14, alto = dur/14 -->
+        <div class="col">
+          <div class="ev c1" style="top:14.29%;height:7.14%"><b>Reunión de equipo</b><small>09:00</small></div>
+          <div class="ev c2" style="top:39.29%;height:7.14%"><b>Almuerzo con Ana</b><small>12:30</small></div>
+        </div>
+        <div class="col">
+          <div class="ev c3" style="top:7.14%;height:7.14%"><b>Gimnasio</b><small>08:00</small></div>
+          <div class="ev c4" style="top:57.14%;height:10.7%"><b>Mandar ropa a lavandería</b><small>15:00</small></div>
+        </div>
+        <div class="col">
+          <div class="ev c1" style="top:21.43%;height:10.71%"><b>Revisión de proyecto</b><small>10:00–11:30</small></div>
+          <div class="ev c4" style="top:78.57%;height:7.14%"><b>Clase de inglés</b><small>18:00</small></div>
+        </div>
+        <div class="col">
+          <div class="ev c3" style="top:50%;height:7.14%"><b>Cita odontológica</b><small>14:00</small></div>
+          <div class="ev c2" style="top:64.29%;height:7.14%"><b>Llamada con proveedor</b><small>16:00</small></div>
+        </div>
+        <div class="col">
+          <div class="ev c1" style="top:14.29%;height:7.14%"><b>Reunión de equipo</b><small>09:00</small></div>
+          <div class="ev c2" style="top:85.71%;height:7.14%"><b>Cena con amigos</b><small>19:00</small></div>
+        </div>
+        <div class="col we">
+          <div class="ev c3" style="top:21.43%;height:14.29%"><b>Mercado y compras</b><small>10:00–12:00</small></div>
+        </div>
+        <div class="col we">
+          <div class="ev c4" style="top:42.86%;height:21.43%"><b>Cumpleaños de mi hermana</b><small>13:00–16:00</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODO + Notas -->
+    <aside class="side">
+      <div class="todo">
+        <div class="sec-t">TODO de la semana <em>3/11</em></div>
+        <div class="day"><h4>Lunes <span>16</span></h4>
+          <div class="it done"><i class="cb"></i>Enviar informe semanal</div>
+          <div class="it done"><i class="cb"></i>Reunión de equipo <small>09:00</small></div></div>
+        <div class="day"><h4>Martes <span>17</span></h4>
+          <div class="it"><i class="cb"></i>Pagar servicios</div>
+          <div class="it"><i class="cb"></i>Mandar a lavandería la ropa</div></div>
+        <div class="day"><h4>Miércoles <span>18</span></h4>
+          <div class="it"><i class="cb"></i>Comprar regalo para mamá</div></div>
+        <div class="day"><h4>Jueves <span>19</span></h4>
+          <div class="it"><i class="cb"></i>Cita odontológica <small>14:00</small></div>
+          <div class="it"><i class="cb"></i>Renovar seguro del carro</div></div>
+        <div class="day"><h4>Viernes <span>20</span></h4>
+          <div class="it done"><i class="cb"></i>Reservar mesa para la cena</div>
+          <div class="it"><i class="cb"></i>Preparar presentación</div></div>
+        <div class="day"><h4>Sábado <span>21</span></h4>
+          <div class="it"><i class="cb"></i>Compras del mercado</div></div>
+        <div class="day"><h4>Domingo <span>22</span></h4>
+          <div class="it"><i class="cb"></i>Cumpleaños de mi hermana <small>13:00</small></div></div>
+      </div>
+      <div class="notes"><h5>Notas</h5><div class="lines"></div></div>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <div class="mark"><i></i>CalendarPRO <span>· Parrita Labs</span></div>
+    <div>Impreso el 22 de noviembre de 2026</div>
+  </footer>
+
+</div>
+</main>
+
+<script>
+(function () {
+  var btns = document.querySelectorAll('.toolbar button');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.documentElement.setAttribute('data-style', b.dataset.s);
+      btns.forEach(function (x) { x.classList.toggle('on', x === b); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

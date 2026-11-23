@@ -21,6 +21,10 @@ carpeta de datos de la aplicación, y puedes exportar respaldos cuando quieras.
   estados; las limitaciones del archivo se informan antes de importar.
 - **Feriados por país** generados localmente (ES, MX, CO, CL, PE, AR, US).
 - **Impresión** de mes, semana, día, agenda y nota con la marca de Parrita Labs.
+- **Imprimir semana**: botón visible en la barra superior que genera una hoja
+  carta horizontal tipo planner (mini mes, prioridades, progreso, una tarjeta por
+  día con casillas, notas y pendientes para escribir a mano). Copia el estilo
+  activo —acento, tipografías, título y la ilustración de fondo configurada.
 - **Números de semana** ISO y **zona horaria secundaria** en las vistas de tiempo.
 - **Respaldo automático** diario con 14 copias rotativas, además de los respaldos
   manuales.

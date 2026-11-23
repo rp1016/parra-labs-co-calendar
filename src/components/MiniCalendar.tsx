@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { translate, localeOf } from "../i18n";
 import { isDesktop, loadData, miniAddEvent, miniToggleDone } from "../lib/api";
 import { XmasScene } from "./XmasScene";
+import { themedCalendarColor } from "../lib/calendarColor";
 import { MoonIcon } from "./MoonIcon";
 import pielRojaUrl from "../assets/piel-roja.svg";
 import { PielRojaFrame } from "./PielRojaArt";
@@ -154,9 +155,11 @@ export function MiniCalendar() {
 
   const colors = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const calendar of data.calendars) map[calendar.id] = calendar.color;
+    for (const calendar of data.calendars) {
+      map[calendar.id] = themedCalendarColor(calendar.color, settings.miniStyle, settings.theme);
+    }
     return map;
-  }, [data.calendars]);
+  }, [data.calendars, settings.miniStyle, settings.theme]);
 
   const art = artBackground(settings.artTheme);
   const miniStyle = miniStyleFor(settings);

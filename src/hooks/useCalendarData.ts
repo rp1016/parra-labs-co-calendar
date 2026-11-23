@@ -1,16 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { occurrencesBetween, sortOccurrences } from "../lib/recurrence";
 import type { Occurrence } from "../lib/types";
+import { themedCalendarColor } from "../lib/calendarColor";
 import { useAppStore, visibleEvents } from "../state/store";
 
 /** Calendar id → color, so every view paints events the same way. */
 export function useCalendarColors(): Record<string, string> {
   const calendars = useAppStore((state) => state.data.calendars);
+  const style = useAppStore((state) => state.data.settings.miniStyle);
+  const theme = useAppStore((state) => state.data.settings.theme);
   return useMemo(() => {
     const map: Record<string, string> = {};
-    for (const calendar of calendars) map[calendar.id] = calendar.color;
+    for (const calendar of calendars) map[calendar.id] = themedCalendarColor(calendar.color, style, theme);
     return map;
-  }, [calendars]);
+  }, [calendars, style, theme]);
 }
 
 export function useOccurrences(rangeStart: Date, rangeEnd: Date): Occurrence[] {

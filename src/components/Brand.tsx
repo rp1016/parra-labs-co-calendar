@@ -1,4 +1,5 @@
 import { useT } from "../i18n";
+import { AppMark } from "./AppMark";
 
 /** Product lockup: symbol, CalendarPRO wordmark, by Parrita Labs.
  *  The sidebar uses the aqua symbol (app-mark.svg) so it keeps contrast on the
@@ -7,7 +8,7 @@ export function Brand() {
   const t = useT();
   return (
     <div className="brand">
-      <img src="/app-mark.svg" alt="" />
+      <AppMark />
       <div className="brand-text">
         <div className="brand-name">
           <b>Calendar</b>

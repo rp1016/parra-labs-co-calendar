@@ -1,6 +1,7 @@
 import { CalendarDays, CalendarPlus, Check, ChevronDown, MoreHorizontal, StickyNote, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useT } from "../i18n";
+import { themedCalendarColor } from "../lib/calendarColor";
 import { CALENDAR_COLORS } from "../lib/types";
 import { allTags, useAppStore } from "../state/store";
 import { confirmAction } from "../state/confirm";
@@ -9,6 +10,8 @@ import { WeekTodo } from "./WeekTodo";
 export function Sidebar() {
   const t = useT();
   const data = useAppStore((state) => state.data);
+  const miniStyleSetting = data.settings.miniStyle;
+  const themeSetting = data.settings.theme;
   const section = useAppStore((state) => state.section);
   const setSection = useAppStore((state) => state.setSection);
   const tagFilter = useAppStore((state) => state.tagFilter);
@@ -96,7 +99,7 @@ export function Sidebar() {
               <div className="cal-row" key={calendar.id}>
                 <button
                   className="cal-check"
-                  style={{ ["--cal" as string]: calendar.color }}
+                  style={{ ["--cal" as string]: themedCalendarColor(calendar.color, miniStyleSetting, themeSetting) }}
                   aria-pressed={calendar.visible}
                   aria-label={calendar.name}
                   onClick={() => updateCalendar(calendar.id, { visible: !calendar.visible })}

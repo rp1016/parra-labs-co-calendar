@@ -5,6 +5,7 @@ import {
   Columns3,
   List,
   Pencil,
+  Printer,
   Search,
   Settings,
   Square,
@@ -15,6 +16,7 @@ import { formatLongDate, formatMonthYear, formatShortDate, parseDateKey, startOf
 import { useAppStore } from "../state/store";
 import { isMac } from "../platform";
 import { Brand } from "./Brand";
+import { printWeek } from "./PrintWeek";
 
 const VIEWS = [
   { id: "month", icon: CalendarDays },
@@ -29,6 +31,7 @@ export function TopBar() {
   const view = useAppStore((state) => state.view);
   const weekStartsOn = useAppStore((state) => state.data.settings.weekStartsOn);
   const language = useAppStore((state) => state.data.settings.language);
+  const theme = useAppStore((state) => state.data.settings.theme);
   const setView = useAppStore((state) => state.setView);
   const shiftPeriod = useAppStore((state) => state.shiftPeriod);
   const goToday = useAppStore((state) => state.goToday);
@@ -38,6 +41,10 @@ export function TopBar() {
   const openEditor = useAppStore((state) => state.openEditor);
 
   const locale = localeOf(language);
+  const monthDate = parseDateKey(cursor);
+  const monthLabel = new Intl.DateTimeFormat(locale, { month: "long" }).format(monthDate);
+  const monthName = monthLabel.charAt(0).toLocaleUpperCase(locale) + monthLabel.slice(1);
+  const monthYear = String(monthDate.getFullYear());
   const title = useMemo(() => {
     const day = parseDateKey(cursor);
     if (view === "month") {
@@ -71,7 +78,13 @@ export function TopBar() {
 
       <div className="period" {...drag}>
         <h1 className="period-title" {...drag}>
-          {/\d{4}$/.test(title) ? (
+          {view === "month" && theme !== "tradicional" ? (
+            // Same two-part title as the tray mini calendar: month name + year.
+            <>
+              <span className="period-month">{monthName}</span>
+              <span className="period-year">{monthYear}</span>
+            </>
+          ) : /\d{4}$/.test(title) ? (
             <>
               {title.slice(0, -4)}
               <span className="period-year">{title.slice(-4)}</span>
@@ -114,6 +127,15 @@ export function TopBar() {
           </button>
         </div>
 
+        <button
+          className="print-week-btn"
+          onClick={printWeek}
+          aria-label={t("printWeek.title")}
+          title={t("printWeek.title")}
+        >
+          <Printer size={15} />
+          <span>{t("printWeek.button")}</span>
+        </button>
         <button
           className="search-field"
           onClick={() => setSearchOpen(true)}

@@ -1,4 +1,5 @@
 import { ShieldCheck, X } from "lucide-react";
+import { AppMark } from "./AppMark";
 import { useT } from "../i18n";
 import { useAppStore } from "../state/store";
 
@@ -17,7 +18,7 @@ export function AboutDialog() {
         </div>
 
         <div className="modal-body about-body">
-          <img src="/app-mark.svg" alt="" className="about-icon" />
+          <AppMark className="about-icon" />
           <div className="about-name">
             <b>Calendar</b>
             <span>PRO</span>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>CalendarPRO — Planner semanal (C)</title>
+<style>
+@page { size: letter landscape; margin: 0.4in }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:#d9dce0;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:#1d1d1f;font-size:8.5pt;display:flex;flex-direction:column;align-items:center;padding:56px 0 30px}
+.bar{position:fixed;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;background:#fff;padding:6px;border-radius:999px;box-shadow:0 2px 10px #0003;z-index:9}
+.bar button{border:0;background:#eef0f2;padding:6px 14px;border-radius:999px;font:600 12px "Segoe UI",sans-serif;cursor:pointer}
+.bar button.on{background:#222;color:#fff}
+.sheet{--acc:#15bed1;--acc2:#138d9a;--tint:#e8f8fa;--rad:6px;--rule:#d4d8dc;--mfont:"Segoe UI",system-ui,sans-serif;--mw:800;--yc:#aab0b6;--yst:normal;--pill:6px;
+ width:11in;height:8.5in;background:#fff;box-shadow:0 6px 28px #0003;padding:0.4in;display:flex;flex-direction:column;overflow:hidden;position:relative;flex:none}
+.sheet[data-style=sonoma]{--acc:#ff3b30;--acc2:#d62d23;--tint:#ffeceb;--rad:12px;--yc:#ff3b30;--pill:999px}
+.sheet[data-style=botanico]{--acc:#b4553f;--acc2:#8f3f2d;--tint:#f8ece7;--rad:3px;--rule:#e2cfc6;--mfont:Georgia,"Times New Roman",serif;--mw:700;--yc:#b4553f;--yst:italic;--pill:3px}
+.hd{height:0.7in;flex:none;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--acc);padding-bottom:5px;position:relative;overflow:hidden}
+.ttl{font-family:var(--mfont);font-size:30pt;line-height:1;font-weight:var(--mw);letter-spacing:-.5px}
+.ttl .y{color:var(--yc);font-weight:300;font-style:var(--yst);margin-left:.25em}
+.sheet[data-style=botanico] .ttl .y{font-weight:400}
+.wk{font-size:10pt;font-weight:600;color:var(--acc2);padding:3px 10px;background:var(--tint);border-radius:var(--pill);margin-bottom:3px}
+.art{display:none;position:absolute;right:2.3in;bottom:2px;width:1.6in;height:0.6in;opacity:.4}
+.sheet[data-style=botanico] .art{display:block}
+.body{flex:1;min-height:0;display:grid;grid-template-columns:24% 1fr;gap:0.14in;padding:0.12in 0}
+.left{display:flex;flex-direction:column;gap:0.1in;min-height:0}
+.box{border:1px solid var(--rule);border-radius:var(--rad);padding:6px 8px}
+.box h3{font-size:7.5pt;text-transform:uppercase;letter-spacing:.08em;color:var(--acc2);margin-bottom:4px}
+.mini .mh{font:700 9pt var(--mfont);margin-bottom:3px}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:7pt;row-gap:1px}
+.mg b{color:#8a9096;font-size:6.5pt;font-weight:600}
+.mg span{padding:1px 0}.mg .o{color:#c3c7cb}
+.mg .w{background:var(--acc);color:#fff;font-weight:700}
+.pr .l{display:flex;gap:6px;align-items:center;border-bottom:1px solid var(--rule);height:0.26in}
+.cb{display:inline-block;flex:none;width:9px;height:9px;border:1.2px solid var(--acc);border-radius:50%;background:#fff}
+.cb.on{background:var(--acc);box-shadow:inset 0 0 0 1.5px #fff}
+.prog{display:flex;align-items:center;gap:10px}
+.ring{position:relative;width:60px;height:60px;flex:none}
+.ring svg{width:60px;height:60px;transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 13pt var(--mfont)}
+.prog p{font-size:8pt;line-height:1.3}.prog p span{color:#7a8087;font-size:7pt}
+.notes{flex:1;min-height:0;background-image:radial-gradient(#b9bec3 .7px,transparent .8px);background-size:10px 10px;overflow:hidden}
+.right{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:1fr 1fr;gap:0.08in;min-height:0}
+.card{border:1px solid var(--rule);border-radius:var(--rad);padding:6px 7px;display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden}
+.card.today{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.ch{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--rule);padding-bottom:2px;margin-bottom:4px}
+.dn{font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--acc2)}
+.dd{font:var(--mw) 21pt/1 var(--mfont)}
+.sheet[data-style=sonoma] .today .dd{background:var(--acc);color:#fff;border-radius:999px;min-width:30px;text-align:center;padding:2px 4px;font-size:16pt}
+.pd{font-size:7.5pt;color:#8a9096;font-style:italic}
+ul{list-style:none;display:flex;flex-direction:column;gap:3px}
+.it{display:flex;align-items:center;gap:4px;border-left:3px solid var(--c,var(--acc));padding:1px 0 1px 4px;line-height:1.2;min-width:0}
+.c-w{--c:var(--acc)}.c-p{--c:#8e7cc3}.c-h{--c:#34a853}.c-f{--c:#f5a623}
+.tm{font-size:7pt;font-weight:600;background:var(--tint);color:var(--acc2);border-radius:var(--pill);padding:0 4px;white-space:nowrap;flex:none}
+.ti{font-size:8.5pt;min-width:0}
+.done .ti{text-decoration:line-through;color:#8a9096}.done .tm{opacity:.6}
+.ln{border-bottom:1px solid var(--rule);height:0.22in;flex:none}
+ul+.ln{margin-top:auto}
+.ft{height:0.25in;flex:none;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);font-size:7pt;color:#7a8087;padding-top:3px}
+.wm{font-weight:700;color:#444}.wm em{font-style:normal;color:var(--acc2)}
+@media print{
+ body{background:#fff;padding:0;display:block}
+ .bar{display:none}
+ .sheet{box-shadow:none;width:10.2in;height:7.7in;padding:0;break-inside:avoid}
+}
+</style></head><body>
+<div class="bar"><button data-s="popover" class="on">Popover</button><button data-s="sonoma">Sonoma</button><button data-s="botanico">Botánico</button></div>
+<main class="sheet" data-style="popover">
+<header class="hd"><div class="ttl">Noviembre<span class="y">2026</span></div>
+<svg class="art" viewBox="0 0 160 60" fill="none" stroke="#b4553f" stroke-width="1.4" stroke-linecap="round"><path d="M2 48 Q50 40 100 44 T158 30"/><path d="M40 43 q-6-10 -16-12 M70 42 q2-12 12-16 M120 38 q6-9 16-8"/><ellipse cx="88" cy="34" rx="11" ry="7" fill="#b4553f" fill-opacity=".25"/><circle cx="99" cy="28" r="4.5" fill="#b4553f" fill-opacity=".25"/><path d="M103 28 l6 2 -6 1.5M78 36 l-12 6"/><circle cx="100" cy="27" r=".8" fill="#b4553f"/></svg>
+<div class="wk">Semana 47 · 16–22 nov</div></header>
+<div class="body">
+<aside class="left">
+<div class="box mini"><div class="mh">Noviembre 2026</div><div class="mg"><b>L</b><b>M</b><b>X</b><b>J</b><b>V</b><b>S</b><b>D</b><span class="o">26</span><span class="o">27</span><span class="o">28</span><span class="o">29</span><span class="o">30</span><span class="o">31</span><span class="">1</span><span class="">2</span><span class="">3</span><span class="">4</span><span class="">5</span><span class="">6</span><span class="">7</span><span class="">8</span><span class="">9</span><span class="">10</span><span class="">11</span><span class="">12</span><span class="">13</span><span class="">14</span><span class="">15</span><span class="w">16</span><span class="w">17</span><span class="w">18</span><span class="w">19</span><span class="w">20</span><span class="w">21</span><span class="w">22</span><span class="">23</span><span class="">24</span><span class="">25</span><span class="">26</span><span class="">27</span><span class="">28</span><span class="o">29</span><span class="o">30</span><span class="o">1</span><span class="o">2</span><span class="o">3</span><span class="o">4</span><span class="o">5</span><span class="o">6</span></div></div>
+<div class="box pr"><h3>Prioridades de la semana</h3><div class="l"><i class="cb on"></i>Entregar informe</div><div class="l"><i class="cb"></i>Cita odontológica</div><div class="l"><i class="cb"></i>Pagar servicios</div></div>
+<div class="box prog"><div class="ring"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="var(--tint)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="var(--acc)" stroke-width="6" stroke-linecap="round" stroke-dasharray="42.8 157.1"/></svg><b>3</b></div><p><strong>3 de 11</strong> hechas<br><span>Progreso semanal</span></p></div>
+<div class="box notes"><h3>Notas</h3></div>
+</aside>
+<div class="right"><section class="card"><div class="ch"><span class="dn">Lunes</span><span class="dd">16</span></div><ul><li class="it c-w done"><i class="cb on"></i><span class="tm">09:00</span><span class="ti">Reunión de equipo</span></li><li class="it c-p done"><i class="cb on"></i><span class="tm">12:30</span><span class="ti">Almuerzo con Marta</span></li><li class="it c-h"><i class="cb"></i><span class="tm">18:00</span><span class="ti">Gimnasio</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card"><div class="ch"><span class="dn">Martes</span><span class="dd">17</span></div><ul><li class="it c-w done"><i class="cb on"></i><span class="tm">08:30</span><span class="ti">Llamar al banco</span></li><li class="it c-h"><i class="cb"></i><span class="tm">14:00</span><span class="ti">Cita odontológica</span></li><li class="it c-p"><i class="cb"></i><span class="tm">todo el día</span><span class="ti">Pagar servicios</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card"><div class="ch"><span class="dn">Miércoles</span><span class="dd">18</span></div><ul><li class="it c-w"><i class="cb"></i><span class="tm">10:00</span><span class="ti">Entrega de informe</span></li><li class="it c-p"><i class="cb"></i><span class="tm">19:00</span><span class="ti">Clase de inglés</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card"><div class="ch"><span class="dn">Jueves</span><span class="dd">19</span></div><ul><li class="it c-w"><i class="cb"></i><span class="tm">09:30</span><span class="ti">Revisión de presupuesto</span></li><li class="it c-p"><i class="cb"></i><span class="tm">todo el día</span><span class="ti">Mandar a lavandería la ropa</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card"><div class="ch"><span class="dn">Viernes</span><span class="dd">20</span></div><ul><li class="it c-w"><i class="cb"></i><span class="tm">11:00</span><span class="ti">Cierre de sprint</span></li><li class="it c-p"><i class="cb"></i><span class="tm">20:00</span><span class="ti">Cena con amigos</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card"><div class="ch"><span class="dn">Sábado</span><span class="dd">21</span></div><ul><li class="it c-f"><i class="cb"></i><span class="tm">todo el día</span><span class="ti">Cumpleaños de mi hermana</span></li><li class="it c-p"><i class="cb"></i><span class="tm">10:00</span><span class="ti">Mercado y compras</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card today"><div class="ch"><span class="dn">Domingo</span><span class="dd">22</span></div><ul><li class="it c-p"><i class="cb"></i><span class="tm">17:00</span><span class="ti">Preparar la semana</span></li></ul><div class="ln"></div><div class="ln"></div></section><section class="card pend"><div class="ch"><span class="dn">Pendientes</span><span class="pd">sin fecha</span></div><ul><li class="it c-p"><i class="cb"></i><span class="ti">Renovar seguro del carro</span></li><li class="it c-p"><i class="cb"></i><span class="ti">Llamar al plomero</span></li><li class="it c-p"><i class="cb on"></i><span class="ti">Comprar regalo de cumpleaños</span></li><li class="it c-p"><i class="cb"></i><span class="ti">Cambiar contraseña del correo</span></li></ul><div class="ln"></div><div class="ln"></div></section></div>
+</div>
+<footer class="ft"><span class="wm">CalendarPRO <em>·</em> Parrita Labs</span><span>Impreso el 22 de noviembre de 2026</span></footer>
+</main>
+<script>
+document.querySelectorAll('.bar button').forEach(function(b){b.onclick=function(){document.querySelector('.sheet').dataset.style=b.dataset.s;document.querySelectorAll('.bar button').forEach(function(x){x.classList.toggle('on',x===b)})}});
+</script></body></html>

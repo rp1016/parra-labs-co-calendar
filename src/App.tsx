@@ -7,6 +7,7 @@ import { EventDialog } from "./components/EventDialog";
 import { MonthView } from "./components/MonthView";
 import { NotesView } from "./components/NotesView";
 import { PrintSheet } from "./components/PrintSheet";
+import { PrintWeek } from "./components/PrintWeek";
 import { RightRail } from "./components/RightRail";
 import { SearchOverlay } from "./components/SearchOverlay";
 import { SettingsModal } from "./components/SettingsModal";
@@ -167,6 +168,7 @@ export default function App() {
       </div>
 
       <PrintSheet />
+      <PrintWeek />
     </>
   );
 }

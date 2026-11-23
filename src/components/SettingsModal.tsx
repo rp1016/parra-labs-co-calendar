@@ -51,6 +51,7 @@ import {
 } from "../lib/types";
 import { useAppStore } from "../state/store";
 import { confirmAction } from "../state/confirm";
+import { AppMark } from "./AppMark";
 
 type TabId = "general" | "calendar" | "appearance" | "data";
 
@@ -288,7 +289,7 @@ export function SettingsModal() {
           </button>
 
           <div className="settings-nav-foot">
-            <img src="/app-mark.svg" alt="" />
+            <AppMark />
             <div>
               <b>CalendarPRO</b>
               <span>{t("app.by")}</span>
@@ -510,6 +511,9 @@ export function SettingsModal() {
                   </div>
                 </div>
 
+                {(settings.theme === "tradicional" ||
+                  (settings.miniStyle === "popover" && ["auto", "light", "dark"].includes(settings.theme))) && (
+                  <>
                 <div className="settings-group-title">{t("settings.accent")}</div>
                 <div className="settings-card">
                   <div className="accent-row">
@@ -525,6 +529,8 @@ export function SettingsModal() {
                     ))}
                   </div>
                 </div>
+                  </>
+                )}
 
                 <div className="settings-group-title">{t("settings.artGroup")}</div>
                 <div className="settings-card">

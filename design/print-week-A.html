@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>CalendarPRO - Semana imprimible A (columnas por día)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@page { size: letter landscape; margin: 0.4in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: #d9dbde; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: #1d1d1f; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+/* ---- tokens por estilo ---- */
+body[data-style="popover"] {
+  --accent: #138d9a; --accent-soft: #e6f6f8; --ink: #1d1d1f; --muted: #6b7280; --line: #d5d9de;
+  --radius: 6px; --font-title: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --month-weight: 700; --month-style: normal; --year-color: #9aa1a9; --year-weight: 300; --year-style: normal;
+  --today-bg: #138d9a; --today-fg: #fff; --today-radius: 6px; --item-radius: 4px; --check: #138d9a;
+}
+body[data-style="sonoma"] {
+  --accent: #ff3b30; --accent-soft: #fff0ef; --ink: #1d1d1f; --muted: #6b7280; --line: #dcdcdf;
+  --radius: 14px; --font-title: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --month-weight: 700; --month-style: normal; --year-color: #ff3b30; --year-weight: 600; --year-style: normal;
+  --today-bg: #ff3b30; --today-fg: #fff; --today-radius: 999px; --item-radius: 999px; --check: #ff3b30;
+}
+body[data-style="botanico"] {
+  --accent: #b4553f; --accent-soft: #f8ece8; --ink: #2d2a26; --muted: #6f675e; --line: #ddd4ca;
+  --radius: 4px; --font-title: Georgia, "Times New Roman", serif;
+  --month-weight: 400; --month-style: normal; --year-color: #b4553f; --year-weight: 400; --year-style: italic;
+  --today-bg: #b4553f; --today-fg: #fff; --today-radius: 3px; --item-radius: 3px; --check: #b4553f;
+}
+
+/* ---- barra de herramientas (solo pantalla) ---- */
+.toolbar { position: fixed; top: 12px; right: 12px; display: flex; gap: 4px; padding: 4px; background: #fff; border-radius: 999px; box-shadow: 0 2px 10px rgba(0,0,0,.18); z-index: 10; font-size: 13px; }
+.toolbar button { border: 0; background: transparent; padding: 6px 14px; border-radius: 999px; cursor: pointer; font: inherit; color: #333; }
+.toolbar button.on { background: #1d1d1f; color: #fff; }
+.toolbar .print { background: #eee; }
+
+/* ---- hoja ---- */
+.stage { padding: 56px 12px 40px; display: flex; justify-content: center; }
+.sheet { width: 11in; height: 8.5in; padding: 0.4in; background: #fff; box-shadow: 0 6px 28px rgba(0,0,0,.22); display: flex; flex-direction: column; overflow: hidden; font-size: 8.5pt; line-height: 1.25; color: var(--ink); }
+
+.top { display: flex; align-items: flex-end; justify-content: space-between; height: 0.72in; padding-bottom: 0.08in; border-bottom: 1.5px solid var(--accent); flex: none; }
+.title { font-family: var(--font-title); font-size: 26pt; line-height: 1; margin: 0; letter-spacing: -0.02em; color: var(--ink); }
+.title .m { font-weight: var(--month-weight); font-style: var(--month-style); }
+.title .y { color: var(--year-color); font-weight: var(--year-weight); font-style: var(--year-style); margin-left: .25em; }
+body[data-style="botanico"] .title { letter-spacing: 0; }
+.sub { margin-top: 5px; font-size: 9pt; color: var(--muted); }
+.sub b { color: var(--ink); font-weight: 600; }
+.progress { text-align: right; font-size: 8.5pt; color: var(--muted); }
+.progress .n { font-size: 11pt; color: var(--ink); font-weight: 600; }
+.bar { width: 1.9in; height: 6px; margin: 4px 0 0 auto; border: 1px solid var(--accent); border-radius: 999px; overflow: hidden; background: #fff; }
+.bar i { display: block; height: 100%; width: 27%; background: var(--accent); }
+
+.grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(5, 1fr) repeat(2, 0.72fr); gap: 0.07in; padding: 0.1in 0; }
+.col { display: flex; flex-direction: column; min-width: 0; min-height: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.col.we { background: #fbfbfb; }
+.head { display: flex; align-items: center; gap: 6px; padding: 5px 7px; border-bottom: 1px solid var(--line); flex: none; }
+.head .dn { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.head .num { margin-left: auto; min-width: 22px; height: 22px; display: grid; place-items: center; font-size: 12pt; font-weight: 700; padding: 0 4px; font-family: var(--font-title); }
+.col.today .head { background: var(--accent-soft); }
+.col.today .head .dn { color: var(--accent); }
+.col.today .head .num { background: var(--today-bg); color: var(--today-fg); border-radius: var(--today-radius); }
+.col.today { border-color: var(--accent); }
+
+.items { padding: 4px 5px 0; display: flex; flex-direction: column; gap: 3px; }
+.it { display: grid; grid-template-columns: 11px 1fr; column-gap: 5px; align-items: start; padding: 3px 4px; border-radius: var(--item-radius); background: var(--accent-soft); background: #fff; border: 1px solid var(--line); }
+.cb { width: 11px; height: 11px; border: 1.4px solid var(--ink); border-radius: 50%; margin-top: 1px; position: relative; }
+.it.done .cb { background: var(--check); border-color: var(--check); }
+.it.done .cb::after { content: ""; position: absolute; left: 3px; top: 0.5px; width: 2.5px; height: 5.5px; border: solid #fff; border-width: 0 1.5px 1.5px 0; transform: rotate(40deg); }
+.it.done .tt { text-decoration: line-through; color: var(--muted); }
+.meta { display: flex; align-items: center; gap: 4px; font-size: 7.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.dot { width: 6px; height: 6px; border-radius: 50%; flex: none; margin-left: auto; }
+.tt { font-size: 8.5pt; color: var(--ink); font-weight: 500; overflow-wrap: anywhere; }
+
+.lines { flex: 1; min-height: 0; margin-top: 4px; padding: 0 6px; background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(0.24in - 1px), var(--line) calc(0.24in - 1px), var(--line) 0.24in); background-position: 0 0; overflow: hidden; }
+
+.foot { flex: none; height: 0.22in; display: flex; justify-content: space-between; align-items: flex-end; font-size: 7.5pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 3px; }
+.foot b { color: var(--ink); letter-spacing: .02em; }
+.legend { display: flex; gap: 10px; align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 3px; }
+.legend i { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+
+@media print {
+  body { background: #fff; }
+  .toolbar { display: none !important; }
+  .stage { padding: 0; display: block; }
+  .sheet { width: 10.2in; height: 7.7in; padding: 0; box-shadow: none; page-break-inside: avoid; break-inside: avoid; }
+}
+</style>
+</head>
+<body data-style="popover">
+
+<div class="toolbar" role="toolbar" aria-label="Estilo de impresión">
+  <button data-set="popover" class="on">Popover</button>
+  <button data-set="sonoma">Sonoma</button>
+  <button data-set="botanico">Botánico</button>
+  <button class="print" onclick="window.print()">Imprimir</button>
+</div>
+
+<div class="stage">
+  <main class="sheet">
+    <header class="top">
+      <div>
+        <h1 class="title"><span class="m">Noviembre</span><span class="y">2026</span></h1>
+        <div class="sub"><b>Semana 47</b> · 16–22 nov</div>
+      </div>
+      <div class="progress">
+        <div><span class="n">3 de 11</span> hechas</div>
+        <div class="bar"><i></i></div>
+      </div>
+    </header>
+
+    <section class="grid" id="grid"></section>
+
+    <footer class="foot">
+      <div><b>Parrita Labs</b> · CalendarPRO</div>
+      <div class="legend">
+        <span><i style="background:#138d9a"></i>Trabajo</span>
+        <span><i style="background:#ff9500"></i>Personal</span>
+        <span><i style="background:#8e5bd6"></i>Familia</span>
+        <span><i style="background:#34a853"></i>Salud</span>
+      </div>
+      <div>Impreso el 18 nov 2026</div>
+    </footer>
+  </main>
+</div>
+
+<script>
+var C = { w: "#138d9a", p: "#ff9500", f: "#8e5bd6", s: "#34a853" };
+var days = [
+  ["Lun", 16, [[1,"09:00","Reunión de equipo","w"],[1,"12:30","Almuerzo con Marta","p"],[0,"","Pagar servicios","p"]]],
+  ["Mar", 17, [[0,"10:00","Revisión de presupuesto","w"],[1,"18:00","Gimnasio","s"]]],
+  ["Mié", 18, [[0,"09:00","Reunión de equipo","w"],[0,"14:00","Cita odontológica","s"],[0,"","Mandar a lavandería la ropa","p"]]],
+  ["Jue", 19, [[0,"11:00","Entrega de informe","w"],[0,"16:30","Llamar al banco","p"]]],
+  ["Vie", 20, [[0,"15:00","Cierre de sprint","w"],[0,"","Comprar regalo","f"]]],
+  ["Sáb", 21, [[0,"","Mercado","p"]]],
+  ["Dom", 22, [[0,"","Cumpleaños de mi hermana","f"]]]
+];
+var g = document.getElementById("grid"), html = "";
+days.forEach(function (d, i) {
+  var we = i > 4, today = d[1] === 18;
+  html += '<div class="col' + (we ? " we" : "") + (today ? " today" : "") + '"><div class="head"><span class="dn">' + d[0] + '</span><span class="num">' + d[1] + '</span></div><div class="items">';
+  d[2].forEach(function (x) {
+    html += '<div class="it' + (x[0] ? " done" : "") + '"><span class="cb"></span><div><div class="meta"><span>' + (x[1] || "Todo el día") + '</span><span class="dot" style="background:' + C[x[3]] + '"></span></div><div class="tt">' + x[2] + '</div></div></div>';
+  });
+  html += '</div><div class="lines"></div></div>';
+});
+g.innerHTML = html;
+
+document.querySelectorAll(".toolbar [data-set]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    document.body.setAttribute("data-style", b.dataset.set);
+    document.querySelectorAll(".toolbar [data-set]").forEach(function (o) { o.classList.toggle("on", o === b); });
+  });
+});
+</script>
+</body>
+</html>

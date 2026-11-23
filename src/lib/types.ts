@@ -1,6 +1,6 @@
 export type ViewMode = "day" | "week" | "month" | "agenda";
 
-export type ThemeName = "auto" | "light" | "dark" | "midnight" | "sepia" | "contrast" | "tradicional" | "sonoma";
+export type ThemeName = "auto" | "light" | "dark" | "midnight" | "sepia" | "contrast" | "tradicional";
 
 export type AccentName = "indigo" | "violet" | "teal" | "blue" | "amber" | "rose" | "green";
 
@@ -133,8 +133,7 @@ export const THEMES: { id: ThemeName; label: string }[] = [
   { id: "midnight", label: "Medianoche" },
   { id: "sepia", label: "Sepia" },
   { id: "contrast", label: "Alto contraste" },
-  { id: "tradicional", label: "Calendario de pared" },
-  { id: "sonoma", label: "Sonoma" },
+  { id: "tradicional", label: "Calendario Piel Roja" },
 ];
 
 export const CALENDAR_COLORS = [
@@ -202,12 +201,10 @@ export function newId(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}${random}`;
 }
 
-/** The tray mini calendar follows the main look, so there is a single choice:
- *  the wall-calendar theme gives the printed look, Sonoma the frosted red
- *  look, an illustration theme the illustrated banner, and everything else the clean popover. */
-export function miniStyleFor(settings: Pick<Settings, "theme" | "artTheme">): MiniStyle {
+/** One style choice drives both the desktop app and the tray mini calendar.
+ *  The Piel Roja theme brings its own printed look; otherwise the chosen
+ *  style (popover, sonoma or botanico) applies to both. */
+export function miniStyleFor(settings: Pick<Settings, "theme" | "miniStyle">): MiniStyle {
   if (settings.theme === "tradicional") return "tradicional";
-  if (settings.theme === "sonoma") return "sonoma";
-  if (settings.artTheme !== "none") return "botanico";
-  return "popover";
+  return settings.miniStyle;
 }

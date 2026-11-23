@@ -70,9 +70,10 @@ export default function App() {
     const root = document.documentElement;
     root.dataset.theme = resolvedTheme;
     root.dataset.accent = settings.accent;
+    root.dataset.ui = settings.miniStyle;
     root.lang = settings.language;
     document.title = "CalendarPRO — by Parrita Labs";
-  }, [resolvedTheme, settings.accent, settings.language]);
+  }, [resolvedTheme, settings.accent, settings.miniStyle, settings.language]);
 
   // The tray "Quit" asks the UI to save first, then closes the app for good.
   useEffect(() => {

@@ -16,7 +16,10 @@ import {
 import { eventClasses } from "../lib/eventVisual";
 import { artBackground } from "../lib/art";
 import { MoonIcon } from "./MoonIcon";
+import pielRojaUrl from "../assets/piel-roja.svg";
+import { PielRojaFrame } from "./PielRojaArt";
 import { moonPhaseOfDay } from "../lib/moon";
+import { zodiacOf } from "../lib/zodiac";
 import type { Occurrence } from "../lib/types";
 import { useAppStore } from "../state/store";
 import { useCalendarColors, useOccurrences } from "../hooks/useCalendarData";
@@ -71,9 +74,27 @@ export function MonthView() {
   const weekdays = weekdayOrder(weekStartsOn);
   const art = artBackground(artTheme);
   const wallTheme = useAppStore((state) => state.data.settings.theme) === "tradicional";
+  const monthLabel = new Intl.DateTimeFormat(locale, { month: "long" }).format(anchor);
+  const monthName = monthLabel.charAt(0).toLocaleUpperCase(locale) + monthLabel.slice(1);
+  const zodiac = zodiacOf(anchor);
 
   return (
-    <div className="month">
+    <div className={`month ${wallTheme ? "month-pielroja" : ""}`}>
+      {wallTheme && (
+        <div className="month-hero">
+          <PielRojaFrame className="month-hero-frame" />
+          <div className="month-hero-copy">
+            <span className="month-hero-kicker">{t("theme.tradicional")}</span>
+            <h2 className="month-hero-title">
+              PIEL <em>ROJA</em>
+            </h2>
+            <span className="month-hero-zodiac">
+              {monthName} {anchor.getFullYear()} · {zodiac.symbol} {zodiac.name}
+            </span>
+          </div>
+          <img className="month-hero-masthead" src={pielRojaUrl} alt="Jefe indígena Piel Roja" />
+        </div>
+      )}
       <div className={`month-head ${showWeekNumbers ? "with-weeks" : ""}`}>
         {showWeekNumbers && <div className="weeknum-head" aria-hidden />}
         {weekdays.map((index) => (

@@ -60,8 +60,7 @@ const SWATCHES: Record<ThemeName, [string, string, string]> = {
   midnight: ["#0b1020", "#1b2a4d", "#dde5f7"],
   sepia: ["#f8f1e4", "#ece0cc", "#423729"],
   contrast: ["#000000", "#2e2e2e", "#ffffff"],
-  tradicional: ["#fffdfa", "#d62828", "#1f2a44"],
-  sonoma: ["#f5f5f7", "#ff3b30", "#1d1d1f"],
+  tradicional: ["#ffffff", "#d62828", "#171412"],
 };
 
 type TabId = "general" | "calendar" | "appearance" | "data";
@@ -488,6 +487,36 @@ export function SettingsModal() {
                         <span>{t(`theme.${theme.id}`)}</span>
                       </button>
                     ))}
+                  </div>
+                </div>
+
+                <div className="settings-group-title">{t("settings.uiStyle")}</div>
+                <div className="settings-card">
+                  <div className="setting-row">
+                    <div className="setting-main">
+                      <span className="setting-icon">
+                        <Flower2 size={15} />
+                      </span>
+                      <div>
+                        {t("settings.uiStyle")}
+                        <div className="sub">{t("settings.uiStyleHint")}</div>
+                      </div>
+                    </div>
+                    <select
+                      value={settings.miniStyle}
+                      disabled={settings.theme === "tradicional"}
+                      onChange={(event) =>
+                        updateSettings({
+                          miniStyle: event.target.value as "popover" | "sonoma" | "botanico",
+                        })
+                      }
+                    >
+                      {(["popover", "sonoma", "botanico"] as const).map((id) => (
+                        <option key={id} value={id}>
+                          {t(`uiStyle.${id}`)}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 

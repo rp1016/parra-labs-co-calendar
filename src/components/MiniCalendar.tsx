@@ -4,6 +4,8 @@ import { translate, localeOf } from "../i18n";
 import { isDesktop, loadData, miniAddEvent, miniToggleDone } from "../lib/api";
 import { XmasScene } from "./XmasScene";
 import { MoonIcon } from "./MoonIcon";
+import pielRojaUrl from "../assets/piel-roja.svg";
+import { PielRojaFrame } from "./PielRojaArt";
 import { zodiacOf } from "../lib/zodiac";
 import { moonPhaseOfDay } from "../lib/moon";
 import { buildQuickEvent, pickQuickSlot, quickCalendarId } from "../lib/quickAdd";
@@ -223,6 +225,18 @@ export function MiniCalendar() {
           <span className="flake f3">❆</span>
           <span className="flake f4">❄</span>
           <span className="flake f5">❅</span>
+        </div>
+      )}
+      {miniStyle === "tradicional" && (
+        <div className="mini-hero" aria-hidden="true">
+          <PielRojaFrame className="mini-frame" />
+          <img className="mini-chief" src={pielRojaUrl} alt="" />
+          <div className="mini-hero-copy">
+            <span className="mini-hero-kicker">{language === "es" ? "Calendario" : "Calendar"}</span>
+            <span className="mini-hero-brand">
+              PIEL<em>ROJA</em>
+            </span>
+          </div>
         </div>
       )}
       <header className="mini-head">

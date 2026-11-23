@@ -58,6 +58,10 @@ export function normalizeData(raw: Partial<AppData> | null | undefined): AppData
     Array.isArray(raw.calendars) && raw.calendars.length > 0 ? raw.calendars : base.calendars;
   const settings = { ...DEFAULT_SETTINGS, ...(raw.settings ?? {}) };
   if (!isArtTheme(settings.artTheme)) settings.artTheme = DEFAULT_SETTINGS.artTheme;
+  if ((settings.theme as string) === "sonoma") {
+    settings.theme = "light";
+    settings.miniStyle = "sonoma";
+  }
   if (!["popover", "sonoma", "botanico", "tradicional"].includes(settings.miniStyle)) settings.miniStyle = DEFAULT_SETTINGS.miniStyle;
   return {
     version: DATA_VERSION,

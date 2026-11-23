@@ -24,8 +24,11 @@ carpeta de datos de la aplicación, y puedes exportar respaldos cuando quieras.
 - **Números de semana** ISO y **zona horaria secundaria** en las vistas de tiempo.
 - **Respaldo automático** diario con 14 copias rotativas, además de los respaldos
   manuales.
-- **Seis temas** (sistema, claro, oscuro, medianoche, sepia, alto contraste) y
-  siete colores de acento.
+- **Siete temas** (sistema, claro, oscuro, medianoche, sepia, alto contraste y
+  Calendario Piel Roja) y siete colores de acento. El tema Piel Roja
+  recrea los calendarios de pared colombianos: papel, tinta negra, rojo de
+  imprenta, tipografía serif, marco ornamental y el jefe indígena con tocado de
+  plumas.
 - **Fondos artísticos opcionales**: cinco ilustraciones vintage (flores
   botánicas, aves, conejos, niños jugando y animales) dibujadas como SVG locales
   y aplicadas como marca de agua tenue detrás de la cuadrícula del mes.
@@ -37,7 +40,7 @@ carpeta de datos de la aplicación, y puedes exportar respaldos cuando quieras.
   tareas del día con casilla de «hecho» y registro rápido; escribes el título,
   pulsas Enter y se crea un evento de una hora en la próxima hora libre del día.
   Su aspecto sigue al del calendario grande (sin elegir dos veces): el tema
-  «Sonoma» da el widget de vidrio con acento rojo; «Calendario de pared» da un look impreso rojo y blanco con fases de la luna y
+  el menú «Estilo» (Popover, Sonoma, Botánico) se aplica al calendario y al widget; «Calendario de pared» da un look impreso rojo y blanco con fases de la luna y
   signo del zodiaco; con un fondo artístico activo usa la ilustración como
   cabecera; y en diciembre se decora con luces, nieve, árbol y ositos.
 - **Registro rápido también en el calendario grande**: el panel «TODO de la

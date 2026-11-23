@@ -312,41 +312,51 @@ h1, h2, h3, h4, p { margin: 0; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* Calendario de pared: white paper, red and navy ink, like the printed Colombian wall calendars */
+/* Calendario Piel Roja: papel blanco, tinta negra y rojo de imprenta,
+   inspirado en los calendarios de pared colombianos. */
 :root[data-theme="tradicional"], :root[data-theme="tradicional"][data-accent] { --accent-h: 2; }
 :root[data-theme="tradicional"] {
-  --bg: #fffdfa;
-  --bg-subtle: #fbf5ef;
-  --bg-muted: #f4eae1;
-  --bg-hover: #f1e4d8;
-  --line: #e6d9cc;
-  --line-strong: #d3bfae;
-  --text: #1f2a44;
-  --text-strong: #121a2e;
-  --muted: #6a6f80;
-  --faint: #a4a1a6;
-  --shadow-sm: 0 0.5px 1px rgba(31, 42, 68, 0.14), 0 1px 2px rgba(31, 42, 68, 0.08);
-  --shadow: 0 0 0 0.5px rgba(31, 42, 68, 0.2), 0 2px 6px rgba(31, 42, 68, 0.1), 0 12px 28px rgba(31, 42, 68, 0.16), 0 28px 64px rgba(31, 42, 68, 0.14);
+  --wall-red: #d62828;
+  --wall-ink: #171412;
+  --wall-paper: #ffffff;
+  /* Ink tones sampled from the printed reference: brick red and dark brown. */
+  --piel-red: #d02b1c;
+  --piel-ink: #3e251c;
+  --piel-paper: #ffffff;
+  --serif: Georgia, "Times New Roman", "Iowan Old Style", "Palatino Linotype", serif;
+
+  --bg: var(--wall-paper);
+  --bg-subtle: #fcfaf8;
+  --bg-muted: #f6f0ea;
+  --bg-hover: #f2ebe3;
+  --line: #e5d9cd;
+  --line-strong: #d2beb0;
+  --text: var(--wall-ink);
+  --text-strong: #0d0b0a;
+  --muted: #6b625c;
+  --faint: #a49a92;
+  --shadow-sm: 0 0.5px 1px rgba(23, 20, 18, 0.14), 0 1px 2px rgba(23, 20, 18, 0.08);
+  --shadow: 0 0 0 0.5px rgba(23, 20, 18, 0.2), 0 2px 6px rgba(23, 20, 18, 0.1), 0 12px 28px rgba(23, 20, 18, 0.16), 0 28px 64px rgba(23, 20, 18, 0.14);
   --danger: #c4161c;
   --warning-bg: #fbe3a8;
-  --now: #d62828;
+  --now: var(--wall-red);
   --switch-on: #2f8f4e;
-  --glass: rgba(255, 253, 250, 0.9);
-  --glass-line: rgba(31, 42, 68, 0.2);
-  --scrim: rgba(18, 26, 46, 0.3);
+  --glass: rgba(255, 255, 255, 0.94);
+  --glass-line: rgba(23, 20, 18, 0.18);
+  --scrim: rgba(13, 11, 10, 0.3);
   --ctl-bg: #ffffff;
-  --ctl-line: #d3bfae;
+  --ctl-line: #d2beb0;
   --seg-active: #ffffff;
 
-  --side-bg: rgba(251, 245, 239, 0.9);
-  --side-hover: #f3e6da;
-  --side-active: #f0d9cc;
-  --side-text: #1f2a44;
-  --side-muted: #6a6f80;
-  --side-line: #e6d9cc;
+  --side-bg: rgba(252, 250, 248, 0.94);
+  --side-hover: #f3ece4;
+  --side-active: #efe2d6;
+  --side-text: var(--wall-ink);
+  --side-muted: #6b625c;
+  --side-line: #e5d9cd;
 
-  --rail-a: #fbf5ef;
-  --rail-b: #fffdfa;
+  --rail-a: #fcfaf8;
+  --rail-b: #ffffff;
 
   --accent-l: 46%;
   --accent-text: #c4161c;
@@ -354,41 +364,304 @@ h1, h2, h3, h4, p { margin: 0; }
   --accent-ring: rgba(214, 40, 40, 0.35);
   --on-accent: #ffffff;
   --today-bg: #fdecea;
-  --today-line: #d62828;
+  --today-line: var(--wall-red);
   --art-opacity: 0.1;
 
   color-scheme: light;
 }
-/* printed-calendar details: red weekday band, red Sundays, moon phases */
-:root[data-theme="tradicional"] .month-head { background: #d62828; border-bottom: 0; }
-:root[data-theme="tradicional"] .month-head div { color: #fff; text-transform: uppercase; letter-spacing: .06em; font-size: 11.5px; }
-:root[data-theme="tradicional"] .month-cell.sun .daynum { color: #d62828; font-weight: 700; }
-:root[data-theme="tradicional"] .month-cell .daynum { font-weight: 700; font-size: 15px; }
-:root[data-theme="tradicional"] .month-cell.today .daynum { background: #d62828; }
-.cell-moon { position: absolute; top: 8px; right: 8px; color: var(--muted); display: inline-flex; }
 
-/* Mini calendar, wall-calendar style */
-.mini-style-tradicional { --accent: #d62828; --accent-strong: #d62828; --on-accent-strong: #fff; --accent-soft: rgba(214, 40, 40, .12); background: #fffdfa; color: #1f2a44; border-radius: 12px; padding-top: 0; }
-.mini-style-tradicional .mini-head { margin: 0 -12px; padding: 10px 12px 8px; background: #d62828; color: #fff; }
+/* ---- Piel Roja: cartel de pared (vista Mes) ---- */
+.month-pielroja { background: var(--wall-paper); }
+
+.month-hero {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 150px;
+  padding: 12px 30px 10px;
+  background:
+    radial-gradient(120% 140% at 50% 130%, rgba(214, 40, 40, 0.04), transparent 60%),
+    #ffffff;
+  border-top: 4px solid var(--wall-red);
+  border-bottom: 2px solid var(--wall-red);
+  overflow: hidden;
+}
+.month-hero::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 4px;
+  height: 1px;
+  background: var(--wall-red);
+  opacity: 0.35;
+}
+.month-hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 1px;
+  width: 7px;
+  height: 7px;
+  background: var(--wall-red);
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 1;
+}
+.month-hero-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.month-hero-kicker {
+  font: 700 10px/1 var(--font);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--wall-red);
+}
+.month-hero-title {
+  margin: 0;
+  font: 700 clamp(30px, 3.4vw, 48px)/0.92 var(--serif);
+  color: var(--piel-ink, #3e251c);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.month-hero-title span,
+.month-hero-title em {
+  color: var(--piel-red, #d02b1c);
+  font-style: normal;
+  font-weight: 700;
+}
+.month-hero-zodiac {
+  font: 600 11px/1.5 var(--serif);
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+.month-hero-kicker,
+.month-hero-title,
+.month-hero-zodiac {
+  text-shadow: 0 0 8px var(--wall-paper), 0 0 14px var(--wall-paper);
+}
+/* Original Piel Roja artwork from assets/, sized by height to fit the poster. */
+.month-hero-masthead {
+  position: relative;
+  z-index: 1;
+  height: clamp(104px, 11vw, 132px);
+  width: auto;
+  flex: none;
+  margin: -2px 2px -6px 0;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 0 rgba(23, 20, 18, 0.1));
+}
+.month-hero-frame { color: var(--wall-red); }
+
+.month-pielroja .month-head {
+  background: var(--wall-red);
+  border-bottom: 0;
+  box-shadow: 0 2px 0 rgba(23, 20, 18, 0.12);
+}
+.month-pielroja .month-head div {
+  color: #fff;
+  font-family: var(--serif);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 12px;
+  font-weight: 700;
+}
+.month-pielroja .month-head .weeknum-head { border-right-color: rgba(255, 255, 255, 0.35); }
+.month-pielroja .month-cell { border-color: #e8d8c8; }
+.month-pielroja .month-cell .daynum {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--wall-ink);
+}
+.month-pielroja .month-cell.sun .daynum { color: var(--wall-red); }
+.month-pielroja .month-cell.out .daynum { color: var(--faint); }
+.month-pielroja .month-cell:hover { background: #fdf3ea; }
+.month-pielroja .month-cell.today {
+  background: var(--today-bg);
+  box-shadow: inset 0 0 0 1px var(--wall-red);
+}
+.month-pielroja .month-cell.today .daynum { background: var(--wall-red); color: #fff; }
+.month-pielroja .month-cell.selected:not(.today) {
+  box-shadow: inset 0 0 0 2px rgba(214, 40, 40, 0.35);
+}
+.month-pielroja .weeknum { border-right-color: #e8d8c8; color: #9b8f85; }
+.month-pielroja .month-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  border: 1px solid var(--wall-red);
+  box-shadow: inset 0 0 0 3px var(--wall-paper), inset 0 0 0 4px rgba(214, 40, 40, 0.35);
+}
+.cell-moon { position: absolute; top: 8px; right: 8px; color: var(--muted); display: inline-flex; }
+/* The day number is right-aligned in this layout, so keep the moon just to
+   its left instead of dropping it on top of the digits. */
+.month-pielroja .cell-moon { top: 6px; right: 30px; color: var(--wall-red); }
+
+/* Ornamental corner flourishes shared by the month page and the mini. */
+.piel-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--wall-red, #d62828);
+  z-index: 0;
+}
+.piel-corner { position: absolute; width: 72px; height: 72px; opacity: 0.9; }
+.piel-corner.tl { top: 4px; left: 6px; }
+.piel-corner.tr { top: 4px; right: 6px; transform: scaleX(-1); }
+.piel-corner.bl { bottom: 4px; left: 6px; transform: scaleY(-1); }
+.piel-corner.br { bottom: 4px; right: 6px; transform: scale(-1); }
+
+/* Mini calendario, estilo Piel Roja. */
+.mini-style-tradicional {
+  --accent: var(--wall-red, #d62828);
+  --accent-strong: var(--wall-red, #d62828);
+  --on-accent-strong: #fff;
+  --accent-soft: rgba(214, 40, 40, 0.12);
+  --serif: Georgia, "Times New Roman", "Iowan Old Style", "Palatino Linotype", serif;
+  background: var(--wall-paper, #ffffff);
+  color: var(--wall-ink, #171412);
+  border-radius: 12px;
+  padding-top: 0;
+  border-color: var(--wall-red, #d62828);
+}
+.mini-style-tradicional .mini-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 -12px -8px;
+  padding: 8px 16px 6px;
+  min-height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(214, 40, 40, 0.35);
+  overflow: hidden;
+}
+.mini-style-tradicional .mini-chief { height: 58px; width: auto; flex: none; position: relative; z-index: 1; object-fit: contain; }
+.mini-style-tradicional .mini-hero-copy { display: flex; flex-direction: column; gap: 1px; position: relative; z-index: 1; }
+.mini-style-tradicional .mini-hero-kicker {
+  font: 700 8px/1 var(--font);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--wall-red, #d62828);
+}
+.mini-style-tradicional .mini-hero-brand {
+  font: 800 20px/1 var(--serif);
+  letter-spacing: 0.01em;
+  color: var(--piel-ink, #3e251c);
+}
+.mini-style-tradicional .mini-hero-brand em {
+  font-style: normal;
+  color: var(--piel-red, #d02b1c);
+}
+.mini-style-tradicional .mini-frame { color: var(--wall-red, #d62828); }
+.mini-style-tradicional .mini-frame .piel-corner { width: 34px; height: 34px; }
+.mini-style-tradicional .mini-frame .piel-corner.tl { top: 3px; left: 4px; }
+.mini-style-tradicional .mini-frame .piel-corner.tr { top: 3px; right: 4px; }
+.mini-style-tradicional .mini-frame .piel-corner.bl { bottom: 3px; left: 4px; }
+.mini-style-tradicional .mini-frame .piel-corner.br { bottom: 3px; right: 4px; }
+
+.mini-style-tradicional .mini-head {
+  margin: 0 -12px;
+  padding: 9px 12px 8px;
+  background: var(--wall-red, #d62828);
+  color: #fff;
+  border-bottom: 2px solid var(--wall-ink, #171412);
+}
 .mini-style-tradicional .mini-head .icon-btn { color: #fff; }
-.mini-style-tradicional .mini-head .icon-btn:hover { background: rgba(255, 255, 255, .18); }
-.mini-style-tradicional .mini-title { flex-direction: row; justify-content: center; align-items: baseline; gap: 8px; }
-.mini-style-tradicional .mini-month { font: 800 22px/1 Georgia, "Times New Roman", serif; text-transform: uppercase; letter-spacing: .04em; color: #fff; }
-.mini-style-tradicional .mini-year { font: 700 18px/1 Georgia, serif; color: #ffe1de; }
-.mini-style-tradicional .mini-title:hover { background: rgba(255, 255, 255, .14); }
-.mini-style-tradicional .mini-dow { color: #d62828; font-weight: 800; }
-.mini-style-tradicional .mini-day { font-weight: 700; border-radius: 6px; position: relative; }
-.mini-style-tradicional .mini-day.is-sun:not(.is-out):not(.is-today) { color: #d62828; }
-.mini-style-tradicional .mini-day.is-today { background: #d62828; color: #fff; }
-.mini-moon { position: absolute; top: 2px; right: 3px; color: #1f2a44; display: inline-flex; opacity: .75; }
+.mini-style-tradicional .mini-head .icon-btn:hover { background: rgba(255, 255, 255, 0.18); }
+.mini-style-tradicional .mini-title {
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+}
+.mini-style-tradicional .mini-month {
+  font: 800 22px/1 var(--serif);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.mini-style-tradicional .mini-year { font: 700 18px/1 var(--serif); color: #ffe1de; }
+.mini-style-tradicional .mini-title:hover { background: rgba(255, 255, 255, 0.14); }
+.mini-style-tradicional .mini-dow {
+  color: var(--wall-red, #d62828);
+  font-family: var(--serif);
+  font-weight: 800;
+}
+.mini-style-tradicional .mini-day {
+  font-family: var(--serif);
+  font-weight: 700;
+  border-radius: 6px;
+  position: relative;
+}
+.mini-style-tradicional .mini-day.is-sun:not(.is-out):not(.is-today) { color: var(--wall-red, #d62828); }
+.mini-style-tradicional .mini-day.is-today { background: var(--wall-red, #d62828); color: #fff; }
+.mini-style-tradicional .mini-day.is-selected:not(.is-today) {
+  border-color: var(--wall-red, #d62828);
+  background: rgba(214, 40, 40, 0.1);
+}
+.mini-moon {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  color: var(--wall-ink, #171412);
+  display: inline-flex;
+  opacity: 0.75;
+}
+/* Bottom corner keeps the phase clear of the centred day number. */
+.mini-style-tradicional .mini-moon { top: auto; bottom: 2px; right: 2px; opacity: 0.9; }
 .mini-style-tradicional .mini-day.is-today .mini-moon { color: #fff; }
-.mini-zodiac { color: #d62828; font-weight: 700; text-transform: none; }
-.mini-style-tradicional .mini-foot .btn { background: #1f2a44; color: #fff; border-color: #1f2a44; }
+.mini-zodiac { color: var(--wall-red, #d62828); font-weight: 700; text-transform: none; }
+.mini-style-tradicional .mini-events { border-top-color: rgba(214, 40, 40, 0.35); }
+.mini-style-tradicional .mini-events h2 { font-family: var(--serif); color: var(--wall-ink, #171412); }
+.mini-style-tradicional .mini-foot .btn {
+  background: var(--wall-ink, #171412);
+  color: #fff;
+  border-color: var(--wall-ink, #171412);
+}
+.mini-style-tradicional .mini-foot .btn:hover {
+  background: var(--wall-red, #d62828);
+  border-color: var(--wall-red, #d62828);
+}
 .mini-style-tradicional .mini-art, .mini-style-tradicional .mini-banner { display: none; }
 .is-december.mini-style-tradicional { padding-top: 0; }
 .is-december.mini-style-tradicional .mini-head { margin-top: 0; }
 .is-december.mini-style-tradicional .mini-year { color: #ffe1de !important; text-shadow: none; }
 .is-december.mini-style-tradicional .mini-month { text-shadow: none; }
 
-/* Sonoma: clean macOS-like light theme with a red accent; the mini calendar becomes the frosted-glass widget */
-:root[data-theme="sonoma"], :root[data-theme="sonoma"][data-accent] { --accent-h: 4; --accent-l: 52%; }
+/* The wall-calendar hero compresses gracefully in narrow windows. */
+@media (max-width: 760px) {
+  .month-hero {
+    min-height: 116px;
+    padding: 10px 20px 8px;
+    gap: 10px;
+  }
+  .month-hero-kicker { font-size: 8px; letter-spacing: 0.18em; }
+  .month-hero-title { font-size: clamp(24px, 7vw, 36px); }
+  .month-hero-masthead { height: 96px; }
+  .month-hero-zodiac { font-size: 10px; }
+  .piel-corner { width: 50px; height: 50px; }
+}
+@media (max-width: 520px) {
+  .month-hero {
+    min-height: 96px;
+    padding: 8px 16px 6px;
+  }
+  .month-hero-title { font-size: 24px; }
+  .month-hero-masthead { height: 80px; }
+  .month-hero-kicker { font-size: 7px; letter-spacing: 0.14em; }
+  .piel-corner { width: 38px; height: 38px; }
+}
+

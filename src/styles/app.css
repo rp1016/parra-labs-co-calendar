@@ -2473,3 +2473,12 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
   .pw-foot { flex: none; height: 0.25in; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--pw-rule); font-size: 7pt; color: #7a8087; padding-top: 3px; }
   .pw-foot b { color: #444; }
 }
+
+/* Top bar at the default window size: the month navigation must never be clipped,
+   so search collapses to its icon earlier and the nav keeps its width. */
+.topbar .period-nav { flex: none; }
+.topbar .topbar-actions { flex: none; }
+@media (max-width: 1500px) {
+  .topbar .search-field { flex: none; width: 30px; padding: 0; justify-content: center; }
+  .topbar .search-field span { display: none; }
+}

@@ -2248,16 +2248,26 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
 :root[data-ui="sonoma"]:not([data-theme="tradicional"]) { --accent-h: 4; --accent-l: 52%; }
 :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; letter-spacing: -0.01em; }
 :root[data-ui="botanico"]:not([data-theme="tradicional"]) { --accent-h: 12; --accent-l: 44%; }
-:root[data-ui="botanico"][data-theme="light"] {
-  --bg: #fbf7ee; --bg-subtle: #f7f1e3; --bg-muted: #f3ecdc; --bg-hover: #efe6d2;
-  --line: #e6dcc7; --line-strong: #d4c6a8; --text: #2d2a26; --text-strong: #1f1c18;
-  --side-bg: #fbf7ee; --side-hover: #f3ecdc; --side-active: #ecdfc4; --side-line: #e6dcc7;
-  --rail-a: #fbf7ee; --rail-b: #fbf7ee;
-}
-:root[data-ui="botanico"][data-theme="light"] .app { background: #fbf7ee; }
+/* Botanico on desktop copies the mini calendar: standard light surfaces (white), ink text,
+   terracotta accent and a serif title with an italic year. */
+:root[data-ui="botanico"][data-theme="light"] { --text: #2d2a26; --text-strong: #1f1c18; }
 :root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-year {
   font-style: italic; font-weight: 400; color: var(--accent); margin-left: 0.25em;
 }
 :root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-title {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; font-weight: 500; font-size: 22px;
 }
+
+/* Popover on desktop mirrors the mini calendar title: bold month, light muted year */
+:root[data-ui="popover"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; letter-spacing: -0.02em; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]) .period-year { font-weight: 300; color: var(--muted); margin-left: 0.25em; }
+
+/* Sonoma on desktop mirrors the mini calendar: exact red, bold month with a red year, pill controls */
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]) {
+  --accent: #ff3b30; --accent-strong: #ff3b30; --accent-hover: #e8352b; --accent-text: #d92f25;
+  --accent-soft: rgba(255, 59, 48, 0.12); --accent-ring: rgba(255, 59, 48, 0.4);
+  --today-bg: rgba(255, 59, 48, 0.1); --today-line: #ff3b30;
+}
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-year { font-weight: 600; color: var(--accent); margin-left: 0.25em; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.btn, .period-nav, .search-field, .segmented, .segmented button) { border-radius: 999px; }

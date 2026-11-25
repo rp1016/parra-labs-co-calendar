@@ -2482,3 +2482,58 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
   .topbar .search-field { flex: none; width: 30px; padding: 0; justify-content: center; }
   .topbar .search-field span { display: none; }
 }
+
+/* ===== Week to-do: two lines per task (all themes) ===== */
+:root[data-theme] .week-todo-item { position: relative; align-items: flex-start; }
+:root[data-theme] .week-todo-check { margin-top: 5px; }
+:root[data-theme] .week-todo-main {
+  position: relative; flex-direction: column; align-items: stretch; gap: 1px; padding: 4px 0 4px 10px;
+}
+:root[data-theme] .week-todo-dot {
+  position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px; height: auto; border-radius: 2px;
+}
+:root[data-theme] .week-todo-label {
+  order: 1; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  white-space: normal; overflow-wrap: anywhere; line-height: 1.3;
+}
+:root[data-theme] .week-todo-time { order: 2; min-width: 0; line-height: 1.3; }
+/* the delete button floats over the row, so it takes no width from the title */
+:root[data-theme] .week-todo-remove {
+  position: absolute; right: 4px; bottom: 3px; background: var(--bg); box-shadow: 0 0 0 1px var(--line);
+}
+
+/* ===== Resizable left panel ===== */
+.sidebar-resizer { display: none; }
+@media (min-width: 861px) {
+  :root[data-theme] .app {
+    grid-template-columns: var(--side-w, var(--sidebar-width)) minmax(0, 1fr) var(--rail-width);
+  }
+  :root[data-theme] .app.no-rail {
+    grid-template-columns: var(--side-w, var(--sidebar-width)) minmax(0, 1fr) 0;
+  }
+  :root[data-theme] .topbar::before { left: var(--side-w, var(--sidebar-width)); }
+  :root[data-theme] .sidebar-resizer {
+    display: block; position: fixed; top: var(--topbar-height); bottom: 0;
+    left: calc(var(--side-w, var(--sidebar-width)) - 3px); width: 7px; z-index: 6;
+    cursor: col-resize; touch-action: none;
+  }
+  .sidebar-resizer::after {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 2px; width: 2px; background: transparent;
+  }
+  .sidebar-resizer:hover::after, .sidebar-resizer:active::after, .sidebar-resizer:focus-visible::after {
+    background: var(--accent);
+  }
+}
+@media (min-width: 861px) and (max-width: 1100px) {
+  :root[data-theme] .app,
+  :root[data-theme] .app.no-rail {
+    grid-template-columns: var(--side-w, var(--sidebar-width)) minmax(0, 1fr) 0;
+  }
+}
+
+/* The month title follows the panel edge, so it stays lined up with the calendar */
+@media (min-width: 861px) {
+  :root[data-theme] .topbar .topbar-brand {
+    width: calc(var(--side-w, var(--sidebar-width)) - 26px - var(--traffic-inset, 0px));
+  }
+}

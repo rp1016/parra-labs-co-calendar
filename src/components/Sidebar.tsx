@@ -5,6 +5,7 @@ import { themedCalendarColor } from "../lib/calendarColor";
 import { CALENDAR_COLORS } from "../lib/types";
 import { allTags, useAppStore } from "../state/store";
 import { confirmAction } from "../state/confirm";
+import { SidebarResizer } from "./SidebarResizer";
 import { WeekTodo } from "./WeekTodo";
 
 export function Sidebar() {
@@ -69,6 +70,7 @@ export function Sidebar() {
   };
 
   return (
+    <>
     <aside className="sidebar">
       <div className="side-group">
         <div className="side-group-head">
@@ -255,5 +257,7 @@ export function Sidebar() {
         {t("calendar.add")}
       </button>
     </aside>
+    <SidebarResizer />
+    </>
   );
 }

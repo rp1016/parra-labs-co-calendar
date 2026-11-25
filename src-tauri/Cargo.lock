@@ -2524,7 +2524,7 @@ dependencies = [
 
 [[package]]
 name = "parritalabs-calendar"
-version = "0.3.8"
+version = "0.3.9"
 dependencies = [
  "serde_json",
  "tauri",

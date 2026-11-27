@@ -6,7 +6,9 @@ import { XmasScene } from "./XmasScene";
 import { themedCalendarColor } from "../lib/calendarColor";
 import { MoonIcon } from "./MoonIcon";
 import pielRojaUrl from "../assets/piel-roja.svg";
+import bristolWordmarkUrl from "../assets/bristol-wordmark.png";
 import { PielRojaFrame } from "./PielRojaArt";
+import { BristolMedallion } from "./BristolArt";
 import { zodiacOf } from "../lib/zodiac";
 import { moonPhaseOfDay } from "../lib/moon";
 import { buildQuickEvent, pickQuickSlot, quickCalendarId } from "../lib/quickAdd";
@@ -207,7 +209,7 @@ export function MiniCalendar() {
         .join(" ")
         .trim()}
     >
-      {december && miniStyle !== "tradicional" ? (
+      {december && miniStyle !== "tradicional" && miniStyle !== "bristol" ? (
         <div className="mini-banner mini-banner-xmas" aria-hidden="true">
           <XmasScene />
         </div>
@@ -240,6 +242,20 @@ export function MiniCalendar() {
               PIEL<em>ROJA</em>
             </span>
           </div>
+        </div>
+      )}
+      {miniStyle === "bristol" && (
+        <div className="mini-hero" aria-hidden="true">
+          <div className="mini-hero-copy">
+            <span className="mini-hero-kicker">
+              {language === "es" ? "Almanaque popular" : "Popular almanac"}
+            </span>
+            <img className="mini-bristol-logo" src={bristolWordmarkUrl} alt="" />
+          </div>
+          <BristolMedallion
+            className="mini-bristol-medallion"
+            year={anchor.getFullYear()}
+          />
         </div>
       )}
       <header className="mini-head">
@@ -314,7 +330,7 @@ export function MiniCalendar() {
             >
               <span>{day.getDate()}</span>
               <i className={hasOwnEvents ? "has-events" : ""} />
-              {miniStyle === "tradicional" && moonPhaseOfDay(day) && (
+              {(miniStyle === "tradicional" || miniStyle === "bristol") && moonPhaseOfDay(day) && (
                 <span className="mini-moon">
                   <MoonIcon phase={moonPhaseOfDay(day)!} size={9} />
                 </span>

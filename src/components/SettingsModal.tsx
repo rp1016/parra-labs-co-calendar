@@ -66,17 +66,20 @@ export function SettingsModal() {
   const lookValue =
     settings.theme === "tradicional"
       ? "tradicional"
-      : settings.miniStyle !== "popover"
-        ? settings.miniStyle
-        : settings.theme === "auto"
-          ? "popover"
-          : settings.theme;
+      : settings.theme === "bristol"
+        ? "bristol"
+        : settings.miniStyle !== "popover"
+          ? settings.miniStyle
+          : settings.theme === "auto"
+            ? "popover"
+            : settings.theme;
   const chooseLook = (value: string) => {
     if (value === "tradicional") updateSettings({ theme: "tradicional" });
+    else if (value === "bristol") updateSettings({ theme: "bristol" });
     else if (value === "popover") updateSettings({ theme: "auto", miniStyle: "popover" });
     else if (value === "sonoma" || value === "botanico")
       updateSettings({
-        theme: settings.theme === "tradicional" ? "auto" : settings.theme,
+        theme: settings.theme === "tradicional" || settings.theme === "bristol" ? "auto" : settings.theme,
         miniStyle: value,
       });
     else updateSettings({ theme: value as ThemeName, miniStyle: "popover" });
@@ -499,6 +502,7 @@ export function SettingsModal() {
                         <option value="sonoma">{t("uiStyle.sonoma")}</option>
                         <option value="botanico">{t("uiStyle.botanico")}</option>
                         <option value="tradicional">{t("theme.tradicional")}</option>
+                        <option value="bristol">{t("theme.bristol")}</option>
                       </optgroup>
                       <optgroup label={t("settings.lookColors")}>
                         {(["light", "dark", "midnight", "sepia", "contrast"] as const).map((id) => (
@@ -512,6 +516,7 @@ export function SettingsModal() {
                 </div>
 
                 {(settings.theme === "tradicional" ||
+                  settings.theme === "bristol" ||
                   (settings.miniStyle === "popover" && ["auto", "light", "dark"].includes(settings.theme))) && (
                   <>
                 <div className="settings-group-title">{t("settings.accent")}</div>

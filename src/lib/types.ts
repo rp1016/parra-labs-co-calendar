@@ -1,6 +1,6 @@
 export type ViewMode = "day" | "week" | "month" | "agenda";
 
-export type ThemeName = "auto" | "light" | "dark" | "midnight" | "sepia" | "contrast" | "tradicional";
+export type ThemeName = "auto" | "light" | "dark" | "midnight" | "sepia" | "contrast" | "tradicional" | "bristol";
 
 export type AccentName = "indigo" | "violet" | "teal" | "blue" | "amber" | "rose" | "green";
 
@@ -10,7 +10,7 @@ export type Language = "es" | "en";
 export type ArtThemeId = "none" | "botanical" | "birds" | "rabbits" | "children" | "animals";
 
 /** Look of the tray mini calendar. */
-export type MiniStyle = "popover" | "sonoma" | "botanico" | "tradicional";
+export type MiniStyle = "popover" | "sonoma" | "botanico" | "tradicional" | "bristol";
 
 export type RepeatFreq = "none" | "daily" | "weekly" | "monthly" | "yearly";
 
@@ -134,6 +134,7 @@ export const THEMES: { id: ThemeName; label: string }[] = [
   { id: "sepia", label: "Sepia" },
   { id: "contrast", label: "Alto contraste" },
   { id: "tradicional", label: "Calendario Piel Roja" },
+  { id: "bristol", label: "Almanaque Bristol" },
 ];
 
 export const CALENDAR_COLORS = [
@@ -202,9 +203,10 @@ export function newId(prefix: string): string {
 }
 
 /** One style choice drives both the desktop app and the tray mini calendar.
- *  The Piel Roja theme brings its own printed look; otherwise the chosen
- *  style (popover, sonoma or botanico) applies to both. */
+ *  The printed themes (Piel Roja and Almanaque Bristol) bring their own look;
+ *  otherwise the chosen style (popover, sonoma or botanico) applies to both. */
 export function miniStyleFor(settings: Pick<Settings, "theme" | "miniStyle">): MiniStyle {
   if (settings.theme === "tradicional") return "tradicional";
+  if (settings.theme === "bristol") return "bristol";
   return settings.miniStyle;
 }

@@ -10,9 +10,18 @@ describe("themedCalendarColor", () => {
     expect(themedCalendarColor("#15bed1", "popover", "sepia")).toBe("var(--accent)");
     expect(themedCalendarColor("#15bed1", "popover", "midnight")).toBe("var(--accent)");
   });
-  it("keeps custom colors, popover and Piel Roja untouched", () => {
+  it("keeps custom colors and plain popover untouched", () => {
     expect(themedCalendarColor("#8e24aa", "sonoma", "light")).toBe("#8e24aa");
     expect(themedCalendarColor("#15bed1", "popover", "light")).toBe("#15bed1");
-    expect(themedCalendarColor("#15bed1", "sonoma", "tradicional")).toBe("#15bed1");
+    expect(themedCalendarColor("#c2740b", "popover", "tradicional")).toBe("#c2740b");
+  });
+  it("uses the almanac red for the default calendar in Piel Roja", () => {
+    expect(themedCalendarColor("#15bed1", "popover", "tradicional")).toBe("var(--accent)");
+    expect(themedCalendarColor("#15bed1", "sonoma", "tradicional")).toBe("var(--accent)");
+  });
+  it("uses the Bristol orange for the default calendar in Almanaque Bristol", () => {
+    expect(themedCalendarColor("#15bed1", "popover", "bristol")).toBe("var(--accent)");
+    expect(themedCalendarColor("#15bed1", "bristol", "bristol")).toBe("var(--accent)");
+    expect(themedCalendarColor("#8e24aa", "bristol", "bristol")).toBe("#8e24aa");
   });
 });

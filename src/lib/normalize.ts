@@ -62,7 +62,7 @@ export function normalizeData(raw: Partial<AppData> | null | undefined): AppData
     settings.theme = "light";
     settings.miniStyle = "sonoma";
   }
-  if (!["popover", "sonoma", "botanico", "tradicional"].includes(settings.miniStyle)) settings.miniStyle = DEFAULT_SETTINGS.miniStyle;
+  if (!["popover", "sonoma", "botanico", "tradicional", "bristol"].includes(settings.miniStyle)) settings.miniStyle = DEFAULT_SETTINGS.miniStyle;
   return {
     version: DATA_VERSION,
     calendars: calendars.map((calendar) => ({

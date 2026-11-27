@@ -17,7 +17,9 @@ import { eventClasses } from "../lib/eventVisual";
 import { artBackground } from "../lib/art";
 import { MoonIcon } from "./MoonIcon";
 import pielRojaUrl from "../assets/piel-roja.svg";
+import bristolWordmarkUrl from "../assets/bristol-wordmark.png";
 import { PielRojaFrame } from "./PielRojaArt";
+import { BristolMedallion } from "./BristolArt";
 import { moonPhaseOfDay } from "../lib/moon";
 import { zodiacOf } from "../lib/zodiac";
 import type { Occurrence } from "../lib/types";
@@ -73,13 +75,17 @@ export function MonthView() {
 
   const weekdays = weekdayOrder(weekStartsOn);
   const art = artBackground(artTheme);
-  const wallTheme = useAppStore((state) => state.data.settings.theme) === "tradicional";
+  const theme = useAppStore((state) => state.data.settings.theme);
+  const wallTheme = theme === "tradicional";
+  const bristolTheme = theme === "bristol";
   const monthLabel = new Intl.DateTimeFormat(locale, { month: "long" }).format(anchor);
   const monthName = monthLabel.charAt(0).toLocaleUpperCase(locale) + monthLabel.slice(1);
   const zodiac = zodiacOf(anchor);
 
   return (
-    <div className={`month ${wallTheme ? "month-pielroja" : ""}`}>
+    <div
+      className={`month ${wallTheme ? "month-pielroja" : ""} ${bristolTheme ? "month-bristol" : ""}`}
+    >
       {wallTheme && (
         <div className="month-hero">
           <PielRojaFrame className="month-hero-frame" />
@@ -93,6 +99,31 @@ export function MonthView() {
             </span>
           </div>
           <img className="month-hero-masthead" src={pielRojaUrl} alt="Jefe indígena Piel Roja" />
+        </div>
+      )}
+      {bristolTheme && (
+        <div className="month-bristol-cover">
+          <div className="bristol-cover-top">
+            <span>{t("theme.bristol.kicker", { year: anchor.getFullYear() })}</span>
+            <span>{t("theme.bristol.city")}</span>
+            <span>{t("theme.bristol.price")}</span>
+          </div>
+          <div className="bristol-cover-body">
+            <div className="bristol-cover-copy">
+              <span className="bristol-cover-kicker">{t("theme.bristol")}</span>
+              <img
+                className="bristol-cover-logo"
+                src={bristolWordmarkUrl}
+                alt={t("theme.bristol")}
+              />
+              <p className="bristol-cover-deck">{t("theme.bristol.deck")}</p>
+              <div className="bristol-cover-contents">{t("theme.bristol.contents")}</div>
+            </div>
+            <BristolMedallion
+              className="bristol-cover-medallion"
+              year={anchor.getFullYear()}
+            />
+          </div>
         </div>
       )}
       <div className={`month-head ${showWeekNumbers ? "with-weeks" : ""}`}>
@@ -142,7 +173,7 @@ export function MonthView() {
                   onDoubleClick={() => openEditor({ date: key, time: "09:00" })}
                 >
                   <span className="daynum">{day.getDate()}</span>
-                  {wallTheme && moonPhaseOfDay(day) && (
+                  {(wallTheme || bristolTheme) && moonPhaseOfDay(day) && (
                     <span className="cell-moon">
                       <MoonIcon phase={moonPhaseOfDay(day)!} />
                     </span>

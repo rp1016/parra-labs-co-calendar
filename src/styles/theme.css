@@ -320,7 +320,7 @@ h1, h2, h3, h4, p { margin: 0; }
   --wall-ink: #171412;
   --wall-paper: #ffffff;
   /* Ink tones sampled from the printed reference: brick red and dark brown. */
-  --piel-red: #d02b1c;
+  --piel-red: var(--wall-red);
   --piel-ink: #3e251c;
   --piel-paper: #ffffff;
   --serif: Georgia, "Times New Roman", "Iowan Old Style", "Palatino Linotype", serif;
@@ -359,7 +359,13 @@ h1, h2, h3, h4, p { margin: 0; }
   --rail-b: #ffffff;
 
   --accent-l: 46%;
-  --accent-text: #c4161c;
+  /* One intense almanac red for every accent: selection, active items, checks. */
+  --accent: var(--wall-red);
+  --accent-strong: var(--wall-red);
+  --accent-hover: #bd1f1f;
+  --accent-strong-hover: #bd1f1f;
+  --on-accent-strong: #ffffff;
+  --accent-text: var(--wall-red);
   --accent-soft: #fbe3e1;
   --accent-ring: rgba(214, 40, 40, 0.35);
   --on-accent: #ffffff;
@@ -672,3 +678,335 @@ h1, h2, h3, h4, p { margin: 0; }
 
 /* Piel Roja: plain white behind the whole window, including the side panels and top bar */
 :root[data-theme="tradicional"] .app { background: #ffffff; }
+
+/* ==========================================================================
+   Almanaque Bristol: portada naranja, tinta negra y papel hueso.
+   Tema independiente, inspirado en el almanaque popular colombiano.
+   ========================================================================== */
+:root[data-theme="bristol"], :root[data-theme="bristol"][data-accent] { --accent-h: 24; }
+:root[data-theme="bristol"] {
+  --bris-orange: #e8681c;
+  --bris-orange-deep: #d95a12;
+  --bris-orange-soft: #f6dcc0;
+  --bris-cream: #f8f1e4;
+  --bris-paper: #f8f1e4;
+  --bris-side: #f6e3cf;
+  --bris-ink: #171310;
+  --bris-red: #b3200f;
+  --serif: Georgia, "Times New Roman", "Iowan Old Style", "Palatino Linotype", serif;
+
+  --bg: var(--bris-paper);
+  --bg-subtle: #fbf6ec;
+  --bg-muted: #f3e7d3;
+  --bg-hover: #f1e2cb;
+  --line: #e3d2b8;
+  --line-strong: #cfb794;
+  --text: var(--bris-ink);
+  --text-strong: #0d0b09;
+  --muted: #6f5c48;
+  --faint: #9b8873;
+  --shadow-sm: 0 0.5px 1px rgba(23, 19, 16, 0.14), 0 1px 2px rgba(23, 19, 16, 0.08);
+  --shadow: 0 0 0 0.5px rgba(23, 19, 16, 0.2), 0 2px 6px rgba(23, 19, 16, 0.1), 0 12px 28px rgba(23, 19, 16, 0.16), 0 28px 64px rgba(23, 19, 16, 0.14);
+  --danger: var(--bris-red);
+  --warning-bg: #fbe3a8;
+  --now: var(--bris-orange-deep);
+  --switch-on: #2f8f4e;
+  --glass: rgba(248, 241, 228, 0.94);
+  --glass-line: rgba(23, 19, 16, 0.18);
+  --scrim: rgba(13, 11, 9, 0.3);
+  --ctl-bg: #fbf6ec;
+  --ctl-line: #cfb794;
+  --seg-active: #ffffff;
+
+  --side-bg: var(--bris-side);
+  --side-hover: #efd9bf;
+  --side-active: #eacfb0;
+  --side-text: var(--bris-ink);
+  --side-muted: #6f5c48;
+  --side-line: #e0c9a8;
+
+  --rail-a: var(--bris-paper);
+  --rail-b: var(--bris-paper);
+
+  --accent-l: 46%;
+  --accent: var(--bris-orange);
+  --accent-strong: var(--bris-orange-deep);
+  --accent-hover: #c94f0c;
+  --accent-strong-hover: #bf4a0a;
+  --on-accent-strong: #ffffff;
+  --accent-text: #b34a0f;
+  --accent-soft: #fbe3cf;
+  --accent-ring: rgba(232, 104, 28, 0.35);
+  --on-accent: #ffffff;
+  --today-bg: #fbe3cf;
+  --today-line: var(--bris-orange-deep);
+  --art-opacity: 0.1;
+
+  color-scheme: light;
+}
+
+/* ---- Almanaque Bristol: portada de la vista Mes ---- */
+.month-bristol { background: var(--bris-paper); }
+
+.month-bristol-cover {
+  position: relative;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 188px;
+  color: var(--bris-cream);
+  background:
+    repeating-linear-gradient(6deg, rgba(255, 247, 233, 0.026) 0 1px, transparent 1px 4px),
+    radial-gradient(120% 160% at 82% 110%, #f07a24 0%, #e8681c 55%, #dd5d13 100%);
+  border-top: 4px solid var(--bris-ink);
+  border-bottom: 3px solid var(--bris-ink);
+  overflow: hidden;
+}
+.month-bristol-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 90px rgba(110, 45, 8, 0.2);
+}
+.bristol-cover-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  padding: 0 26px;
+  border-bottom: 1px solid rgba(255, 247, 233, 0.48);
+  font: 600 7.5px/1 var(--font);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffe8d0;
+}
+.bristol-cover-body {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 8px 26px 10px;
+}
+.bristol-cover-copy {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+}
+.bristol-cover-kicker {
+  display: block;
+  margin-bottom: 4px;
+  font: 600 8px/1 var(--font);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #ffe6cc;
+}
+.bristol-cover-logo {
+  display: block;
+  height: clamp(30px, 4.4vw, 48px);
+  width: auto;
+  max-width: 100%;
+}
+.bristol-cover-deck {
+  margin: 7px 0 0;
+  max-width: 46ch;
+  font: italic 600 12px/1.35 var(--serif);
+  color: #fff1de;
+}
+.bristol-cover-contents {
+  margin-top: 7px;
+  font: 600 8px/1 var(--font);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffd7ab;
+}
+.bristol-cover-medallion {
+  flex: none;
+  height: clamp(104px, 13vw, 150px);
+  width: auto;
+  filter: drop-shadow(0 2px 0 rgba(23, 19, 16, 0.18));
+}
+
+/* ---- Almanaque Bristol: mes ---- */
+.month-bristol .month-head {
+  background: var(--bris-ink);
+  border-bottom: 0;
+  box-shadow: 0 2px 0 rgba(23, 19, 16, 0.18);
+}
+.month-bristol .month-head div {
+  color: var(--bris-cream);
+  font-family: var(--serif);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 700;
+}
+.month-bristol .month-head .weeknum-head { border-right-color: rgba(248, 241, 228, 0.28); }
+.month-bristol .month-cell { border-color: #e3d2b8; }
+.month-bristol .month-cell .daynum {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--bris-ink);
+}
+.month-bristol .month-cell.sun .daynum { color: var(--bris-orange-deep); }
+.month-bristol .month-cell.out .daynum { color: var(--faint); }
+.month-bristol .month-cell:hover { background: #fbefdd; }
+.month-bristol .month-cell.today {
+  background: var(--today-bg);
+  box-shadow: inset 0 0 0 1px var(--bris-orange-deep);
+}
+.month-bristol .month-cell.today .daynum { background: var(--bris-orange); color: #fff; }
+.month-bristol .month-cell.selected:not(.today) {
+  box-shadow: inset 0 0 0 2px rgba(232, 104, 28, 0.35);
+}
+.month-bristol .weeknum { border-right-color: #e3d2b8; color: #9b8873; }
+.month-bristol .month-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  border: 1px solid var(--bris-orange);
+  box-shadow: inset 0 0 0 3px var(--bris-paper), inset 0 0 0 4px rgba(232, 104, 28, 0.35);
+}
+.month-bristol .cell-moon { top: 6px; right: 30px; color: var(--bris-orange-deep); }
+
+/* ---- Almanaque Bristol: mini calendario ---- */
+.mini-style-bristol {
+  --accent: var(--bris-orange, #e8681c);
+  --accent-strong: var(--bris-orange-deep, #d95a12);
+  --on-accent-strong: #fff;
+  --accent-soft: rgba(232, 104, 28, 0.14);
+  --serif: Georgia, "Times New Roman", "Iowan Old Style", "Palatino Linotype", serif;
+  background: var(--bris-paper, #f8f1e4);
+  color: var(--bris-ink, #171310);
+  border-radius: 12px;
+  padding-top: 0;
+  border-color: var(--bris-orange, #e8681c);
+}
+.mini-style-bristol .mini-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 -12px -8px;
+  padding: 8px 14px 7px;
+  min-height: 82px;
+  background:
+    repeating-linear-gradient(5deg, rgba(255, 247, 233, 0.03) 0 1px, transparent 1px 4px),
+    var(--bris-orange, #e8681c);
+  border-bottom: 2px solid var(--bris-ink, #171310);
+  overflow: hidden;
+}
+.mini-style-bristol .mini-hero-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mini-style-bristol .mini-hero-kicker {
+  font: 600 6.5px/1 var(--font);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffe3c6;
+}
+.mini-bristol-logo {
+  display: block;
+  height: 26px;
+  width: auto;
+  max-width: 170px;
+}
+.mini-bristol-medallion {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  margin-left: auto;
+  width: 58px;
+  height: 58px;
+}
+.mini-style-bristol .mini-head {
+  margin: 0 -12px;
+  padding: 9px 12px 8px;
+  background: var(--bris-ink, #171310);
+  color: var(--bris-cream, #f8f1e4);
+  border-bottom: 2px solid var(--bris-orange, #e8681c);
+}
+.mini-style-bristol .mini-head .icon-btn { color: var(--bris-cream, #f8f1e4); }
+.mini-style-bristol .mini-head .icon-btn:hover { background: rgba(255, 255, 255, 0.16); }
+.mini-style-bristol .mini-title {
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+}
+.mini-style-bristol .mini-month {
+  font: 800 22px/1 var(--serif);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bris-cream, #f8f1e4);
+}
+.mini-style-bristol .mini-year { font: 700 18px/1 var(--serif); color: #ffc98f; }
+.mini-style-bristol .mini-title:hover { background: rgba(255, 255, 255, 0.12); }
+.mini-style-bristol .mini-dow {
+  color: var(--bris-orange-deep, #d95a12);
+  font-family: var(--serif);
+  font-weight: 800;
+}
+.mini-style-bristol .mini-day {
+  font-family: var(--serif);
+  font-weight: 700;
+  border-radius: 6px;
+  position: relative;
+}
+.mini-style-bristol .mini-day.is-sun:not(.is-out):not(.is-today) { color: var(--bris-orange-deep, #d95a12); }
+.mini-style-bristol .mini-day.is-today { background: var(--bris-orange, #e8681c); color: #fff; }
+.mini-style-bristol .mini-day.is-selected:not(.is-today) {
+  border-color: var(--bris-orange, #e8681c);
+  background: rgba(232, 104, 28, 0.12);
+}
+.mini-style-bristol .mini-moon {
+  top: auto;
+  bottom: 2px;
+  right: 2px;
+  color: var(--bris-ink, #171310);
+  opacity: 0.9;
+}
+.mini-style-bristol .mini-day.is-today .mini-moon { color: #fff; }
+.mini-style-bristol .mini-events { border-top-color: rgba(232, 104, 28, 0.35); }
+.mini-style-bristol .mini-events h2 { font-family: var(--serif); color: var(--bris-ink, #171310); }
+.mini-style-bristol .mini-foot .btn {
+  background: var(--bris-ink, #171310);
+  color: #fff;
+  border-color: var(--bris-ink, #171310);
+}
+.mini-style-bristol .mini-foot .btn:hover {
+  background: var(--bris-orange, #e8681c);
+  border-color: var(--bris-orange, #e8681c);
+}
+.mini-style-bristol .mini-art, .mini-style-bristol .mini-banner { display: none; }
+.mini-style-bristol .mini-zodiac { color: var(--bris-orange-deep, #d95a12); font-weight: 700; text-transform: none; }
+.is-december.mini-style-bristol { padding-top: 0; }
+.is-december.mini-style-bristol .mini-year { color: #ffc98f !important; text-shadow: none; }
+.is-december.mini-style-bristol .mini-month { text-shadow: none; }
+
+/* The Bristol cover compresses gracefully in narrow windows. */
+@media (max-width: 760px) {
+  .month-bristol-cover { min-height: 150px; }
+  .bristol-cover-top { padding: 0 20px; font-size: 7px; }
+  .bristol-cover-body { padding: 6px 20px 8px; gap: 10px; }
+  .bristol-cover-medallion { height: 96px; }
+  .bristol-cover-deck { font-size: 10.5px; }
+  .bristol-cover-contents { font-size: 7px; }
+}
+@media (max-width: 620px) {
+  .month-bristol-cover { min-height: 126px; }
+  .bristol-cover-medallion { display: none; }
+  .bristol-cover-deck { display: none; }
+}

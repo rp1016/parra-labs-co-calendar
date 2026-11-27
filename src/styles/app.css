@@ -1,4 +1,4 @@
-﻿/* ---------- shell ---------- */
+/* ---------- shell ---------- */
 .app {
   display: grid;
   grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--rail-width);
@@ -2245,111 +2245,111 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
 .mini-style-popover { border-radius: 14px; }
 
 /* ---- Style dropdown: applies to the desktop app too (Piel Roja keeps its own look) ---- */
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) { --accent-h: 4; --accent-l: 52%; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; letter-spacing: -0.01em; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) { --accent-h: 12; --accent-l: 44%; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) { --accent-h: 4; --accent-l: 52%; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title { font-weight: 700; letter-spacing: -0.01em; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) { --accent-h: 12; --accent-l: 44%; }
 /* Botanico on desktop copies the mini calendar: standard light surfaces (white), ink text,
    terracotta accent and a serif title with an italic year. */
 :root[data-ui="botanico"][data-theme="light"] { --text: #2d2a26; --text-strong: #1f1c18; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-year {
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-year {
   font-style: italic; font-weight: 400; color: var(--accent); margin-left: 0.25em;
 }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-title {
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; font-weight: 500; font-size: 22px;
 }
 
 /* Popover on desktop mirrors the mini calendar title: bold month, light muted year */
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; letter-spacing: -0.02em; }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .period-year { font-weight: 300; color: var(--muted); margin-left: 0.25em; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title { font-weight: 700; letter-spacing: -0.02em; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-year { font-weight: 300; color: var(--muted); margin-left: 0.25em; }
 
 /* Sonoma on desktop mirrors the mini calendar: exact red, bold month with a red year, pill controls */
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) {
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) {
   --accent: #ff3b30; --accent-strong: #ff3b30; --accent-hover: #e8352b; --accent-text: #d92f25;
   --accent-soft: rgba(255, 59, 48, 0.12); --accent-ring: rgba(255, 59, 48, 0.4);
   --today-bg: rgba(255, 59, 48, 0.1); --today-line: #ff3b30;
 }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-title { font-weight: 700; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-year { font-weight: 600; color: var(--accent); margin-left: 0.25em; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.btn, .period-nav, .search-field, .segmented, .segmented button) { border-radius: 999px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title { font-weight: 700; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-year { font-weight: 600; color: var(--accent); margin-left: 0.25em; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.btn, .period-nav, .search-field, .segmented, .segmented button) { border-radius: 999px; }
 
 /* ===== Style unification (desktop mirrors the mini calendar) ===== */
 /* Neutral window background: no accent-tinted wash behind the panels */
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .app, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .app, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .app { background: var(--bg-muted); }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .app, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .app, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .app { background: var(--bg-muted); }
 
 /* --- Botanico: full terracotta token set --- */
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) {
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) {
   --accent: #b4553f; --accent-strong: #b4553f; --accent-hover: #9c4632; --accent-strong-hover: #9c4632;
   --accent-text: #9c4632; --accent-soft: rgba(180, 85, 63, .14); --accent-ring: rgba(180, 85, 63, .4);
   --today-bg: rgba(180, 85, 63, .08); --today-line: #b4553f; --switch-on: #b4553f;
   --on-accent: #fff; --on-accent-strong: #fff;
 }
-:root[data-ui="botanico"]:not([data-theme="tradicional"])[data-theme="dark"], :root[data-ui="botanico"]:not([data-theme="tradicional"])[data-theme="midnight"] {
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"])[data-theme="dark"], :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"])[data-theme="midnight"] {
   --accent: #d98a73; --accent-strong: #c4664f; --accent-text: #e8a893; --accent-soft: rgba(217, 138, 115, .2);
   --accent-ring: rgba(217, 138, 115, .45); --today-bg: rgba(217, 138, 115, .14); --today-line: #d98a73; --switch-on: #c4664f;
 }
 /* --- Sonoma: missing tokens + dark variants --- */
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) { --accent-strong-hover: #e8352b; --switch-on: #ff3b30; --on-accent: #fff; --on-accent-strong: #fff; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"])[data-theme="dark"], :root[data-ui="sonoma"]:not([data-theme="tradicional"])[data-theme="midnight"] {
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) { --accent-strong-hover: #e8352b; --switch-on: #ff3b30; --on-accent: #fff; --on-accent-strong: #fff; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"])[data-theme="dark"], :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"])[data-theme="midnight"] {
   --accent-text: #ff6b60; --accent-soft: rgba(255, 59, 48, .22); --today-bg: rgba(255, 59, 48, .16); --accent-hover: #ff5a50;
 }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) { --switch-on: var(--accent); }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) { --switch-on: var(--accent); }
 
 /* --- Today marker: a round filled circle in every style (as in the mini) --- */
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .month-cell.today, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .month-cell.today, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .month-cell.today { background: transparent; box-shadow: none; }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .month-cell.today .daynum, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .month-cell.today .daynum, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .month-cell.today .daynum {
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.today, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.today, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.today { background: transparent; box-shadow: none; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.today .daynum, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.today .daynum, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.today .daynum {
   background: var(--accent-strong); color: #fff; font-weight: 700; border-radius: 50%;
 }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .week-day.today .week-pill, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .week-day.today .week-pill, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .week-day.today .week-pill {
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-day.today .week-pill, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-day.today .week-pill, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-day.today .week-pill {
   background: var(--accent-strong); color: #fff; border-radius: 50%;
 }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .week-col.today, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .week-col.today, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .week-col.today,
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .allday-cell.today, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .allday-cell.today, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .allday-cell.today { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-col.today, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-col.today, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-col.today,
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .allday-cell.today, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .allday-cell.today, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .allday-cell.today { background: color-mix(in srgb, var(--accent) 4%, transparent); }
 /* Selected day: thin accent outline + soft fill, like .mini-day.is-selected */
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .month-cell.selected:not(.today), :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .month-cell.selected:not(.today), :root[data-ui="botanico"]:not([data-theme="tradicional"]) .month-cell.selected:not(.today) {
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.selected:not(.today), :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.selected:not(.today), :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell.selected:not(.today) {
   box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft);
 }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .month-cell:hover, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .month-cell:hover, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .month-cell:hover { background: var(--bg-hover); }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell:hover, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell:hover, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell:hover { background: var(--bg-hover); }
 
 /* --- Sonoma: pill shapes everywhere, flat primary controls, thin red now-line --- */
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.side-nav button, .cal-row, .week-todo-toggle, .week-todo-blank button, .icon-btn, .rail-tab, .rail-tabgroup, .rail-add, .input, .search-inline, .toast, .tag-pill) { border-radius: 999px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .tag-input { border-radius: 18px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) textarea.input { border-radius: 14px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .week-todo-item { border-radius: 14px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .chip { border-radius: 999px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.timed, .day-timed) { border-radius: 8px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.modal, .search-panel) { border-radius: 16px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .settings-card { border-radius: 14px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .settings-nav-item { border-radius: 999px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .settings-nav-item.active { background: var(--accent); color: #fff; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .settings-nav-item.active svg { color: #fff; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.btn.primary, .side-nav button.active, .icon-btn.primary) { box-shadow: none; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.modal-head h2) { font-weight: 700; letter-spacing: -0.01em; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.input, .tag-input):focus, :root[data-ui="sonoma"]:not([data-theme="tradicional"]) .tag-input:focus-within { box-shadow: 0 0 0 4px rgba(255, 59, 48, .22); border-color: #ff3b30; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .now-line { background: #ff3b30; height: 1.5px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .now-line::after { background: #ff3b30; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.month-cell.selected:not(.today)) { border-radius: 10px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.side-nav button, .cal-row, .week-todo-toggle, .week-todo-blank button, .icon-btn, .rail-tab, .rail-tabgroup, .rail-add, .input, .search-inline, .toast, .tag-pill) { border-radius: 999px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .tag-input { border-radius: 18px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) textarea.input { border-radius: 14px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .week-todo-item { border-radius: 14px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .chip { border-radius: 999px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.timed, .day-timed) { border-radius: 8px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.modal, .search-panel) { border-radius: 16px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .settings-card { border-radius: 14px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .settings-nav-item { border-radius: 999px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .settings-nav-item.active { background: var(--accent); color: #fff; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .settings-nav-item.active svg { color: #fff; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.btn.primary, .side-nav button.active, .icon-btn.primary) { box-shadow: none; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.modal-head h2) { font-weight: 700; letter-spacing: -0.01em; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.input, .tag-input):focus, :root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .tag-input:focus-within { box-shadow: 0 0 0 4px rgba(255, 59, 48, .22); border-color: #ff3b30; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .now-line { background: #ff3b30; height: 1.5px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .now-line::after { background: #ff3b30; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.month-cell.selected:not(.today)) { border-radius: 10px; }
 
 /* --- Popover: 8px controls, 12px cards, 6px chips (matches the mini) --- */
-:root[data-ui="popover"]:not([data-theme="tradicional"]) :is(.btn, .input, .icon-btn, .tag-input) { border-radius: 8px; }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) :is(.modal, .search-panel, .settings-card) { border-radius: 12px; }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) :is(.chip, .timed, .day-timed) { border-radius: 6px; }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .settings-nav-item.active { background: var(--accent-soft); color: var(--accent-text); }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.btn, .input, .icon-btn, .tag-input) { border-radius: 8px; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.modal, .search-panel, .settings-card) { border-radius: 12px; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.chip, .timed, .day-timed) { border-radius: 6px; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .settings-nav-item.active { background: var(--accent-soft); color: var(--accent-text); }
 
 /* --- Botanico: serif headings, round checkboxes, soft corners --- */
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.brand-name, .side-title, .rail-group-title b, .week-todo-toggle span, .month-head, .agenda-day-head .label, .modal-head h2, .search-group-title, .settings-pane-head h3, .settings-nav h2) {
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.brand-name, .side-title, .rail-group-title b, .week-todo-toggle span, .month-head, .agenda-day-head .label, .modal-head h2, .search-group-title, .settings-pane-head h3, .settings-nav h2) {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
 }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.modal-head h2, .rail-group-title b) { font-weight: 500; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .month-cell .daynum { font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; font-weight: 500; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.btn, .input, .tag-input, .segmented button, .rail-tab, .side-nav button) { border-radius: 10px; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.segmented, .rail-tabgroup, .modal, .search-panel, .settings-card) { border-radius: 12px; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .chip { border-radius: 3px; border-left-width: 2px; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.timed, .day-timed) { border-radius: 4px; box-shadow: none; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .settings-nav-item.active { background: var(--accent-soft); color: var(--accent-text); }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .month-art { filter: sepia(.25) saturate(.85); }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.input, .tag-input):focus, :root[data-ui="botanico"]:not([data-theme="tradicional"]) .tag-input:focus-within { box-shadow: 0 0 0 3px rgba(180, 85, 63, .18); }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.toast) { border-radius: 10px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.modal input[type="checkbox"], .week-todo-check), :root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.modal input[type="checkbox"]) { border-radius: 50%; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.modal-head h2, .rail-group-title b) { font-weight: 500; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-cell .daynum { font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; font-weight: 500; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.btn, .input, .tag-input, .segmented button, .rail-tab, .side-nav button) { border-radius: 10px; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.segmented, .rail-tabgroup, .modal, .search-panel, .settings-card) { border-radius: 12px; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .chip { border-radius: 3px; border-left-width: 2px; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.timed, .day-timed) { border-radius: 4px; box-shadow: none; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .settings-nav-item.active { background: var(--accent-soft); color: var(--accent-text); }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .month-art { filter: sepia(.25) saturate(.85); }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.input, .tag-input):focus, :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .tag-input:focus-within { box-shadow: 0 0 0 3px rgba(180, 85, 63, .18); }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.toast) { border-radius: 10px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.modal input[type="checkbox"], .week-todo-check), :root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.modal input[type="checkbox"]) { border-radius: 50%; }
 
 /* Color themes bring their own accent in the Popover style (the picker is hidden there) */
 :root[data-ui="popover"][data-theme="sepia"] { --accent-h: 22; --accent-s: 46%; --accent-l: 40%; }
@@ -2358,8 +2358,8 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
 /* The symbol is inline now: same box as the old <img>, and its aqua follows the accent */
 .brand svg { width: 27px; height: 27px; border-radius: 7px; flex: none; }
 .settings-nav-foot svg { width: 30px; height: 30px; flex: none; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) :is(.brand, .about-icon, .settings-nav-foot),
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) :is(.brand, .about-icon, .settings-nav-foot),
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.brand, .about-icon, .settings-nav-foot),
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) :is(.brand, .about-icon, .settings-nav-foot),
 :root[data-ui="popover"][data-theme="sepia"] :is(.brand, .about-icon, .settings-nav-foot),
 :root[data-ui="popover"][data-theme="midnight"] :is(.brand, .about-icon, .settings-nav-foot) {
   --mark-1: color-mix(in srgb, var(--accent) 55%, #fff);
@@ -2372,11 +2372,11 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
 
 /* Month + year title copies the tray mini calendar, style by style (Piel Roja keeps its own) */
 .period-month + .period-year { margin-left: 0.28em; }
-:root[data-ui="popover"]:not([data-theme="tradicional"]) .period-title { font-size: 21px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-title { font-size: 19px; }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .period-month { font-weight: 700; color: var(--text-strong); }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-title { font-size: 28px; line-height: 1; }
-:root[data-ui="botanico"]:not([data-theme="tradicional"]) .period-month { font-weight: 500; }
+:root[data-ui="popover"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title { font-size: 21px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title { font-size: 19px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-month { font-weight: 700; color: var(--text-strong); }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-title { font-size: 28px; line-height: 1; }
+:root[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .period-month { font-weight: 500; }
 
 /* ===== Print the week (planner sheet, US Letter landscape) ===== */
 .print-week-btn {
@@ -2385,7 +2385,7 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
   color: var(--accent-text); font: 600 12.5px var(--font); cursor: pointer; white-space: nowrap;
 }
 .print-week-btn:hover { background: var(--accent-soft); border-color: var(--accent); }
-:root[data-ui="sonoma"]:not([data-theme="tradicional"]) .print-week-btn { border-radius: 999px; }
+:root[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .print-week-btn { border-radius: 999px; }
 @media (max-width: 1180px) { .print-week-btn span { display: none; } .print-week-btn { padding: 0 9px; } }
 
 .print-week-sheet { display: none; }
@@ -2407,14 +2407,14 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
   html[data-print="week"] .print-week-sheet * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
 
   /* style variants copy the app styles */
-  html[data-ui="sonoma"]:not([data-theme="tradicional"]) .print-week-sheet { --pw-rad: 12px; --pw-pill: 999px; --pw-year: var(--pw-acc); --pw-year-w: 600; }
-  html[data-ui="botanico"]:not([data-theme="tradicional"]) .print-week-sheet {
+  html[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .print-week-sheet { --pw-rad: 12px; --pw-pill: 999px; --pw-year: var(--pw-acc); --pw-year-w: 600; }
+  html[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .print-week-sheet {
     --pw-rad: 3px; --pw-pill: 3px; --pw-mfont: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
     --pw-year: var(--pw-acc); --pw-year-style: italic; --pw-year-w: 400;
   }
 
   .pw-art { position: absolute; inset: 0; z-index: 0; background-repeat: no-repeat; background-position: center 58%; background-size: 78% auto; opacity: 0.16; }
-  html[data-ui="botanico"]:not([data-theme="tradicional"]) .pw-art {
+  html[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .pw-art {
     inset: 0 0 auto 0; height: 1.25in; background-position: center 30%; background-size: cover; opacity: 0.5;
     -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
   }
@@ -2423,7 +2423,7 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
   .pw-head { flex: none; height: 0.7in; display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid var(--pw-acc); padding-bottom: 5px; }
   .pw-title { font-family: var(--pw-mfont); font-size: 30pt; line-height: 1; letter-spacing: -0.5px; }
   .pw-month { font-weight: 700; }
-  html[data-ui="botanico"]:not([data-theme="tradicional"]) .pw-month { font-weight: 500; }
+  html[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .pw-month { font-weight: 500; }
   .pw-year { margin-left: 0.25em; color: var(--pw-year); font-style: var(--pw-year-style); font-weight: var(--pw-year-w); }
   .pw-week { font-size: 10pt; font-weight: 600; color: var(--pw-acc); padding: 3px 10px; background: var(--pw-tint); border-radius: var(--pw-pill); margin-bottom: 3px; }
 
@@ -2456,8 +2456,8 @@ html.is-mini .mini { height: calc(100vh - 16px); box-shadow: 0 8px 26px rgba(0, 
   .pw-card-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--pw-rule); padding-bottom: 2px; margin-bottom: 4px; }
   .pw-dayname { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--pw-acc); }
   .pw-daynum { font: 700 21pt/1 var(--pw-mfont); }
-  html[data-ui="botanico"]:not([data-theme="tradicional"]) .pw-daynum { font-weight: 500; }
-  html[data-ui="sonoma"]:not([data-theme="tradicional"]) .pw-card.today .pw-daynum { background: var(--pw-acc); color: #fff; border-radius: 999px; min-width: 30px; text-align: center; padding: 2px 4px; font-size: 16pt; }
+  html[data-ui="botanico"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .pw-daynum { font-weight: 500; }
+  html[data-ui="sonoma"]:not([data-theme="tradicional"]):not([data-theme="bristol"]) .pw-card.today .pw-daynum { background: var(--pw-acc); color: #fff; border-radius: 999px; min-width: 30px; text-align: center; padding: 2px 4px; font-size: 16pt; }
   .pw-holiday { font-size: 7pt; font-style: italic; color: #8a6d1f; margin: -2px 0 3px; }
   .pw-hint { font-size: 7.5pt; color: #8a9096; font-style: italic; }
   .pw-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }

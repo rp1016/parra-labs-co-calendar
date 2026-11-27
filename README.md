@@ -28,11 +28,13 @@ carpeta de datos de la aplicación, y puedes exportar respaldos cuando quieras.
 - **Números de semana** ISO y **zona horaria secundaria** en las vistas de tiempo.
 - **Respaldo automático** diario con 14 copias rotativas, además de los respaldos
   manuales.
-- **Siete temas** (sistema, claro, oscuro, medianoche, sepia, alto contraste y
-  Calendario Piel Roja) y siete colores de acento. El tema Piel Roja
+- **Ocho temas** (sistema, claro, oscuro, medianoche, sepia, alto contraste,
+  Calendario Piel Roja y Almanaque Bristol) y siete colores de acento. Piel Roja
   recrea los calendarios de pared colombianos: papel, tinta negra, rojo de
   imprenta, tipografía serif, marco ornamental y el jefe indígena con tocado de
-  plumas.
+  plumas. Almanaque Bristol es un tema independiente inspirado en el almanaque
+  popular: portada naranja, papel hueso, tinta de imprenta y el retrato grabado
+  del fundador en un medallón.
 - **Fondos artísticos opcionales**: cinco ilustraciones vintage (flores
   botánicas, aves, conejos, niños jugando y animales) dibujadas como SVG locales
   y aplicadas como marca de agua tenue detrás de la cuadrícula del mes.
